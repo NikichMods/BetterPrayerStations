@@ -31,3 +31,16 @@ Installed 0.1.0 hash matches its exact artifact, and the game assembly hash matc
 Correction scope: resolve all five targets by declared owner, exact argument types, return type and implemented body before patching; reject inherited/no-argument grave Open; bind the grave postfix argument by index. Improve the panel's generic initialization failure wording so it does not misdiagnose every patch failure as an environment mismatch. No product mechanics, save fields, looks, UI workflow or rendering algorithm changed. The descriptor mechanism remains justified; this failure occurred before testing it.
 
 Local regression gate passes exact bindings for CustomDrawers.GetNewWOPPrefabsNames(), GraveGUI.Open(WorldGameObject), GraveGUI.Hide(bool), MainGame.OnGameLoaded(GameSave), MainGame.OnGameStartedPlaying(), plus inherited-overload rejection and indexed argument contract. Existing descriptor/version tests also pass. This is not yet a successful installed Harmony startup.
+## Appearance Probe 0.1.1 — installed; runtime confirmation pending
+
+Corrective research candidate for the 0.1.0 initialization failure above. No production release or gameplay acceptance is implied.
+
+- Exact clean source: `f2857b63ad8655f4fc17892f3e1ba00215681257`.
+- Frozen reference: `probe/appearance-0.1.1`.
+- Numbered artifact: `BetterPrayerStationsAppearanceProbe-0.1.1.dll`.
+- Canonical installed basename: `BetterPrayerStationsAppearanceProbe.dll`.
+- Artifact/installed SHA-256: `3d65bf6d32ed485fdc9efe6eeee2b1297cd8329383e5ee9d35fa5dcbd1cef36d` (identical).
+- Canonical version owner: Plugin.cs Version; assembly/file versions checked as 0.1.1.0.
+- Build gate: clean exact source, SDK6.0.406 Roslyn compilation with warnings as errors, five exact declared patch targets, inherited Open() rejection, indexed argument binding contract, native descriptor projection and version identity tests all PASS.
+- Installation on 2026-10-23: host process absent immediately before replacement; prior 0.1.0 DLL backed up outside the plugin directory; exact new artifact copied to the canonical basename and hash verified. Private installation manifest retained in ignored evidence storage. Numbered 0.1.0 bytes remain unchanged.
+- Runtime status: not yet launched with 0.1.1. First check is successful READY initialization, then the unchanged narrow grave appearance/redraw/load/cancel/cleanup matrix linked above. Local tests cannot prove Harmony startup or Unity rendering.
