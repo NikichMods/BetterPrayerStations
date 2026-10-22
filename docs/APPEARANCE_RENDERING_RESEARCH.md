@@ -50,6 +50,6 @@ WorldGameObject.Redraw refreshes more than grave parts (component/craft lists, d
 
 ## Readiness and next evidence
 
-Static owner/result seam and native quality separation are established. **Production gate remains BLOCKED** for the full appearance/fitting feature: exact refresh/close/load rollback, instantiated-resource behavior and representative live preservation are not yet proved. No runtime probe or production code is supplied by this document.
+Static owner/result seam and native quality separation are established. **Production gate remains BLOCKED** for the full appearance/fitting feature: exact refresh/close/load rollback, instantiated-resource behavior and representative live preservation are not yet proved. Production code remains absent. The authorized research probe is isolated in `research/AppearanceProbe`; its matrix and installed-runtime return belong to `docs/TEST_BUILD_LOG.md`. Compilation/helper tests do not satisfy this production gate.
 
 Next narrow installed slice: one selected grave and two existing looks. First prove committed descriptor projection survives ordinary redraw/save-load and keeps item IDs/quality unchanged. Then prove temporary fitting cancels on close/target change/reload, preserves empty slots/construction states and does not alter saves/payments. This sequence isolates render correctness from picker/transaction lifecycle instead of bundling unverified mechanisms.

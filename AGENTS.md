@@ -8,7 +8,7 @@ This project follows [NikichMods/DevRules](https://github.com/NikichMods/DevRule
 - Repository: `NikichMods/BetterPrayerStations`.
 - Initial target: Graveyard Keeper **1.407**, PC, BepInEx environment. Exact loader/runtime/build references remain to be verified.
 - Purpose: useful prayer stations, optional faith spending on individual graves, and paid decoration appearance changes preserving quality.
-- Current milestone: adopted product concept; first technical persistence research is recorded in `docs/PERSISTENCE_RESEARCH.md`. No production implementation, runtime acceptance, build, version or release exists yet. Bootstrap authorization does not authorize automatic production implementation.
+- Current milestone: adopted product concept; first technical persistence research is recorded in `docs/PERSISTENCE_RESEARCH.md`. No production implementation or release exists. The user authorized a narrow research-only appearance probe; its version/build/install state is owned by `docs/TEST_BUILD_LOG.md`, not a production release. Runtime acceptance remains pending.
 
 ## Sources of truth and recovery
 
@@ -38,5 +38,7 @@ This repository owns this mod's product behavior, architecture, balance and acce
 - Use `codex/<topic>` for implementation/research branches. Unaccepted runtime work stays off `main`.
 - Follow global immutable numbered-build/source/hash rules and explicit installed-runtime acceptance before stable promotion. GitHub Releases will be the stable binary download surface.
 - Intended installed filename: `BetterPrayerStations.dll`; numbered handoff: `BetterPrayerStations-<version>.dll`. Select canonical semantic-version owner with the actual build system, before first binary; no version is consumed by bootstrap.
-- No build/CI scaffolding at this documentation-only phase. Establish useful compile/handoff gates when executable source/toolchain exist, under `CI_POLICY.md`.
+- Research probe build gate: `research/AppearanceProbe/build.ps1`, exact clean source for numbered artifacts, version assertions and native descriptor tests. Compiler: verified Windows SDK 6.0.406 Roslyn with local host references. Hosted CI is unselected because proprietary local references are already available for the meaningful local gate; do not upload them. Reassess production build/CI separately.
+- Diagnostic identity exception: canonical probe version is `research/AppearanceProbe/Plugin.cs` constant Version; installed `BetterPrayerStationsAppearanceProbe.dll`, handoff `BetterPrayerStationsAppearanceProbe-<version>.dll`. A probe number does not consume the production mod version.
+- Read `research/AppearanceProbe/PLAN.md` and README plus `docs/TEST_BUILD_LOG.md` before diagnostic handoff/testing; follow the local installed-runtime loop and never overwrite a loaded binary.
 - MPL-2.0: see `LICENSE` and `LICENSING.md`; add SPDX notices when original source files are introduced.

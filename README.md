@@ -11,6 +11,7 @@ Spend faith on grave improvements, inspect buried contents without exhumation, a
 - [Evidence and acceptance](docs/EVIDENCE_AND_ACCEPTANCE.md)
 - [Persistence research](docs/PERSISTENCE_RESEARCH.md)
 - [Grave-owned appearance rendering](docs/APPEARANCE_RENDERING_RESEARCH.md)
+- [Diagnostic builds and runtime returns](docs/TEST_BUILD_LOG.md)
 - [Working contract](AGENTS.md)
 - [Licensing](LICENSING.md)
 

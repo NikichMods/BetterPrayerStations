@@ -1,6 +1,6 @@
 # Implementation plan
 
-Status: technical research started at the user's request, 2026-10-23. [Persistence research](PERSISTENCE_RESEARCH.md) establishes native carriers. The accepted grave-owned appearance model removes the former need to transfer cosmetic metadata at decoration removal. No production implementation or user-operated runtime probe has been supplied.
+Status: technical research started at the user's request, 2026-10-23. [Persistence research](PERSISTENCE_RESEARCH.md) establishes native carriers. The accepted grave-owned appearance model removes the former need to transfer cosmetic metadata at decoration removal. Production implementation remains absent. The authorized narrow diagnostic probe source is in `research/AppearanceProbe`; see `docs/TEST_BUILD_LOG.md` for exact artifact/install/runtime-return status.
 
 ## First technical slice
 

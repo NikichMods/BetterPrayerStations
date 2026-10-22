@@ -2,7 +2,7 @@
 
 ## Current evidence boundary
 
-As of 2026-10-23: adopted concept, bounded shared static host evidence and schematic browser interaction checks. **No game implementation, in-game UI validation, persistent modifier round trip, compatibility acceptance or numbered artifact exists.** The subsequent [persistence research](PERSISTENCE_RESEARCH.md) adds bounded static lifecycle findings and a passing offline native map/item binary fixture. Appearance ownership was subsequently revised to grave-owned slot choices; item-owned cosmetic round trips are historical research, not current requirements. This does not establish installed-game persistence or cosmetic rendering.
+As of 2026-10-23: adopted concept, bounded shared static host evidence and schematic browser interaction checks. **No production game implementation, installed UI/persistence acceptance or compatibility acceptance exists.** The research-only appearance probe is tracked separately in [the test-build log](TEST_BUILD_LOG.md); its compiled/installed state must not be called runtime acceptance. The subsequent [persistence research](PERSISTENCE_RESEARCH.md) adds bounded static lifecycle findings and a passing offline native map/item binary fixture. Appearance ownership was subsequently revised to grave-owned slot choices; item-owned cosmetic round trips are historical research, not current requirements. This does not establish installed-game persistence or cosmetic rendering.
 
 ## Shared evidence owners
 
