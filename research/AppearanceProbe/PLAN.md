@@ -1,4 +1,4 @@
-# Appearance probe 0.1.0 — research-method checkpoint
+# Appearance probe — research-method checkpoint
 
 Question: does one actual grave render a projected gravestone descriptor, retain the committed choice through native save/load, and restore it after fitting closes?
 

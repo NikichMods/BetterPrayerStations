@@ -28,6 +28,25 @@ static class DescriptorTests
         var type = assembly.GetType("NikichMods.BPSProbe.Plugin", true);
         string version = (string)type.GetField("Version").GetRawConstantValue();
         Assert(assembly.GetName().Version.ToString() == version + ".0", "Version owner differs from assembly metadata");
+        var targets = (MethodInfo[])type.GetMethod("ResolveTargets", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, null);
+        var owners = new[] { typeof(CustomDrawers), typeof(GraveGUI), typeof(GraveGUI), typeof(MainGame), typeof(MainGame) };
+        var signatures = new[] { Type.EmptyTypes, new[] { typeof(WorldGameObject) }, new[] { typeof(bool) }, new[] { typeof(GameSave) }, Type.EmptyTypes };
+        Assert(targets.Length == 5, "Patch target count changed");
+        for (int n = 0; n < targets.Length; n++)
+        {
+            Assert(targets[n].DeclaringType == owners[n] && targets[n].GetMethodBody() != null, "Patch resolved to inherited/unimplemented method");
+            var parameters = targets[n].GetParameters();
+            Assert(parameters.Length == signatures[n].Length, "Wrong native overload");
+            for (int k = 0; k < parameters.Length; k++) Assert(parameters[k].ParameterType == signatures[n][k], "Wrong native parameter type");
+        }
+        var declared = type.GetMethod("DeclaredTarget", BindingFlags.NonPublic | BindingFlags.Static);
+        bool rejectedInherited = false;
+        try { declared.Invoke(null, new object[] { typeof(GraveGUI), "Open", typeof(void), Type.EmptyTypes }); }
+        catch (TargetInvocationException ex) { rejectedInherited = ex.InnerException is MissingMethodException; }
+        Assert(rejectedInherited, "Inherited BaseGUI.Open() accepted as a grave-specific target");
+        var openedPatch = type.GetMethod("Opened", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert(openedPatch.GetParameters()[1].Name == "__0" && openedPatch.GetParameters()[1].ParameterType == typeof(WorldGameObject), "Open postfix must bind native first argument by index");
+        Console.WriteLine("PASS exact patch bindings: five declared implemented signatures, inherited Open() rejected, grave argument indexed.");
         var method = type.GetMethod("ProjectParts", BindingFlags.NonPublic | BindingFlags.Static);
         Action<IList<WOPPrefabName>> project = parts => method.Invoke(null, new object[] { parts, "actual_stone", "desired_wood" });
         var source = new WOPPrefabName { part_1 = "actual_stone_stg_", stage = 3, part_2 = "_suffix", need_herb = true };

@@ -19,7 +19,7 @@ namespace NikichMods.BPSProbe
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string Id = "nikichmods.bps.appearanceprobe";
-        public const string Version = "0.1.0";
+        public const string Version = "0.1.1";
         const string Marker = "nikichmods.bps.appearance_probe.selected";
         const string Look = "nikichmods.bps.appearance_probe.look";
         const string HostHash = "e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
@@ -51,11 +51,12 @@ namespace NikichMods.BPSProbe
                 if (savedInventory == null || savedInventory.FieldType != typeof(Item) || openedGrave == null || openedGrave.FieldType != typeof(WorldGameObject))
                     throw new MissingFieldException("Save/grave ownership fields");
                 harmony = new Harmony(Id);
-                Patch(typeof(CustomDrawers), "GetNewWOPPrefabsNames", null, "Project");
-                Patch(typeof(GraveGUI), "Open", null, "Opened");
-                Patch(typeof(GraveGUI), "Hide", null, "Closed");
-                Patch(typeof(MainGame), "OnGameLoaded", "Loading", null);
-                Patch(typeof(MainGame), "OnGameStartedPlaying", null, "Started");
+                var targets = ResolveTargets();
+                Patch(targets[0], null, "Project");
+                Patch(targets[1], null, "Opened");
+                Patch(targets[2], null, "Closed");
+                Patch(targets[3], "Loading", null);
+                Patch(targets[4], null, "Started");
                 active = true;
                 Log("READY version=" + Version + " host=" + hash + " scope=one-gravestone save_keys=2");
             }
@@ -63,15 +64,33 @@ namespace NikichMods.BPSProbe
             {
                 active = false;
                 if (harmony != null) harmony.UnpatchSelf();
-                status = "Пробник отключён: не подтверждена среда. См. журнал.";
+                status = "Не удалось подключить пробник. Причина записана в журнал.";
                 Logger.LogError("BPS_PROBE INIT_FAILED action=disabled " + ex);
             }
         }
 
-        void Patch(Type type, string name, string prefix, string postfix)
+        internal static MethodInfo DeclaredTarget(Type type, string name, Type returns, Type[] arguments)
         {
-            var method = AccessTools.Method(type, name);
-            if (method == null) throw new MissingMethodException(type.FullName, name);
+            var method = type.GetMethod(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, arguments, null);
+            if (method == null || method.DeclaringType != type || method.ReturnType != returns || method.IsAbstract || method.GetMethodBody() == null)
+                throw new MissingMethodException(type.FullName, name + " (exact declared signature)");
+            return method;
+        }
+
+        internal static MethodInfo[] ResolveTargets()
+        {
+            return new[]
+            {
+                DeclaredTarget(typeof(CustomDrawers), "GetNewWOPPrefabsNames", typeof(List<WOPPrefabName>), Type.EmptyTypes),
+                DeclaredTarget(typeof(GraveGUI), "Open", typeof(void), new[] { typeof(WorldGameObject) }),
+                DeclaredTarget(typeof(GraveGUI), "Hide", typeof(void), new[] { typeof(bool) }),
+                DeclaredTarget(typeof(MainGame), "OnGameLoaded", typeof(void), new[] { typeof(GameSave) }),
+                DeclaredTarget(typeof(MainGame), "OnGameStartedPlaying", typeof(void), Type.EmptyTypes)
+            };
+        }
+
+        void Patch(MethodInfo method, string prefix, string postfix)
+        {
             harmony.Patch(method,
                 prefix == null ? null : new HarmonyMethod(typeof(Plugin), prefix),
                 postfix == null ? null : new HarmonyMethod(typeof(Plugin), postfix));
@@ -285,8 +304,9 @@ namespace NikichMods.BPSProbe
             GUI.DragWindow(new Rect(0, 0, 10000, 22));
         }
 
-        static void Opened(GraveGUI __instance, WorldGameObject grave_wgo)
+        static void Opened(GraveGUI __instance, WorldGameObject __0)
         {
+            var grave_wgo = __0;
             var p = self;
             if (p == null || !p.active) return;
             try
