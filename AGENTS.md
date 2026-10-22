@@ -12,7 +12,7 @@ This project follows [NikichMods/DevRules](https://github.com/NikichMods/DevRule
 
 ## Sources of truth and recovery
 
-Inspect actual checkout/branch/changes and read this contract, `docs/DESIGN.md`, `docs/IMPLEMENTATION_PLAN.md` and `docs/EVIDENCE_AND_ACCEPTANCE.md` and `docs/PERSISTENCE_RESEARCH.md` before substantive work. Update owning documents when accepted decisions or evidence change.
+Inspect actual checkout/branch/changes and read this contract, `docs/DESIGN.md`, `docs/IMPLEMENTATION_PLAN.md` and `docs/EVIDENCE_AND_ACCEPTANCE.md` and `docs/PERSISTENCE_RESEARCH.md` and `docs/APPEARANCE_RENDERING_RESEARCH.md` before substantive work. Update owning documents when accepted decisions or evidence change.
 
 Shared host knowledge: [NikichMods/GraveyardKeeperResearch](https://github.com/NikichMods/GraveyardKeeperResearch), starting with `docs/RESEARCH_INDEX.md`. In particular consult `GRAVEYARD_RUNTIME.md`, `PERK_MECHANICS.md`, `CRAFTING_INVENTORY_AND_TRADING.md` and `UI_INPUT_TIME_AND_ENVIRONMENT.md` before new host inspection. Product/economy context is linked in the evidence document.
 
@@ -20,14 +20,14 @@ This repository owns this mod's product behavior, architecture, balance and acce
 
 ## Product constraints
 
-`docs/DESIGN.md` owns the adopted mechanics. Do not silently change ownership, shared price progression, coverage activation, partial anatomy bypass or appearance/stat separation. UI tabs, prices, radius and unlock details remain open. Do not promote illustrative preview values into requirements.
+`docs/DESIGN.md` owns the adopted mechanics. Appearance belongs to the grave; quality belongs to the physically installed item. No cosmetic item metadata or inventory-icon changes are required. Do not silently change ownership, shared price progression, coverage activation, partial anatomy bypass or appearance/stat separation. UI tabs, prices, radius and unlock details remain open. Do not promote illustrative preview values into requirements.
 
 ## Engineering and evidence
 
 - Follow `ENGINEERING_RULES.md` before technical mechanism selection; apply `RUNTIME_INTEGRATION.md` to host integration and `RUNTIME_TEST_HARNESS.md` when supplying an installed probe.
 - Prefer verified host seams; preserve native anatomy and original body data. A grave modifier must not become exported organ/zombie power.
 - Never guess identifiers, serialization, installation/removal paths, rendering ownership or compatibility. Static plausibility and browser mockups are not installed-game proof.
-- Save data must preserve per-grave investment/count and per-decoration appearance across supported lifecycles. Stable identity, migration and safe removal behavior need evidence before implementation is declared ready.
+- Save data must preserve per-grave investment/count and independent grave-owned gravestone/fence appearance choices across supported lifecycles. Stable identity, migration and safe removal behavior need evidence before implementation is declared ready.
 - Appearance fitting is a temporary view of the actual selected world grave, with cancellation restoring committed presentation and no payment until confirmation. No separate rendered scene is required by the product.
 - No broad recurring world scans, reflection, logging or visual object recreation without verified need. Re-evaluate coverage on appropriate verified changes; exact mechanism remains open.
 - Do not commit game binaries, extracted assets or copied/decompiled game source. Preserve minimal derived evidence and original code only.

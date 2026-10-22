@@ -37,7 +37,7 @@ The highest covering tier governs purchase permission only. Any station activate
 
 Moving or demolishing a station re-evaluates current coverage. It does not delete investments, refund them or reset price progression. Returning any station restores all stored effects. Wooden stations therefore remain useful for maintaining graves developed under stone coverage.
 
-Inspection also requires coverage. Purchased decoration appearances remain independently attached to their items and do not switch off outside coverage.
+Inspection also requires coverage. Purchased appearances remain on the grave and do not switch off outside coverage.
 
 ## Ownership, exhumation and replacement
 
@@ -45,7 +45,7 @@ Inspection also requires coverage. Purchased decoration appearances remain indep
 | --- | --- | --- |
 | Original body and native anatomy/embalming | Body | Leaves with body |
 | Bought conversion capacity, extra wreaths, shared action count | Grave | Remains stored at grave |
-| Paid cosmetic appearance | Physical gravestone/fence item | Travels with item |
+| Paid gravestone and fence appearances | Grave, separate choice for each slot | Remain at grave; removed items are ordinary |
 
 An empty grave contributes no bonus from faith investments. A replacement body uses the grave's stored investments when covered. Effective conversions are bounded by the actual eligible red skulls: unused capacity cannot manufacture extra white skulls for an already red-free body. The same investment can yield a different rating for another body.
 
@@ -55,9 +55,11 @@ Full grave deletion, third-party grave movement, identity replacement and mod un
 
 ## Appearance commissions and fitting
 
-The first version uses **existing available game appearances** for gravestones and fences. The player pays craftspeople to change the appearance of the installed decoration while retaining the source item's quality/function. A wooden-looking decoration can retain the original high-quality item's effectiveness. No mandatory best-looking tier or quality penalty for visual preference.
+The first version uses **existing available game appearances** for gravestones and fences. The player pays craftspeople to customize a specific grave. The grave stores separate gravestone/fence appearance choices; quality/function still comes from the physical item installed in each slot. A wooden-looking decoration can retain the original high-quality item's effectiveness. No mandatory best-looking tier or quality penalty for visual preference.
 
-Cosmetic identity must remain understandable in world, inventory/storage and tooltips after removal/transfer. Show the real base item/function and chosen appearance separately. A cosmetic badge must not alter or impersonate native item-quality metadata.
+Ownership revised and accepted 2026-10-23: **appearance belongs to the grave; quality belongs to the installed item**. Removing a decoration returns an ordinary item and retains the appearance choice at the grave. An empty slot renders no paid decoration. Installing another compatible item uses the saved grave appearance with the new item's actual quality. On a different grave, the moved item uses that destination's own appearance choice, or its normal look if none is selected. Body replacement/exhumation does not reset either appearance.
+
+Show the actual installed item and its quality separately from the grave's chosen appearance. No cosmetic tags, special inventory icons, item-level appearance tooltips or metadata transfer through removal recipes are required. Inventory/storage continue to show ordinary items. This supersedes the former item-owned model; it is an intentional product simplification, not a claim that item metadata is impossible.
 
 Adopted fitting flow:
 
@@ -65,9 +67,9 @@ Adopted fitting flow:
 2. Temporarily preview the look on the **actual grave in the actual cemetery**, with surrounding context visible.
 3. Confirm the displayed price or cancel.
 
-Browsing and cancellation spend nothing and do not commit item changes. Confirmation commits the appearance and payment together. Closing/interruption must restore committed presentation; exact handling belongs to implementation acceptance. A separate scene/view rendered inside a window is not required. The earlier schematic illustration was an interaction aid, not a proposed second game renderer.
+Browsing and cancellation spend nothing and do not commit item changes. Confirmation commits the grave-slot appearance choice and payment together. Closing/interruption must restore committed presentation; exact handling belongs to implementation acceptance. A separate scene/view rendered inside a window is not required. The earlier schematic illustration was an interaction aid, not a proposed second game renderer.
 
-The exact meaning of available, gravestone/fence compatibility, prices, repeat-commission payment, restoring original appearance and ordering-access requirements remain open. Restricting to learned decoration technologies was suggested but **not adopted**.
+The exact meaning of available, gravestone/fence compatibility, prices, repeat-commission payment, the price/access for clearing a saved override and ordering-access requirements remain open. A missing override uses the installed item's ordinary appearance. Restricting to learned decoration technologies was suggested but **not adopted**.
 
 ## Information and interface
 

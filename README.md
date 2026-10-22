@@ -10,6 +10,7 @@ Spend faith on grave improvements, inspect buried contents without exhumation, a
 - [Implementation questions and next steps](docs/IMPLEMENTATION_PLAN.md)
 - [Evidence and acceptance](docs/EVIDENCE_AND_ACCEPTANCE.md)
 - [Persistence research](docs/PERSISTENCE_RESEARCH.md)
+- [Grave-owned appearance rendering](docs/APPEARANCE_RENDERING_RESEARCH.md)
 - [Working contract](AGENTS.md)
 - [Licensing](LICENSING.md)
 

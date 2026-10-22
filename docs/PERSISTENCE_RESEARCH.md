@@ -1,69 +1,60 @@
 # Persistence research — 2026-10-23
 
-Status: **bounded static evidence plus offline native binary serialization fixture**. No installed-game acceptance, production patches or changes to user saves. Product requirements remain in `DESIGN.md`; reusable host findings belong to [shared graveyard runtime research](https://github.com/NikichMods/GraveyardKeeperResearch/blob/codex/graveyard-design-candidates/docs/GRAVEYARD_RUNTIME.md#grave-and-decoration-persistence--2026-10-23).
+Status: **bounded static evidence plus passing offline native binary fixture**. No installed-game acceptance, production patches or user-save changes. `DESIGN.md` owns product semantics; reusable host facts remain in [shared research](https://github.com/NikichMods/GraveyardKeeperResearch/blob/codex/graveyard-design-candidates/docs/GRAVEYARD_RUNTIME.md#grave-and-decoration-persistence--2026-10-23).
 
-## Question and result
+## Current question and result
 
-Can grave investments stay with the grave while cosmetic identity follows a physical decoration through installation, removal, storage and loading?
+Can one grave retain faith investment and two independent appearance choices while physical decorations remain ordinary items with native quality?
 
-The evidence supports native object/item parameters as the first implementation family to pursue. A separate coordinate-keyed ledger is not currently justified. A deliberate transfer of cosmetic metadata at decoration removal is necessary; native output generation does not automatically copy the installed item's custom fields.
+**Accepted ownership revision:** gravestone and fence appearances belong to the grave. Quality belongs to the actual installed item. This supersedes item-owned cosmetics and removes the need for custom item icons, tooltip badges or cosmetic transfer through removal recipes.
 
-This is a recommendation grounded in the inspected paths, not a completed save-compatible implementation or permission to change adopted product behavior.
+Native grave Item parameters remain the first mechanism to pursue. A separate coordinate-keyed ledger, cosmetic item-definition IDs or an item-owned appearance registry are not currently justified. The exact schema/code mapping is provisional; this is not a completed save-compatible mod.
 
 ## Evidence identity and method
 
-- Game target: GK 1.407 PC.
+- Target: GK 1.407 PC.
 - `Assembly-CSharp.dll` SHA-256: `e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8`.
 - `Assembly-CSharp-firstpass.dll` SHA-256: `9dc6def3b7715dd27eeb168ddc0af47e31c6f38d3fbee24bf592899392026498`.
 - `resources.assets` SHA-256: `215c7981901a4b72d5db717666ba47ad3cc032527c95f58dc39d8af1293a69ca`.
-- Supporting source: `Kupie/GYK_DECOMP@6abf79199d92482af1c7573870dd9a20ec2270b9`, selected Item/GameRes/SerializableWGO/SerializableGameMap/WorldGameObject/CraftComponent/ResModificator/MultiInventory/GraveGUI and grave FlowCanvas node files. Local IL corroborated the selected ownership, transfer, removal and restoration methods.
-- Prior research already demonstrated namespaced Item binary serialization in ResearchableAlchemyRecipes. Reused that finding; the new fixture specifically adds the composite native map/WGO/grave/nested-decoration boundary.
-- Bounded native data inspection covered the four grave states, relevant scripts/recipes and all 42 ItemType.GraveStone/GraveFence definitions. No bulk proprietary payload is committed.
+- Supporting source: `Kupie/GYK_DECOMP@6abf79199d92482af1c7573870dd9a20ec2270b9`, selected Item/GameRes/SerializableWGO/SerializableGameMap/WorldGameObject/CraftComponent/ResModificator/MultiInventory/GraveGUI and grave FlowCanvas nodes. Selected local IL corroborates ownership, restoration and transfer paths. Rendering investigation is recorded separately in `APPEARANCE_RENDERING_RESEARCH.md`.
+- Prior native Item binary evidence from ResearchableAlchemyRecipes was reused. This project's fixture adds the actual map/WGO/grave/decoration container boundary; it does not replace the serializer.
 
 ## Grave storage and identity
 
-`SerializableGameMap.SaveSceneToMe` captures world objects through `SerializableWGO.FromWGO`. The record stores both `unique_id` and `item = wgo.data`. Restoration rebuilds scene objects, restores their saved ID and Item, then reconfigures the object definition. Thus a Unity object reference is transient across loading, while grave state can travel in the saved Item without a second identity ledger.
+`SerializableGameMap.SaveSceneToMe -> SerializableWGO.FromWGO` captures `unique_id` and `item=wgo.data`. Scene restore creates new Unity objects and restores their saved ID/Item before SetObject. A live Unity reference is transient; the saved grave Item can carry its own state without an external ID ledger.
 
-Normal grave state changes use `ReplaceWithObject -> SetObject -> InitNewObject` on the same WGO. `InitNewObject` changes the data Item's definition ID/capacity rather than replacing its Item; `SetItemID` does not clear parameters. The inspected burial/exhumation chain is `grave_empty -> grave_corp -> grave_ground -> grave_exhume -> grave_empty`. Exhumation's graph uses `Flow_ExhumeBodyFromWGO` to drop/remove the actual body from the grave inventory, not replace the grave data. Native craft End removes zero parameters; positive custom counts/schema markers survive that cleanup path.
+`ReplaceWithObject -> SetObject -> InitNewObject` reuses the current WGO and Item. Updating Item definition ID/capacity does not clear parameters. The inspected chain is `grave_empty -> grave_corp -> grave_ground -> grave_exhume -> grave_empty`; exhumation drops/removes the body's inventory item, not grave data. Craft End removes zero parameters, not positive custom fields.
 
-Recommendation: store schema/version, conversion capacity, extra-wreath count and shared paid-action count on grave data under a project namespace. Zero/missing can mean an unpurchased default; positive schema markers can identify initialized state. Exact keys/migration and maximum valid values are not final. Keep effective coverage/score derived, rather than persist a particular station ID or active effect list. Body data remains untouched.
+Research direction: namespaced schema marker, conversion/wreath/shared-payment counts and separate stable appearance codes for gravestone/fence on grave data. Missing/zero appearance means use the actual installed item's ordinary look. Keep coverage and effective score derived, and never store a station ID as investment ownership. Exact keys, code values, validation/migration and limits are not final.
 
-Coordinates are not a stable primary key under movement. The WGO ID can aid diagnostics and lifecycle correlation, but no global external registry is currently needed. Arbitrary deletion/recreation and other movement mods remain unsupported until inspected/tested.
+An empty decoration slot retains its saved choice but displays nothing. A replacement item uses that choice with its own native quality. Moving an ordinary item to another grave does not export a cosmetic preference. Exhumation leaves both choices at the source grave. These are adopted product rules; live execution is still untested.
 
-## Decoration lifecycle
+## Decoration lifecycle under revised ownership
 
-| Boundary | Evidence | Consequence |
-| --- | --- | --- |
-| Installation | GraveGUI passes the chosen instance; native transfer-needs branch inserts that instance for the selected single-item path | Cosmetic parameters have a carrier into grave inventory |
-| Storage transfer | MultiInventory copies Item; Item copy constructor copies GameRes; non-stackable AddItem copies Item again as needed | Copied custom parameters can follow the decoration through the inspected normal transfer path |
-| Save serialization | Native map/WGO and Item fixture retains nested appearance code and durability | Serialization can preserve item-owned metadata; not a live inventory or world test |
-| Removal | Recipe output is copied from its definition; original installed item is removed later; native handling explicitly propagates durability, not arbitrary appearance keys | Add a narrow, validated transfer of the chosen cosmetic metadata before the generated result is dropped |
-| Inventory/world rendering | Icons and world visuals resolve native definition data unless explicitly extended | A saved appearance key does not itself render the requested look |
+| Boundary | Current requirement |
+| --- | --- |
+| Install/reinstall | Keep ordinary item identity/quality; render that grave's choice only for a present supported slot |
+| Remove | Native ordinary item result; grave choices remain; no cosmetic metadata transfer |
+| Chest/other inventory | Ordinary items and native inventory presentation |
+| Another grave | Destination grave choice applies, or ordinary item look if unset |
+| Save/load | Preserve both grave choices even without installed decorations; no cross-save cache leakage |
 
-The current native corpus has 42 GraveStone/GraveFence definitions, all stack_count=1, each with one matching grave installation recipe and one matching removal recipe producing one base-definition item. This includes definitions whose gameplay unlock/placement status is not proven; it is not the final available-look catalog. GraveCover and mod-added definitions are outside this corpus.
+Historical finding: all 42 checked GraveStone/GraveFence definitions have stack_count=1 and native set/remove recipes; removal generates a base-item template and does not copy arbitrary custom parameters. That is useful shared host evidence but **no longer a product blocker**. The former proposed removal-result interception and pending cosmetic-transfer state are superseded, not queued for implementation.
 
-Potential removal seam: while the native removal output list is being generated, scope to the actual grave removal craft and exact installed slot item, then annotate its corresponding generated output before native DropItems. Preserve native quality, ID, durability, work, tools, scripts and output multiplicity. This candidate is **not READY**: all matching result-generation callers, interruptions and the exact drop/copy path still need a representative executable slice. Do not broadly override Item copying or globally rewrite ResModificator outputs.
+Historical trap: active craft `_current_item` restores from ID/durability, while consumed-items data is separate. It still matters to mods that depend on that service field; this product no longer needs it to preserve appearance. Prior item-owned fixture state/results are archived at source `b86ff41`, not current requirements or public save compatibility obligations.
 
-Active native craft serialization has an additional trap: `_current_item` is restored from ID/durability, while `cur_craft_items_used` is stored separately. An in-memory captured Item reference cannot serve as the sole source across save/load. For removal, prefer the still-installed decoration in the saved grave inventory if its lifetime is verified, or deliberately persist narrowly scoped pending metadata. That choice remains open.
+## Movement boundary
 
-Cosmetic codes need a stable, versioned mapping independent of dictionary/list ordering. Separate new item-definition IDs are less attractive for the initial scope because native installation matches exact input IDs and loading requires those definitions. A separate JSON sidecar adds save pairing/identity/atomicity work without a demonstrated need. Reconsider if native metadata fails a required lifecycle.
+Reused exact Move Objects 0.6.0 structural checkpoint, DLL SHA-256 `c126964ca13e474770254f998fb912deca14d6c51ce933dce5ded8c7cdbcfdf0`: its selected route moves the existing WGO. Grave-attached state therefore avoids a coordinate-keyed identity problem. Grave eligibility, cancellation, redraw, radius invalidation and move/save behavior remain untested; no blanket move-mod compatibility is claimed. Deletion/recreation and uninstall policy remain separate open cases.
 
-## Movement-mod boundary
+## Current offline executable check
 
-The installed Move Objects 0.6.0 DLL matches the already inspected SHA-256 `c126964ca13e474770254f998fb912deca14d6c51ce933dce5ded8c7cdbcfdf0`. Reused shared evidence: its selected `MoveExistingWGO` route moves the existing object instead of replacing it. This makes data-attached investments preferable to coordinate keys. It does **not** prove grave eligibility, cancellation, position persistence, redraw, radius invalidation or all movement tools. Do not claim full compatibility yet.
+Original script: `research/persistence/native-serialization.ps1`, fresh PowerShell process, `-ManagedDirectory <local game Managed folder>`. No DLL, game process manipulation or save-file reads/writes.
 
-## Offline executable check
+Method: synthetic uninitialized Items avoid Unity Resources constructor calls. Native GameRes access and SmartSerializer round-trip a native SerializableGameMap with two WGO records: an occupied grave with investment and two appearance codes, and a separate empty grave with different codes. Ordinary decoration/body data and a chest Item are included. The generic serializer requires a class root, so the actual native containing map is used.
 
-Original script: `research/persistence/native-serialization.ps1`. Run in a fresh PowerShell process with `-ManagedDirectory <local game Managed folder>`. No DLL is built, no game process is touched, and no save file is read or written.
+PASS: WGO ID; faith counters; independent gravestone/fence choices for both occupied and empty graves; no appearance on the ordinary decoration; chest decoration stays ordinary; durability and body separation; restored graph independence; missing-choice default. It proves the carrier can represent the revised ownership. It does not execute removal/replacement/movement, native visual rendering or a full live save cycle.
 
-Method: synthetic Items are allocated without constructors because native constructors consult Unity Resources. Native GameRes parameter access and **native SmartSerializer** serialize/deserialize a native SerializableGameMap containing a WGO record, grave Item, decoration and body; a separate chest Item is also round-tripped. The first direct struct call was rejected by the serializer's class generic constraint; the successful test uses its real map container, without replacing the serializer.
+## Next useful slice
 
-Result: PASS for saved WGO ID, conversion/wreath/shared-count fields, nested cosmetic code, original durability, absence of grave modifier on the body, chest contents, independent restored graph and fresh-grave default. These prove serialization representability and separation in the fixture, not installed persistence of a mod that does not exist yet. No copying/crafting/movement/rendering methods were simulated as proof of their native execution.
-
-## Readiness and next test
-
-- **Serialization carrier:** established by source/IL and bounded native fixture.
-- **Full production persistence and cosmetic removal:** **BLOCKED for implementation acceptance**, pending exact mutation/drop boundary, interrupted removal and representative live cycle.
-- **Rendering and coverage:** not investigated by this persistence slice.
-
-Next useful slice: one grave and one ordinary decoration in an explicitly identified research candidate, using reversible markers only. Exercise install -> remove -> chest -> save/load -> install on another grave; separately save/load an invested grave, exhume/replace its body and move it through the selected Move Objects route. Compare actual metadata before/after and original body/decorative quality, including save/load during manual removal and cancellation. Select the narrow diagnostic method under DevRules before building that candidate; this document does not claim a probe has been supplied or the runtime gate has passed.
+Persistence carrier is established at the bounded source/IL/native-binary level. Next test should target grave-owned **world rendering and temporary fitting**, not item metadata transfer. See `APPEARANCE_RENDERING_RESEARCH.md`: verify one real grave's two choices, unchanged item quality, cancel/close/reload restoration, empty-slot suppression and destination-grave behavior. Inspect actual window lifecycle before handing out a probe. Full production readiness and installed acceptance remain open.

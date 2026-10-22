@@ -41,8 +41,9 @@ Set-Value $grave 'nikichmods.bps.schema' 1
 Set-Value $grave 'nikichmods.bps.conversions' 3
 Set-Value $grave 'nikichmods.bps.wreaths' 2
 Set-Value $grave 'nikichmods.bps.actions' 5
+Set-Value $grave 'nikichmods.bps.look.stone' 7
+Set-Value $grave 'nikichmods.bps.look.fence' 11
 $decoration=New-FixtureItem 'grave_top_stn_plate_2'
-Set-Value $decoration 'nikichmods.bps.appearance' 7
 Set-Value $decoration 'durability' 0.625
 $grave.inventory.Add($decoration)
 $body=New-FixtureItem 'body'
@@ -53,6 +54,14 @@ $wgoType.GetField('unique_id').SetValue($record,[long]123456789)
 $wgoType.GetField('item').SetValue($record,$grave)
 $map=[Activator]::CreateInstance($mapType)
 $mapType.GetField('_wgos',$binding).GetValue($map).Add($record)
+$secondGrave=New-FixtureItem 'grave_empty'
+Set-Value $secondGrave 'nikichmods.bps.look.stone' 2
+Set-Value $secondGrave 'nikichmods.bps.look.fence' 4
+$secondRecord=[Activator]::CreateInstance($wgoType)
+$wgoType.GetField('obj_id').SetValue($secondRecord,'grave_empty')
+$wgoType.GetField('unique_id').SetValue($secondRecord,[long]987654321)
+$wgoType.GetField('item').SetValue($secondRecord,$secondGrave)
+$mapType.GetField('_wgos',$binding).GetValue($map).Add($secondRecord)
 $restoredMap=Roundtrip $mapType $map
 $restored=$mapType.GetField('_wgos',$binding).GetValue($restoredMap)[0]
 Assert-Value $restored.unique_id 123456789 'WGO identity'
@@ -60,16 +69,23 @@ Assert-Value (Read-Value $restored.item 'nikichmods.bps.conversions') 3 'Grave c
 Assert-Value (Read-Value $restored.item 'nikichmods.bps.wreaths') 2 'Grave wreaths'
 Assert-Value (Read-Value $restored.item 'nikichmods.bps.actions') 5 'Shared action count'
 Assert-Value $restored.item.inventory.Count 2 'Nested inventory'
-Assert-Value (Read-Value $restored.item.inventory[0] 'nikichmods.bps.appearance') 7 'Installed appearance'
+Assert-Value (Read-Value $restored.item 'nikichmods.bps.look.stone') 7 'Grave gravestone appearance'
+Assert-Value (Read-Value $restored.item 'nikichmods.bps.look.fence') 11 'Grave fence appearance'
+Assert-Value (Read-Value $restored.item.inventory[0] 'nikichmods.bps.look.stone') 0 'No appearance exported to decoration'
+$restoredSecond=$mapType.GetField('_wgos',$binding).GetValue($restoredMap)[1]
+Assert-Value $restoredSecond.item.inventory.Count 0 'Empty grave has no physical decoration'
+Assert-Value (Read-Value $restoredSecond.item 'nikichmods.bps.look.stone') 2 'Separate empty grave gravestone choice'
+Assert-Value (Read-Value $restoredSecond.item 'nikichmods.bps.look.fence') 4 'Separate empty grave fence choice'
 Assert-Value (Read-Value $restored.item.inventory[0] 'durability') ([single]0.625) 'Decoration durability'
 Assert-Value (Read-Value $restored.item.inventory[1] 'nikichmods.bps.conversions') 0 'Body separation'
 $chest=New-FixtureItem 'chest'
 $chest.inventory.Add($decoration)
 $restoredChest=Roundtrip $itemType $chest
-Assert-Value (Read-Value $restoredChest.inventory[0] 'nikichmods.bps.appearance') 7 'Stored appearance'
+Assert-Value (Read-Value $restoredChest.inventory[0] 'nikichmods.bps.look.stone') 0 'Stored ordinary decoration has no grave look'
 Set-Value $restored.item 'nikichmods.bps.actions' 9
 Assert-Value (Read-Value $grave 'nikichmods.bps.actions') 5 'Independent deserialized grave'
 $empty=New-FixtureItem 'grave_empty'
 Assert-Value (Read-Value $empty 'nikichmods.bps.actions') 0 'Fresh grave default'
-Write-Output 'PASS native binary serialization: SerializableWGO identity, grave counters, nested decoration appearance/durability, body separation, chest contents and independent restored objects.'
+Assert-Value (Read-Value $empty 'nikichmods.bps.look.stone') 0 'Default native appearance'
+Write-Output 'PASS native binary serialization: SerializableWGO identity, grave counters and two grave-owned looks, separate empty-grave looks, ordinary decoration/chest data, durability, body separation and independent restored objects.'
 Write-Output 'LIMIT: synthetic uninitialized Items; no live save/load, Unity rendering, craft removal, inventory transfer, WGO movement or production modifier execution was exercised.'
