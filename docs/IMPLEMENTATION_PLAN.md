@@ -1,6 +1,6 @@
 # Implementation plan
 
-Status: planning only. No production code or user-operated probe is authorized by the bootstrap itself.
+Status: technical research started at the user's request, 2026-10-23. [Persistence research](PERSISTENCE_RESEARCH.md) establishes native carriers and the decoration-removal gap. No production implementation or user-operated runtime probe has been supplied.
 
 ## First technical slice
 

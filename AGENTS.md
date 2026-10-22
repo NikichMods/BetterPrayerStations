@@ -8,11 +8,11 @@ This project follows [NikichMods/DevRules](https://github.com/NikichMods/DevRule
 - Repository: `NikichMods/BetterPrayerStations`.
 - Initial target: Graveyard Keeper **1.407**, PC, BepInEx environment. Exact loader/runtime/build references remain to be verified.
 - Purpose: useful prayer stations, optional faith spending on individual graves, and paid decoration appearance changes preserving quality.
-- Current milestone: adopted product concept and documentation bootstrap. No production implementation, runtime acceptance, build, version or release exists yet. Bootstrap authorization does not authorize automatic production implementation.
+- Current milestone: adopted product concept; first technical persistence research is recorded in `docs/PERSISTENCE_RESEARCH.md`. No production implementation, runtime acceptance, build, version or release exists yet. Bootstrap authorization does not authorize automatic production implementation.
 
 ## Sources of truth and recovery
 
-Inspect actual checkout/branch/changes and read this contract, `docs/DESIGN.md`, `docs/IMPLEMENTATION_PLAN.md` and `docs/EVIDENCE_AND_ACCEPTANCE.md` before substantive work. Update owning documents when accepted decisions or evidence change.
+Inspect actual checkout/branch/changes and read this contract, `docs/DESIGN.md`, `docs/IMPLEMENTATION_PLAN.md` and `docs/EVIDENCE_AND_ACCEPTANCE.md` and `docs/PERSISTENCE_RESEARCH.md` before substantive work. Update owning documents when accepted decisions or evidence change.
 
 Shared host knowledge: [NikichMods/GraveyardKeeperResearch](https://github.com/NikichMods/GraveyardKeeperResearch), starting with `docs/RESEARCH_INDEX.md`. In particular consult `GRAVEYARD_RUNTIME.md`, `PERK_MECHANICS.md`, `CRAFTING_INVENTORY_AND_TRADING.md` and `UI_INPUT_TIME_AND_ENVIRONMENT.md` before new host inspection. Product/economy context is linked in the evidence document.
 

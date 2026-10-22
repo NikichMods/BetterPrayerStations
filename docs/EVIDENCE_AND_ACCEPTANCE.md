@@ -2,7 +2,7 @@
 
 ## Current evidence boundary
 
-As of 2026-10-23: adopted concept, bounded shared static host evidence and schematic browser interaction checks. **No game implementation, in-game UI validation, persistent modifier round trip, compatibility acceptance or numbered artifact exists.** No tests or builds need to run for this documentation-only bootstrap.
+As of 2026-10-23: adopted concept, bounded shared static host evidence and schematic browser interaction checks. **No game implementation, in-game UI validation, persistent modifier round trip, compatibility acceptance or numbered artifact exists.** The subsequent [persistence research](PERSISTENCE_RESEARCH.md) adds bounded static lifecycle findings and a passing offline native map/item binary fixture. This does not establish installed-game persistence or cosmetic rendering.
 
 ## Shared evidence owners
 
