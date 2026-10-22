@@ -8,7 +8,7 @@ This project follows [NikichMods/DevRules](https://github.com/NikichMods/DevRule
 - Repository: `NikichMods/BetterPrayerStations`.
 - Initial target: Graveyard Keeper **1.407**, PC, BepInEx environment. Exact loader/runtime/build references remain to be verified.
 - Purpose: useful prayer stations, optional faith spending on individual graves, and paid decoration appearance changes preserving quality.
-- Current milestone: adopted product concept; first technical persistence research is recorded in `docs/PERSISTENCE_RESEARCH.md`. No production implementation or release exists. The user authorized a narrow research-only appearance probe; its version/build/install state is owned by `docs/TEST_BUILD_LOG.md`, not a production release. Runtime acceptance remains pending.
+- Current milestone: adopted product concept; first technical persistence research is recorded in `docs/PERSISTENCE_RESEARCH.md`. No production implementation or release exists. The user authorized a narrow research-only appearance probe; its version/build/install state is owned by `docs/TEST_BUILD_LOG.md`, not a production release. The narrow 0.1.1 gravestone render/redraw/menu-load/close-cancel/cleanup scenario passed in the installed game with user visual confirmation; full product acceptance remains open.
 
 ## Sources of truth and recovery
 

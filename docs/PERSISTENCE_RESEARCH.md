@@ -1,6 +1,6 @@
 # Persistence research — 2026-10-23
 
-Status: **bounded static evidence plus passing offline native binary fixture**. No installed-game acceptance, production patches or user-save changes. `DESIGN.md` owns product semantics; reusable host facts remain in [shared research](https://github.com/NikichMods/GraveyardKeeperResearch/blob/codex/graveyard-design-candidates/docs/GRAVEYARD_RUNTIME.md#grave-and-decoration-persistence--2026-10-23).
+Status: **bounded static evidence plus passing offline native binary fixture**. A subsequent narrow installed 0.1.1 probe confirms one grave-owned gravestone choice through menu-load; its two diagnostic fields were explicitly written and cleaned in the user save session. No production patch or full lifecycle acceptance exists. `DESIGN.md` owns product semantics; reusable host facts remain in [shared research](https://github.com/NikichMods/GraveyardKeeperResearch/blob/codex/graveyard-design-candidates/docs/GRAVEYARD_RUNTIME.md#grave-and-decoration-persistence--2026-10-23).
 
 ## Current question and result
 
@@ -57,4 +57,4 @@ PASS: WGO ID; faith counters; independent gravestone/fence choices for both occu
 
 ## Next useful slice
 
-Persistence carrier is established at the bounded source/IL/native-binary level. Next test should target grave-owned **world rendering and temporary fitting**, not item metadata transfer. See `APPEARANCE_RENDERING_RESEARCH.md`: verify one real grave's two choices, unchanged item quality, cancel/close/reload restoration, empty-slot suppression and destination-grave behavior. Inspect actual window lifecycle before handing out a probe. Full production readiness and installed acceptance remain open.
+Persistence carrier is established at the bounded source/IL/native-binary level. The first grave-owned **world rendering and temporary fitting** slice passed in installed 0.1.1; next test should target independent slots and physical decoration replacement, not item metadata transfer. See `APPEARANCE_RENDERING_RESEARCH.md`: verify one real grave's two choices, unchanged item quality, cancel/close/reload restoration, empty-slot suppression and destination-grave behavior. Inspect actual window lifecycle before handing out a probe. Full production readiness and installed acceptance remain open.

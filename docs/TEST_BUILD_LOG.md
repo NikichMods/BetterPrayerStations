@@ -31,9 +31,9 @@ Installed 0.1.0 hash matches its exact artifact, and the game assembly hash matc
 Correction scope: resolve all five targets by declared owner, exact argument types, return type and implemented body before patching; reject inherited/no-argument grave Open; bind the grave postfix argument by index. Improve the panel's generic initialization failure wording so it does not misdiagnose every patch failure as an environment mismatch. No product mechanics, save fields, looks, UI workflow or rendering algorithm changed. The descriptor mechanism remains justified; this failure occurred before testing it.
 
 Local regression gate passes exact bindings for CustomDrawers.GetNewWOPPrefabsNames(), GraveGUI.Open(WorldGameObject), GraveGUI.Hide(bool), MainGame.OnGameLoaded(GameSave), MainGame.OnGameStartedPlaying(), plus inherited-overload rejection and indexed argument contract. Existing descriptor/version tests also pass. This is not yet a successful installed Harmony startup.
-## Appearance Probe 0.1.1 — installed; runtime confirmation pending
+## Appearance Probe 0.1.1 — narrow installed scenario PASS
 
-Corrective research candidate for the 0.1.0 initialization failure above. No production release or gameplay acceptance is implied.
+Corrective research candidate for the 0.1.0 initialization failure above. No production release or full product acceptance is implied.
 
 - Exact clean source: `f2857b63ad8655f4fc17892f3e1ba00215681257`.
 - Frozen reference: `probe/appearance-0.1.1`.
@@ -43,4 +43,25 @@ Corrective research candidate for the 0.1.0 initialization failure above. No pro
 - Canonical version owner: Plugin.cs Version; assembly/file versions checked as 0.1.1.0.
 - Build gate: clean exact source, SDK6.0.406 Roslyn compilation with warnings as errors, five exact declared patch targets, inherited Open() rejection, indexed argument binding contract, native descriptor projection and version identity tests all PASS.
 - Installation on 2026-10-23: host process absent immediately before replacement; prior 0.1.0 DLL backed up outside the plugin directory; exact new artifact copied to the canonical basename and hash verified. Private installation manifest retained in ignored evidence storage. Numbered 0.1.0 bytes remain unchanged.
-- Runtime status: not yet launched with 0.1.1. First check is successful READY initialization, then the unchanged narrow grave appearance/redraw/load/cancel/cleanup matrix linked above. Local tests cannot prove Harmony startup or Unity rendering.
+- Runtime status: installed startup and the requested narrow scenario passed on 2026-10-23; details below. This is research acceptance, not stable promotion or full product acceptance.
+
+### Installed return — 2026-10-23
+
+User reports every visual step matched the procedure and supplied a native grave-window screenshot. Fresh session log identifies 0.1.1 and READY with the expected game assembly hash; installed DLL still matches the artifact hash above. Preserved private log SHA-256: `b8d41ce97045c3c1db922f7a4695d8e88c44677c4c30a8ffec388588cc0dd23f`. Screenshot SHA-256: `923520be3ac4be3248749194ad4b4f548e52d0cb2b8c137f7f8cab551479b2c8`. Raw log/image are retained only in ignored local evidence, not public assets.
+
+Selected grave 47567 has actual `grave_top_stn_plate_2` and `grave_bot_stn_2`, native quality 3. Six REDRAW_END records all report invariants=True; all recorded state strings are identical across SELECT and before/after actions: native quality, actual item IDs/counts/durability, direct body contents, player money and faith. This is bounded instrumentation, not a bytewise comparison of every save field.
+
+| Step | Recorded world result |
+| --- | --- |
+| Commit wooden cross | Actual WOP becomes `grave_top_wd_cross_1_stg_1`; stone fence retained |
+| Explicit redraw | Same wooden cross and fence |
+| Native menu/save-load | LOAD recovers grave 47567 with committed=1; wooden cross restored |
+| Temporary stone-cross fitting | `grave_top_stn_cross_1_stg_1`; committed remains 1 |
+| Close grave window | CANCEL reason=grave-close; persisted_look_unchanged=true; wooden cross restored |
+| Cleanup | Original `grave_top_stn_plate_2_stg_1` restored; active_keys=0, inert_zero_keys=2 |
+
+No probe FAILED/INIT_FAILED or invariant violation appears in this snapshot. Other host errors exist; do not call the entire session error-free. In particular, a missing `grave_top_stn_plate_2_stg_2` resource is logged at line731, before initial target selection at line1043. The tested redraws all instantiate stage1; this record is not a failed probe redraw, and its independent cause/owner is not established here.
+
+The screenshot records native UI quality3, body3 red/3 white at97%, and the original physical gravestone/fence names and icons, each quality3. It is a useful native UI baseline, not a screenshot proving every world appearance or a finalized cosmetic picker design.
+
+Limits: one occupied, completed grave; gravestone only, two test looks. No fence-choice mutation, removal/reinstallation, physical item transfer, empty/construction slot runtime test, exhumation, movement, interrupted fitting load/save, full application restart or production payment/coverage/UI acceptance. Cleanup was observed in memory; a subsequent save/load proving persistent cleanup is not recorded. Next useful lifecycle slice is two independent grave-slot choices through decoration removal/reinstallation and destination-grave transfer; do not repeat the passed basic redraw/close scenario without a new reason.

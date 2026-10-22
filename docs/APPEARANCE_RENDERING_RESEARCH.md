@@ -1,12 +1,12 @@
 # Grave-owned appearance rendering — 2026-10-23
 
-Status: **bounded static source/IL and asset metadata**, no production patch or installed-game rendering test. Product ownership is accepted in `DESIGN.md`; native persistence carrier/fixture are documented in `PERSISTENCE_RESEARCH.md`.
+Status: **bounded static source/IL and asset metadata plus passing narrow installed 0.1.1 scenario**. One occupied grave passed gravestone projection, redraw, menu-load, close-cancel and cleanup with unchanged measured native state. No production patch or full appearance acceptance exists. Product ownership is accepted in `DESIGN.md`; native persistence carrier/fixture are documented in `PERSISTENCE_RESEARCH.md`.
 
 ## Question and hypothesis
 
 Can a grave-specific appearance replace only the rendered decoration choice, preserving installed items, native quality, damage stages and cancellation behavior?
 
-Hypothesis supported by the inspected code: project the native grave visual descriptors after they are built; let the native drawer instantiate and maintain the world parts. A temporary fitting choice can feed the same projection without writing persistent grave state. This is a proposed mechanism, not an implemented feature or verified preview lifecycle.
+Hypothesis supported by the inspected code: project the native grave visual descriptors after they are built; let the native drawer instantiate and maintain the world parts. A temporary fitting choice can feed the same projection without writing persistent grave state. The research probe now verifies this mechanism for one gravestone and native grave-window closing; the full product and other lifecycle paths remain unverified.
 
 ## Evidence identity
 
@@ -20,7 +20,7 @@ The builder uses actual grave inventory and native ItemType (GraveStone=101, Gra
 
 `WOPPrefabName.EqualsTo` compares part_1, part_2, stage and need_herb; a changed projected name can participate in native redraw detection. Its GetName composes the prefab name. If a requested damage-stage prefab fails to load, OnDrawGrave tries descending positive stages. It then optionally tries the corresponding `_herb` part. RedrawPart loads/instantiates native WorldObjectPart and uses the prefab's local offset; it is more than assigning a SpriteRenderer sprite.
 
-The quality getter reads real inventory quality and body skulls, not WOPPrefabName. A descriptor-only change therefore has a static separation from numerical quality; live unchanged-score behavior still needs proof. Do not temporarily replace Item.id, definitions, durability or shared balance data to obtain a visual.
+The quality getter reads real inventory quality and body skulls, not WOPPrefabName. A descriptor-only change therefore has a static separation from numerical quality; live unchanged-score behavior is confirmed for the narrow 0.1.1 case, not the full catalog/lifecycle. Do not temporarily replace Item.id, definitions, durability or shared balance data to obtain a visual.
 
 The native builder also removes inventory items whose definitions are null. It is not a pure read helper to invoke repeatedly from a picker. Let native drawing invoke it; do not manufacture preview by repeatedly calling it as a catalog/eligibility query.
 
@@ -50,6 +50,6 @@ WorldGameObject.Redraw refreshes more than grave parts (component/craft lists, d
 
 ## Readiness and next evidence
 
-Static owner/result seam and native quality separation are established. **Production gate remains BLOCKED** for the full appearance/fitting feature: exact refresh/close/load rollback, instantiated-resource behavior and representative live preservation are not yet proved. Production code remains absent. The authorized research probe is isolated in `research/AppearanceProbe`; its matrix and installed-runtime return belong to `docs/TEST_BUILD_LOG.md`. Compilation/helper tests do not satisfy this production gate.
+The installed 0.1.1 diagnostic passes the first narrow slice: committed wooden-cross projection, explicit redraw, native menu-load recovery, temporary stone-cross fitting, close cancellation and cleanup on one occupied completed grave. Actual WOP names changed as expected, while all measured native quality/item/body/currency snapshots stayed identical. The user confirmed the visual sequence. Exact source/artifact/log identity and limitations are owned by [TEST_BUILD_LOG.md](TEST_BUILD_LOG.md).
 
-Next narrow installed slice: one selected grave and two existing looks. First prove committed descriptor projection survives ordinary redraw/save-load and keeps item IDs/quality unchanged. Then prove temporary fitting cancels on close/target change/reload, preserves empty slots/construction states and does not alter saves/payments. This sequence isolates render correctness from picker/transaction lifecycle instead of bundling unverified mechanisms.
+**Production gate remains BLOCKED for the full feature.** One gravestone case does not prove independent fence choices, empty or unfinished slots, removal/reinstallation, other-grave transfers, movement/exhumation, full restart, save/load during fitting, target loss or payment/coverage/native picker behavior. No production code exists. Next investigate two independent slot choices through decoration removal/reinstallation and another-grave transfer: this establishes whether the adopted grave ownership stays correct when physical items change, rather than merely showing a persistent visual override on an unchanged grave. Full redraw is evidenced as sufficient for this probe; it is not yet selected as the final production refresh strategy.
