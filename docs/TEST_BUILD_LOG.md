@@ -65,3 +65,23 @@ No probe FAILED/INIT_FAILED or invariant violation appears in this snapshot. Oth
 The screenshot records native UI quality3, body3 red/3 white at97%, and the original physical gravestone/fence names and icons, each quality3. It is a useful native UI baseline, not a screenshot proving every world appearance or a finalized cosmetic picker design.
 
 Limits: one occupied, completed grave; gravestone only, two test looks. No fence-choice mutation, removal/reinstallation, physical item transfer, empty/construction slot runtime test, exhumation, movement, interrupted fitting load/save, full application restart or production payment/coverage/UI acceptance. Cleanup was observed in memory; a subsequent save/load proving persistent cleanup is not recorded. Next useful lifecycle slice is two independent grave-slot choices through decoration removal/reinstallation and destination-grave transfer; do not repeat the passed basic redraw/close scenario without a new reason.
+
+## Appearance Probe 0.1.2 — installed; two-slot lifecycle pending
+
+Research-only extension requested after the passing 0.1.1 slice; not production or stable promotion. Previous 0.1.0/0.1.1 numbered artifacts remain unchanged.
+
+- Exact clean source: `990b5038bfefe135f31d498ac970f7dee2e5e077`.
+- Frozen reference: `probe/appearance-0.1.2`.
+- Numbered artifact: `BetterPrayerStationsAppearanceProbe-0.1.2.dll`.
+- Installed basename: `BetterPrayerStationsAppearanceProbe.dll`; single active payload in the isolated probe directory.
+- Artifact/installed SHA-256: `9b3b520b07afb8ab52a4a276bddfaf7cce07977461f5c9f0fcf2bdf174c5b938` (identical).
+- Canonical version owner Plugin.cs Version; assembly/file versions derive from it and passed 0.1.2.0 identity checks.
+- Build: `research/AppearanceProbe/build.ps1 -GameRoot <local game root> -DotnetRoot <local SDK root> -ExpectedSource <exact SHA>`, SDK6.0.406 Roslyn with installed host references, clean source, warnings as errors. Local build-identity manifest includes all reference hashes.
+- Gate PASS: compilation/version, four exact declared implemented patch signatures, inherited parameterless Open rejection/indexed argument, real native WOP name/cache preservation, independent top/fence projection, missing individual slots, unfinished descriptor, stage/herb/suffix preservation and invalid saved-code rejection. These are not Unity/craft/load acceptance.
+- Installation 2026-10-23: game process absent immediately before replacement; verified prior 0.1.1 payload and latest ordinary log preserved outside plugin directory; exact candidate copied and installed hash rechecked. Private paths/manifest/log remain ignored local evidence.
+
+Scope: at most one marked A and B, three diagnostic fields each (marker/top/fence); two independently selectable top/fence choices. Same descriptor projection/native full-redraw mechanism. Previous fitting UI/Hide hook excluded from this new slice; its accepted behavior stays frozen in 0.1.1. No native item/craft/transfer patches, item generation/mutation, payment or coverage mechanics. One recovery pass after load, redraws paced one grave per frame. Explicit passive checkpoints do not force redraw and record both graves plus player's direct decoration inventory, including any unintended diagnostic metadata on items.
+
+Requested procedure and save classification: [README](../research/AppearanceProbe/README.md); question/matrix/why this extension: [PLAN](../research/AppearanceProbe/PLAN.md). A = wooden cross/stone fence I; B = stone cross/stone fence II. Record baseline; native top-only removal; fence removal/pickup; native reinstallation; empty both and exchange actual ordinary decorations; save/menu-load; cleanup both and save. Prefer distinct physical item IDs at A/B so quality/identity transfer is visible. Normal item removal/replacement can change grave quality; unchanged measured state is asserted only immediately across the probe's own cosmetic redraws.
+
+Runtime status: not yet launched with 0.1.2. Need READY and actual loaded resource confirmation, CHECKPOINT observations at each native stage, unchanged grave codes, appropriate actual parts/absent slots, ordinary removed item data, destination preferences with native physical-item quality, two-grave LOAD recovery and cleanup. No passing native lifecycle, user visual outcome, fallback execution or persistent cleanup is implied by the local build gate. Entire-grave movement, exhumation, full restart, fitting interruptions, all styles and final production UI/payment remain outside this candidate.
