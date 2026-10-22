@@ -29,9 +29,9 @@ static class DescriptorTests
         string version = (string)type.GetField("Version").GetRawConstantValue();
         Assert(assembly.GetName().Version.ToString() == version + ".0", "Version owner differs from assembly metadata");
         var targets = (MethodInfo[])type.GetMethod("ResolveTargets", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, null);
-        var owners = new[] { typeof(CustomDrawers), typeof(GraveGUI), typeof(GraveGUI), typeof(MainGame), typeof(MainGame) };
-        var signatures = new[] { Type.EmptyTypes, new[] { typeof(WorldGameObject) }, new[] { typeof(bool) }, new[] { typeof(GameSave) }, Type.EmptyTypes };
-        Assert(targets.Length == 5, "Patch target count changed");
+        var owners = new[] { typeof(CustomDrawers), typeof(GraveGUI), typeof(MainGame), typeof(MainGame) };
+        var signatures = new[] { Type.EmptyTypes, new[] { typeof(WorldGameObject) }, new[] { typeof(GameSave) }, Type.EmptyTypes };
+        Assert(targets.Length == 4, "Patch target count changed");
         for (int n = 0; n < targets.Length; n++)
         {
             Assert(targets[n].DeclaringType == owners[n] && targets[n].GetMethodBody() != null, "Patch resolved to inherited/unimplemented method");
@@ -46,7 +46,7 @@ static class DescriptorTests
         Assert(rejectedInherited, "Inherited BaseGUI.Open() accepted as a grave-specific target");
         var openedPatch = type.GetMethod("Opened", BindingFlags.NonPublic | BindingFlags.Static);
         Assert(openedPatch.GetParameters()[1].Name == "__0" && openedPatch.GetParameters()[1].ParameterType == typeof(WorldGameObject), "Open postfix must bind native first argument by index");
-        Console.WriteLine("PASS exact patch bindings: five declared implemented signatures, inherited Open() rejected, grave argument indexed.");
+        Console.WriteLine("PASS exact patch bindings: four declared implemented signatures, inherited Open() rejected, grave argument indexed.");
         var method = type.GetMethod("ProjectParts", BindingFlags.NonPublic | BindingFlags.Static);
         Action<IList<WOPPrefabName>> project = parts => method.Invoke(null, new object[] { parts, "actual_stone", "desired_wood" });
         var source = new WOPPrefabName { part_1 = "actual_stone_stg_", stage = 3, part_2 = "_suffix", need_herb = true };
@@ -71,6 +71,33 @@ static class DescriptorTests
         project(unsupported);
         Assert(unsupported.Count == 2 && unsupported[0] == null && ReferenceEquals(unsupported[1], fence), "Unsupported entries changed");
         Console.WriteLine("PASS descriptor projection: native names/cache comparison, stages/herbs, original descriptor preservation, unrelated fence, construction and empty slots; version identity.");
+        // Distinct real native descriptors expose accidental cross-slot mutation and in-place cache writes.
+        var nativeTop = new WOPPrefabName { part_1="actual_top_stg_", stage=2, need_herb=true };
+        var nativeFence = new WOPPrefabName { part_1="actual_fence_stg_", stage=3, part_2="_x" };
+        var both = new List<WOPPrefabName> { nativeTop, nativeFence };
+        method.Invoke(null,new object[]{both,"actual_top","look_top"});
+        Assert(ReferenceEquals(both[1],nativeFence),"Top projection modifies fence");
+        method.Invoke(null,new object[]{both,"actual_fence","look_fence"});
+        Assert(both[0].GetName()=="look_top_stg_2" && both[0].need_herb && both[1].GetName()=="look_fence_stg_3_x","Independent slots not composed");
+        Assert(nativeTop.GetName()=="actual_top_stg_2" && nativeFence.GetName()=="actual_fence_stg_3_x","Native cache mutated");
+        var absentTop = new List<WOPPrefabName>{nativeFence};
+        method.Invoke(null,new object[]{absentTop,"actual_top","look_top"});
+        Assert(absentTop.Count==1 && ReferenceEquals(absentTop[0],nativeFence),"Missing top slot conjured or fence altered");
+        var absentFence = new List<WOPPrefabName>{nativeTop};
+        method.Invoke(null,new object[]{absentFence,"actual_fence","look_fence"});
+        Assert(absentFence.Count==1 && ReferenceEquals(absentFence[0],nativeTop),"Missing fence slot conjured or top altered");
+        var unfinished = new List<WOPPrefabName>{new WOPPrefabName{part_1="actual_fence_stg_",stage=0}};
+        method.Invoke(null,new object[]{unfinished,"actual_fence","look_fence"});
+        Assert(unfinished[0].part_1=="actual_fence_stg_" && unfinished[0].stage==0,"Unfinished descriptor projected");
+        var codes=type.GetMethod("ReadCode",BindingFlags.NonPublic|BindingFlags.Static);
+        foreach(float invalid in new[]{-1f,1.5f,3f,float.NaN,float.PositiveInfinity})
+        {
+            bool rejected=false;
+            try{codes.Invoke(null,new object[]{invalid});}
+            catch(TargetInvocationException ex){rejected=ex.InnerException is InvalidOperationException;}
+            Assert(rejected,"Invalid saved appearance code accepted");
+        }
+        Console.WriteLine("PASS independent gravestone/fence projection, absent individual slots, unfinished descriptor and invalid saved-code rejection.");
         Console.WriteLine("LIMIT no Unity scene, native resource instantiation, GUI/load lifecycle or in-game acceptance.");
         return 0;
     }

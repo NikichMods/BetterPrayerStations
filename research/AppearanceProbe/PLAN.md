@@ -1,21 +1,18 @@
-# Appearance probe — research-method checkpoint
+# Appearance probe — research-method checkpoint, 0.1.2
 
-Question: does one actual grave render a projected gravestone descriptor, retain the committed choice through native save/load, and restore it after fitting closes?
+Question: do independent grave-owned top/fence appearances survive **native removal, reinstallation and exchange of ordinary physical decorations between two graves**, with empty slots invisible and actual item quality preserved?
 
-Existing evidence: pinned native source/IL, asset metadata and passing native binary fixture establish the carrier and descriptor owner. No existing exact mod implements the chosen behavior. A direct vanilla action cannot supply a projected descriptor. A small research-only BepInEx plugin is needed to supply that input and capture actual WOP names/unchanged item state; visual judgment and native save/load remain user actions.
+Existing evidence: 0.1.1 exact artifact passed one occupied grave's gravestone projection, explicit redraw, menu-load, close-cancel and cleanup. Static/native-serializer findings establish two grave fields are representable and native removal generates ordinary base items. They do not prove installed two-slot lifecycle. Reusing 0.1.1 alone cannot supply fence projection or two live marked graves. Therefore extend its same narrow descriptor mechanism and add passive checkpoints; use direct native gameplay for the operations being tested. A craft/transfer emulator or direct inventory mutation would add assumptions and bypass the tested boundary, so neither is introduced. Full production appearance remains BLOCKED pending evidence.
 
-This is research, not a READY production appearance feature. Only gravestone, two fixed existing looks and one opted-in grave are tested. Fence, costs, radius and final native UI are excluded.
-
-| Case | Native path | Expected evidence | Cleanup |
+| Case | Native path / observation | Expected | Cleanup |
 | --- | --- | --- | --- |
-| Commit look A/B | Native descriptor builder, native WGO redraw/resource loading | Actual additional WOP names change; quality/items/body/currency snapshot unchanged | Cleanup button |
-| Explicit redraw | Same native redraw with committed choice | Same actual appearance and unchanged snapshot | None |
-| Save/menu/load | Real game save map/restore/start callback | Marked grave recovered once; committed look applied; visual confirmation | Cleanup then save |
-| Fit alternative then close grave | Temporary result projection, native GraveGUI.Hide | CANCEL reason; next-frame native redraw from committed choice; no saved look change | Automatic |
-| Cleanup | Own two namespaced test parameters set to zero, native redraw | Normal appearance, no active saved marker | Save once to persist cleanup |
+| Register A/B and separate top/fence commits | Four known stage1 resources and native WGO redraw | Distinct committed grave choices; immediate redraw preserves measured actual state | Clear both |
+| Remove top only, then fence | Ordinary native removal craft, pickup, passive checkpoint | Real slots disappear individually; saved codes stay; ordinary returned inventory items have no diagnostic fields | Reinstall |
+| Reinstall at A | Native set recipes and their own redraw | Both original A choices return without another commit | Clear both |
+| Empty both, exchange physical items | Native remove/set paths, actual inventory IDs/durability/quality, passive checkpoint | Source codes stay; destination preferences apply to incoming items; quality follows real items | Physical positions remain as player arranged |
+| Save/menu-load modified inventories | Native map save/restore and one bounded recovery pass | Both IDs and all four appearance codes recover; expected WOPs and measured native state | Clear both then save |
+| Cleanup | Zero only own three fields, one redraw per frame | Ordinary visuals for current physical items; no item undo/refund | Save |
 
-Input guards: current save/player inventory ownership, live selected grave with completed installed gravestone, no active craft, exact verified assembly identity and known resource paths. No world enumeration in recurring paths. Load invalidates all transient target references before native scene restoration; one existing WorldMap list pass after actual game-start recovers an opted-in marker. Multiple marked graves fail closed.
+No synthetic item setup, native craft patch, transfer interception, item-owned cosmetic metadata, per-frame observer or forced redraw at checkpoint. Scope: two occupied buried graves, completed native operations, two known top/fence choices. No new fitting behavior: previous exact 0.1.1 source/artifact preserves that accepted slice. This candidate removes its unused Hide hook. Invalid duplicate/out-of-range marker/code fails closed rather than guessing an owner.
 
-Save classification: explicit target selection/committed look is save-persistent, scoped to two `nikichmods.bps.appearance_probe.*` parameters. Preview is nonpersistent and never written to grave data. Cleanup leaves inert zero-valued namespaced fields, preserving all unrelated parameters; no global parameter trimming. Test marker remains after removing the DLL unless cleaned/saved; vanilla ignores those namespaced fields.
-
-Full WGO.Redraw is the controlled refresh under test, not a claimed optimal production refresh. Bound one native call per action, queue panel actions onto Update, log before/after and inspect actual WOP instances. No per-frame redraw/logging. Native Hide schedules cancellation redraw for the next frame after clearing preview immediately.
+Save classification: A/B registration and slot commits are save-persistent diagnostic parameters. Native removal/reinstallation/exchange and ordinary saves are real player actions. Checkpoint/panel/session references are nonpersistent. Existing 0.1.1 marker1/look is compatible as A/fence0; original bytes/number remain immutable. Exact current source/hash/handoff belongs to docs/TEST_BUILD_LOG.md; this plan does not claim runtime acceptance.
