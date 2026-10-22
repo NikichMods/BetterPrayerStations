@@ -95,3 +95,11 @@ Proposals for compact exhumation consequences and affected-grave/quality-loss wa
 ## Remaining decisions
 
 Product direction is complete enough to start technical planning. Numeric balance, radius, exact appearance availability/payment/access and supported edge cases remain explicit design tasks. Architecture, persistence and host UI feasibility are unverified implementation questions, not permission to silently remove adopted behavior.
+
+### Deferred progression-gate proposal — not adopted
+
+The user proposed, but explicitly remains unsure about, restricting appearance commissions to aristocrat papers (the previously discussed 12-gold milestone) and faith/skull services to cathedral progression, while keeping body-content inspection available early. Do not interpret this as removal of the agreed inspection radius. Exact native progression flags and document possession/consumption semantics need verification only if this direction is selected.
+
+Tradeoff: explicit milestones communicate intended late-game timing and guarantee delayed access, but remove the deliberate option to spend scarce early faith. A cathedral gate also changes the role of the wooden station's first-N paid actions from an early working version to a post-unlock purchase cap. These consequences must be settled before adopting either gate. Appearance unlock and functional unlock need not use the same policy. The exact action scope of a proposed cathedral gate (conversion only or both faith actions) remains unspecified.
+
+Current working design is unchanged; prices/unlocks remain open. No gate is added to Appearance Probe 0.1.0, whose frozen source/artifact and requested runtime scenario remain unchanged. Evaluate this product choice after the current technical slice rather than delaying the user's probe test.
