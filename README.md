@@ -4,7 +4,7 @@ A planned Graveyard Keeper mod that gives prayer stations an active role in cari
 
 Spend faith on grave improvements, inspect buried contents without exhumation, and commission a different appearance for a gravestone or fence without sacrificing its quality.
 
-**Status: design agreed; implementation has not started. No installable build is available.** Initial target: Graveyard Keeper 1.407 on PC with BepInEx. Exact loader/toolchain requirements will be verified before implementation.
+**Status: design agreed; implementation has not started. No production build is available. An isolated research-only appearance probe is tracked in the test-build log.** Initial target: Graveyard Keeper 1.407 on PC with BepInEx. Exact loader/toolchain requirements will be verified before implementation.
 
 - [Design and scope](docs/DESIGN.md)
 - [Implementation questions and next steps](docs/IMPLEMENTATION_PLAN.md)
