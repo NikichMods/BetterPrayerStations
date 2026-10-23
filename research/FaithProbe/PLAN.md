@@ -70,3 +70,6 @@ Current method/readiness, static geometry inputs and evidence limits are owned b
 
 
 Current corrective candidate0.7.1: see COVERAGE_RESEARCH.md returned0.7.0 evidence/readiness; README priority repeat-preview/native construction/approach scenario. Prior0.7.0 compile success is not runtime acceptance.
+
+
+Installed0.7.1 bounded scenario accepted; current canonical result/limits: docs/COVERAGE_RESEARCH.md and exact TEST_BUILD_LOG.md return. Do not repeat this accepted scenario or consume another diagnostic version solely for bookkeeping. Passive station quality remains the next separate unimplemented mechanic, subject to DESIGN.md input decisions.

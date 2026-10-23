@@ -1,10 +1,10 @@
 # Better Prayer Stations — Faith Probe0.7.1
 
-Research-only square/grid and preview feedback candidate. Canonical version: Plugin.cs. Exact frozen source, DLL hash and installed state: docs/TEST_BUILD_LOG.md. Not a production release; real-game acceptance pending. No passive station-quality bonus, final artwork, final balance or action cap.
+Research-only square/grid and preview feedback candidate. Canonical version: Plugin.cs. Exact frozen source, DLL hash and installed state: docs/TEST_BUILD_LOG.md. Not a production release; bounded installed scenario accepted with user visual confirmation; exact evidence and remaining limits in TEST_BUILD_LOG.md. No passive station-quality bonus, final artwork, final balance or action cap.
 
 ## Приоритетная повторная проверка0.7.1
 
-0.7.0 остановился при переходе предпросмотра в строительный проект.0.7.1 исправляет выбор текущей WorldObjectPart-геометрии и отложенное получение нативной подписи, когда строительное окно ещё не включило значки качества. Подпись готовности теперь записывается в журнал. Проверки сборки проходят; повторного игрового подтверждения ещё нет. Выдача обоих наборов в0.7.0 уже подтверждена точными нативными дельтами; повторять ради её проверки не нужно.
+0.7.0 остановился при переходе предпросмотра в строительный проект.0.7.1 исправляет выбор текущей WorldObjectPart-геометрии и отложенное получение нативной подписи, когда строительное окно ещё не включило значки качества. Подпись готовности теперь записывается в журнал. Проверки сборки и повторный игровой сценарий пройдены: семь предпросмотров, отложенная подпись, размещение/достройка дерева, подход и перенос подтверждены в установленной среде. Это принятие узкого диагностического сценария, не готового мода. Выдача обоих наборов в0.7.0 уже подтверждена точными нативными дельтами; повторять ради её проверки не нужно.
 
 После назначения A и бесплатной подготовки:
 

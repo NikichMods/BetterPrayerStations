@@ -64,3 +64,6 @@ Current authorized candidate0.7.0: square/grid center membership, native old-num
 
 
 Faith0.7.0 return is partially successful but not accepted: material grants and some numeric preview transitions pass; repeat-preview text readiness is intermittent, and construction placement triggers a geometry observation exception that shuts down the probe. Subsequent approach/completion/move symptoms are after shutdown.0.7.1 corrective current-WOP geometry/deferred native text candidate is prepared; exact return/readiness in COVERAGE_RESEARCH.md, current repeat steps in FaithProbe README. No passive/balance scope added.
+
+
+Current accepted diagnostic milestone: installed Faith0.7.1 passes same-catalog repeated preview with frozen native old-plus-delta text, native wooden project/completion, square/green highlight and approach observation, Move Objects source replacement with stable count; TEST_BUILD_LOG.md owns exact evidence/limits.0.7.0 shutdown and missing-repeat-text defects are closed for this tested path. Stone completion/clean no-Move environment/paired mixed-state load remain open. No new binary or stable promotion required. Next separate design/technical block is passive station quality with exclusive contribution; resolve still-open formula inputs/negative-empty policy in DESIGN.md before a new runtime candidate.
