@@ -1,6 +1,6 @@
 # Two-grave and native zone integration research — 2026-10-23
 
-Status: research-only0.5.0 candidate, offline gates pass; live simultaneous/native-zone/closed-window return pending. DESIGN.md owns mechanics. No final prices/radius/caps or product visual work is selected here.
+Status: corrective research-only0.5.1 candidate; explicit saved A/B roles and native-open context refresh pass offline gates.0.5.0 return was incomplete with only A registered; live simultaneous/native-zone/closed-window return remains pending. DESIGN.md owns mechanics. No final prices/radius/caps or product visual work is selected here.
 
 ## Exact question and native owners
 
@@ -23,3 +23,11 @@ User requests a sample through console; it waits until native windows and floati
 Actual TwoGraves identity/order/cap/duplicate handling passes; headless native getter IL shows both positive owners and independent dormant selection, both-owner native map serialization including mixed C/L. Actual native WorldZone.GetTotalQuality executes on raw synthetic native fixtures, ignores a marked-as-ignored third object and emits its actual result once. Separate simulated-debit/native-count tests show A1/A2/B1 prices and independent restored counters. These are intentionally separate boundaries, not a synthetic replacement for the combined live zone calculation.
 
 Pending live scenario: two marked healthy graves in one native Sum zone, A C1/L1/N2 (next3), B C1/L0/N1 (next2), total cost4; closed sample -> move station so only one loses coverage -> closed sample -> restore -> closed sample -> save/menu-load both -> automatic closed sample and individual native GUI checks -> cleanup both/save. Exact steps README, frozen identity TEST_BUILD_LOG. No stable promotion or final balance acceptance.
+
+## Corrective0.5.1 — explicit saved roles and actual open context
+
+The incomplete0.5.0 return contains only SELECT1060, conversion cost1 and wreath cost2 (faith24->21,N2,next3), three passing GUI observations and context-or-coverage rejection. No SELECT B, closed ZONE, load or post-purchase save. User exited without saving. Private runtime-incomplete.log SHA256 fa56282014a4c10cad53302aa4c9b9b5288e79cf8f7dc485698d1c3ee6b71831. No evidence of cross-grave price leakage; console retained selected A after another native grave opened, and guard prevented payment. Exact reason B was never registered is not logged.
+
+0.5.1 adds explicit assign-opened-as-A/B buttons and optional grave-owned diagnostic slot, persistent across native serialization. Occupied role/two roles for one grave reject without mutation; legacy unlabelled marks need explicit assignment. Native Open uses actual owner, refreshes quote and purchase enablement, logs OPEN_CONTEXT, cancels pending old-owner work. Unregistered/unlabelled opened grave cannot buy. Role is cleared with improvements, never travels with body. No payment backend or zone formula change; no production visual/balance scope.
+
+Offline role tests pass including ID-order independence, native map role/count reload, refusal invariance, duplicate/invalid roles and cleanup. Unity UI/open/load and simultaneous zone integration remain unaccepted. Repeat the README two-role setup and independent prices first, then previously unperformed closed-zone/move/load steps. No save-file editing or faith refund.

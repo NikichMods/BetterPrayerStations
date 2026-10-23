@@ -19,7 +19,7 @@ namespace NikichMods.BPSFaithProbe
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string Id = "nikichmods.bps.faithprobe";
-        public const string Version = "0.5.0";
+        public const string Version = "0.5.1";
         const string Host = "e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const int Limit = SavedFaithState.Limit; // Diagnostic UI/object-count bound, not a product cap.
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
@@ -38,7 +38,8 @@ namespace NikichMods.BPSFaithProbe
         readonly HashSet<long> zoneInputOwners=new HashSet<long>();
         FieldInfo zoneOwner;
         int shownFaith;
-        string pairSummary="";
+        string pairSummary="",editingSummary="",aButton="Назначить открытую могилу как A",bButton="Назначить открытую могилу как B";
+        bool editingAssigned;
         int coverageTier=-1, coveringCount; long nearestStation; float nearestCells, nextCoveragePoll;
         bool ActiveFor(WorldGameObject grave)
         {long id;float distance;int count;return effects && coverage.Evaluate(grave,out id,out distance,out count)>0;}
@@ -328,6 +329,8 @@ namespace NikichMods.BPSFaithProbe
         {
             if(target==null || target.data==null){shownConversions=shownWreaths=0;return;}
             var saved=SavedFaithState.Read(target.data);shownConversions=saved.Conversions;shownWreaths=saved.Wreaths;
+            int slot=TwoGraves.SlotOf(target);editingAssigned=graves.Contains(target) && slot>0;
+            editingSummary="Открыта №"+target.unique_id+": "+(editingAssigned?(slot==1?"могила A":"могила B"):"не назначена A/B — сначала назначьте");
             RefreshSummary();
             if(Current())shownFaith=FaithPurchase.Count(MainGame.me.player.data);
         }
@@ -335,8 +338,11 @@ namespace NikichMods.BPSFaithProbe
         {
             var summary=new StringBuilder();
             foreach(var g in graves.Items)
-            {var v=SavedFaithState.Read(g.data);summary.Append("№").Append(g.unique_id).Append(" C").Append(v.Conversions).Append(" / L").Append(v.Wreaths).Append(" / N").Append(v.Actions).Append("; цена ").Append(FaithPurchase.Price(v.Actions)).Append(Bound(g)&&ActiveFor(g)?"; активно":"; неактивно").Append(ReferenceEquals(g,target)?" — выбрана":"").AppendLine();}
+            {var v=SavedFaithState.Read(g.data);summary.Append(TwoGraves.SlotOf(g)==1?"A №":TwoGraves.SlotOf(g)==2?"B №":"Без роли №").Append(g.unique_id).Append(" C").Append(v.Conversions).Append(" / L").Append(v.Wreaths).Append(" / N").Append(v.Actions).Append("; цена ").Append(FaithPurchase.Price(v.Actions)).Append(Bound(g)&&ActiveFor(g)?"; активно":"; неактивно").Append(ReferenceEquals(g,target)?" — выбрана":"").AppendLine();}
             pairSummary=summary.ToString();
+            var a=graves.ForSlot(1);var b=graves.ForSlot(2);
+            aButton=a==null?"Назначить открытую могилу как A":"Подтвердить A №"+a.unique_id;
+            bButton=b==null?"Назначить открытую могилу как B":"Подтвердить B №"+b.unique_id;
         }
         void Recover()
         {
@@ -360,9 +366,9 @@ namespace NikichMods.BPSFaithProbe
             zoneCheckRequested=graves.Items.Count==2;
             status="Вложения восстановлены после загрузки. Откройте могилу или запишите этап после эксгумации.";
         }
-        void Select()
+        void Select(int slot)
         {
-            if(!SessionReady() || !Trackable(opened) || opened.components.craft.is_crafting){status="Откройте обычную могилу без текущей работы.";return;}
+            if(!SessionReady() || !Trackable(opened) || gui==null || !gui.gameObject.activeInHierarchy || !ReferenceEquals(graveField.GetValue(gui),opened) || opened.components.craft.is_crafting){status="Откройте обычную могилу без текущей работы.";return;}
             if(!Current()){Recover();status="Дождитесь восстановления и повторите выбор.";return;}
             if(!graves.Contains(opened) && graves.Items.Count>=2){status="Две могилы уже отмечены; сначала завершите тест очисткой обеих.";return;}
             if(graves.Items.Count>0)
@@ -370,12 +376,12 @@ namespace NikichMods.BPSFaithProbe
                 var z=zoneOwner.GetValue(graves.Items[0]) as WorldZone;
                 if(z==null || !ReferenceEquals(z,zoneOwner.GetValue(opened))){status="Выберите вторую могилу в той же нативной зоне кладбища.";return;}
             }
-            graves.Add(opened);
+            var saved=SavedFaithState.Read(opened.data);
+            if(!graves.Assign(opened,slot)){status="Эта роль уже занята другой могилой либо открытая могила уже назначена другой роли. Откройте нужный номер; назначение не изменено.";Log("ASSIGN_REJECT opened="+opened.unique_id+" requested_slot="+slot);return;}
             target=opened;body=target.GetBodyFromInventory(true);
-            var saved=SavedFaithState.Read(target.data);
             SavedFaithState.Write(target.data,saved.Conversions,saved.Wreaths);UpdateDisplay();
             effects=true;PollCoverage(true);
-            Log("SELECT target="+target.unique_id+" conversions="+conversions+" wreaths="+wreaths+" "+Raw());
+            Log("SELECT target="+target.unique_id+" slot="+slot+" conversions="+conversions+" wreaths="+wreaths+" "+Raw());
             if(Bound(target))Measure("select",delegate{});else Capture("select-empty");
         }
         void CaptureOne(WorldGameObject grave,string role)
@@ -384,7 +390,7 @@ namespace NikichMods.BPSFaithProbe
             var saved=SavedFaithState.Read(grave.data);
             bool was=effects;float native;try{effects=false;native=grave.quality;}finally{effects=was;}
             float actual=grave.quality;
-            Log("CHECKPOINT n="+checkpoint+" role="+role+" target="+grave.unique_id+" object="+grave.obj_id+" conversions="+saved.Conversions+" wreaths="+saved.Wreaths+" actions="+saved.Actions+" active="+ActiveFor(grave)+" native="+native.ToString("R",Inv)+" effective="+actual.ToString("R",Inv)+" faith="+FaithPurchase.Count(MainGame.me.player.data)+" next_price="+FaithPurchase.Price(saved.Actions)+" "+RawBody(grave.GetBodyFromInventory(true)));
+            Log("CHECKPOINT n="+checkpoint+" role="+role+" target="+grave.unique_id+" object="+grave.obj_id+" slot="+TwoGraves.SlotOf(grave)+" conversions="+saved.Conversions+" wreaths="+saved.Wreaths+" actions="+saved.Actions+" active="+ActiveFor(grave)+" native="+native.ToString("R",Inv)+" effective="+actual.ToString("R",Inv)+" faith="+FaithPurchase.Count(MainGame.me.player.data)+" next_price="+FaithPurchase.Price(saved.Actions)+" "+RawBody(grave.GetBodyFromInventory(true)));
         }
         void Capture(string reason)
         {
@@ -395,7 +401,7 @@ namespace NikichMods.BPSFaithProbe
         }
         void Buy(bool conversion,int quoteActions,int quoteCost,bool shortage=false)
         {
-            if(!Bound(target) || gui==null || !gui.gameObject.activeInHierarchy || !ReferenceEquals(graveField.GetValue(gui),target) || !Active || MainGame.me.gui_elements.build_mode_gui.is_shown || FloatingWorldGameObject.IsFloating())
+            if(!Bound(target) || TwoGraves.SlotOf(target)==0 || gui==null || !gui.gameObject.activeInHierarchy || !ReferenceEquals(graveField.GetValue(gui),target) || !Active || MainGame.me.gui_elements.build_mode_gui.is_shown || FloatingWorldGameObject.IsFloating())
             {status="Покупка не выполнена: откройте выбранную могилу под готовой молельней вне режима строительства.";Log("PURCHASE_REJECT reason=context-or-coverage");return;}
             if(conversion && !shortage)
             {
@@ -426,7 +432,7 @@ namespace NikichMods.BPSFaithProbe
         {
             var b=new StringBuilder();
             foreach(var g in graves.Items)if(!ReferenceEquals(g,target))
-                b.Append(g.unique_id).Append(':').Append(g.data.GetParam(SavedFaithState.SchemaKey,0)).Append(':').Append(g.data.GetParam(SavedFaithState.ConversionKey,0)).Append(':').Append(g.data.GetParam(SavedFaithState.WreathKey,0)).Append(':').Append(GraveHash(g));
+                b.Append(g.unique_id).Append(':').Append(g.data.GetParam(SavedFaithState.SchemaKey,0)).Append(':').Append(g.data.GetParam(SavedFaithState.ConversionKey,0)).Append(':').Append(g.data.GetParam(SavedFaithState.WreathKey,0)).Append(':').Append(g.data.GetParam(SavedFaithState.SlotKey,0)).Append(GraveHash(g));
             return b.ToString();
         }
         string GraveHash(){return GraveHash(target);}
@@ -566,7 +572,7 @@ namespace NikichMods.BPSFaithProbe
             if (wasReady && Current() && gui != null && gui.gameObject.activeInHierarchy)
                 Queue(delegate { Log("ROLLBACK_BEGIN"); redraw.Invoke(gui, null); Log("ROLLBACK_END fallback=vanilla-ui"); });
         }
-        void ClearAll(){foreach(var g in graves.Items)SavedFaithState.Clear(g.data);zoneCheckRequested=false;}
+        void ClearAll(){foreach(var g in graves.Items){Log("CLEAR_OWNER target="+g.unique_id+" slot="+TwoGraves.SlotOf(g));SavedFaithState.Clear(g.data);}zoneCheckRequested=false;editingAssigned=false;editingSummary="Тестовые назначения очищены";aButton="Назначить открытую могилу как A";bButton="Назначить открытую могилу как B";}
         void Cleanup()
         {
             if(!Current() || target==null || target.data==null){status="Нет текущей тестовой могилы.";return;}
@@ -593,14 +599,16 @@ namespace NikichMods.BPSFaithProbe
             scroll = GUILayout.BeginScrollView(scroll);
             GUILayout.Label("Пробник СПИСЫВАЕТ веру у героя и из его сумок. Тестовая цена: N+1. F8 — скрыть/показать.", label);
             GUILayout.Label(status, label);
+            GUILayout.Label(editingSummary,label);
             GUILayout.Label("Превращения: " + shownConversions + "; доп. венки: " + shownWreaths + "; эффекты: " + (coverageTier>0 ? "покрытие есть" : "вне покрытия"), label);
             GUILayout.Label("Молельни: "+coverage.Count+"; покрывают: "+coveringCount+"; уровень: "+coverageTier+"; ближайшая №"+nearestStation+" на "+(float.IsPositiveInfinity(nearestCells)?"—":nearestCells.ToString("0.00",Inv))+" кл.",label);
             GUILayout.Label("Вера: "+shownFaith+"; общих действий: "+(shownConversions+shownWreaths)+"; следующая цена: "+FaithPurchase.Price(shownConversions+shownWreaths)+" веры (тест).",label);
             GUILayout.Label(pairSummary,label);
             bool previous = GUI.enabled;
             GUI.enabled = ready && SessionReady() && pending == null;
-            if (GUILayout.Button("Отметить / выбрать открытую могилу (до двух)", button)) Queue(Select);
-            GUI.enabled = ready && Current() && target != null && pending == null;
+            if(GUILayout.Button(aButton,button))Queue(delegate{Select(1);});
+            if(GUILayout.Button(bButton,button))Queue(delegate{Select(2);});
+            GUI.enabled = ready && Current() && editingAssigned && target != null && gui!=null && gui.gameObject.activeInHierarchy && pending == null;
             if (GUILayout.Button("Купить превращение за "+FaithPurchase.Price(shownConversions+shownWreaths)+" веры",button))QueueBuy(true);
             if (GUILayout.Button("Купить венок за "+FaithPurchase.Price(shownConversions+shownWreaths)+" веры",button))QueueBuy(false);
             if (GUILayout.Button("Проверить нехватку: цена = весь запас + 1",button))QueueBuy(false,true);
@@ -617,13 +625,25 @@ namespace NikichMods.BPSFaithProbe
         static void Opened(GraveGUI __instance, WorldGameObject __0)
         {
             var p = self; if (p == null || !p.ready) return;
-            if (ReferenceEquals(p.graveField.GetValue(__instance), __0)) { p.gui = __instance; p.opened = __0; }
+            if(!ReferenceEquals(p.graveField.GetValue(__instance),__0))return;
+            p.gui=__instance;p.opened=__0;
+            if(!p.Current())return;
+            try
+            {
+                if(!ReferenceEquals(p.target,__0) && p.pending!=null){p.pending=null;p.Log("CONTEXT_CANCEL pending=discarded reason=open-owner-changed");}
+                p.target=__0;p.body=__0.GetBodyFromInventory(true);p.UpdateDisplay();
+                int count;long nearest;float distance;
+                p.coverageTier=p.coverage.Evaluate(__0,out nearest,out distance,out count);p.coveringCount=count;p.nearestStation=nearest;p.nearestCells=distance;
+                p.Log("OPEN_CONTEXT target="+__0.unique_id+" slot="+TwoGraves.SlotOf(__0)+" registered="+p.graves.Contains(__0)+" actions="+(p.shownConversions+p.shownWreaths)+" next_price="+FaithPurchase.Price(p.shownConversions+p.shownWreaths));
+                p.status=p.editingAssigned?"Контекст покупки переключён на открытую могилу.":"Открытая могила ещё не назначена: нажмите кнопку A или B. Покупки отключены.";
+            }
+            catch(Exception ex){p.Fail(ex);}
         }
         static void Loading()
         {
             var p=self;if(p==null)return;
             if(p.target!=null)p.Log("RESET reason=load saved_grave_params=retained");
-            p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;p.coverage.Clear();p.graves.Clear();p.previousTier.Clear();p.previousCovering.Clear();p.zoneCheckRequested=false;p.zoneSampling=false;p.pairSummary="";p.coverageTier=-1;p.coveringCount=0;p.nearestStation=0;p.nearestCells=float.PositiveInfinity;
+            p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;p.coverage.Clear();p.graves.Clear();p.previousTier.Clear();p.previousCovering.Clear();p.zoneCheckRequested=false;p.zoneSampling=false;p.pairSummary="";p.editingSummary="";p.editingAssigned=false;p.aButton="Назначить открытую могилу как A";p.bButton="Назначить открытую могилу как B";p.coverageTier=-1;p.coveringCount=0;p.nearestStation=0;p.nearestCells=float.PositiveInfinity;
         }
         static void Started()
         {

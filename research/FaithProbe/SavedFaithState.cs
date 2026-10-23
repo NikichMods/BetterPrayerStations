@@ -8,6 +8,7 @@ namespace NikichMods.BPSFaithProbe
     {
         public const string SchemaKey = "nikichmods.bps.faith_probe.schema";
         public const string ConversionKey = "nikichmods.bps.faith_probe.conversions";
+        public const string SlotKey = "nikichmods.bps.faith_probe.slot";
         public const string WreathKey = "nikichmods.bps.faith_probe.wreaths";
         public const int Limit = 12;
         internal struct Value
@@ -22,7 +23,7 @@ namespace NikichMods.BPSFaithProbe
                 throw new InvalidOperationException("Invalid diagnostic investment count");
             return (int)value;
         }
-        public static bool IsOwned(string name) { return name == SchemaKey || name == ConversionKey || name == WreathKey; }
+        public static bool IsOwned(string name) { return name == SchemaKey || name == ConversionKey || name == WreathKey || name == SlotKey; }
         public static Value Read(Item owner)
         {
             float schema = owner.GetParam(SchemaKey, 0f);
@@ -39,7 +40,7 @@ namespace NikichMods.BPSFaithProbe
         }
         public static void Clear(Item owner)
         {
-            owner.SetParam(ConversionKey,0f); owner.SetParam(WreathKey,0f); owner.SetParam(SchemaKey,0f);
+            owner.SetParam(ConversionKey,0f); owner.SetParam(WreathKey,0f); owner.SetParam(SchemaKey,0f);owner.SetParam(SlotKey,0f);
         }
         public static void Convert(ref int red, ref int white, ref int available, float durability, int count)
         {

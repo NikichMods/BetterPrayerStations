@@ -161,12 +161,36 @@ static class LifecycleTests
         Bind(records[0].item);Bind(records[1].item);
         Check(!ReferenceEquals(records[0].item,a.data),"Native restore reused original Item reference");
         Check(records[0].obj_id==a.obj_id && records[1].obj_id==b.obj_id,"Native object-state IDs lost");
-        var ga=Grave(records[0].item);var gb=Grave(records[1].item);ga.obj_id=records[0].obj_id;gb.obj_id=records[1].obj_id;return new[]{ga,gb};
+        var ga=Grave(records[0].item);var gb=Grave(records[1].item);ga.obj_id=records[0].obj_id;gb.obj_id=records[1].obj_id;ga.unique_id=records[0].unique_id;gb.unique_id=records[1].unique_id;return new[]{ga,gb};
     }
     static void NoExport(Item body)
     {
         Check(Count(body,Schema)==0 && Count(body,C)==0 && Count(body,L)==0,"Grave parameters exported to body/item");
         foreach(var child in body.inventory)NoExport(child);
+    }
+    static void ExplicitRoles()
+    {
+        const string slotKey="nikichmods.bps.faith_probe.slot";
+        var type=probe.GetType("NikichMods.BPSFaithProbe.TwoGraves",true);
+        var set=Activator.CreateInstance(type);var assign=type.GetMethod("Assign");var find=type.GetMethod("ForSlot");var add=type.GetMethod("Add");
+        var a=Fixture(3,3,1f,6f);a.unique_id=202;var b=Fixture(3,3,1f,6f);b.unique_id=101;
+        Write(a.data,1,1);Write(b.data,0,0);
+        Check((bool)assign.Invoke(set,new object[]{a,1}) && (bool)assign.Invoke(set,new object[]{b,2}),"Explicit role assignment failed");
+        Check(ReferenceEquals(find.Invoke(set,new object[]{1}),a) && ReferenceEquals(find.Invoke(set,new object[]{2}),b),"Role follows sorted ID instead of assignment");
+        string beforeA=Fingerprint(a.data),beforeB=Fingerprint(b.data);
+        Check(!(bool)assign.Invoke(set,new object[]{b,1}) && !(bool)assign.Invoke(set,new object[]{a,2}),"Occupied role/same grave two roles accepted");
+        Check(beforeA==Fingerprint(a.data) && beforeB==Fingerprint(b.data),"Rejected role assignment mutated saved data");
+        Check((bool)assign.Invoke(set,new object[]{a,1}),"Same owner role confirmation rejected");
+        var pair=Roundtrip(a,b);a=pair[0];b=pair[1];set=Activator.CreateInstance(type);add.Invoke(set,new object[]{b});add.Invoke(set,new object[]{a});
+        Check(ReferenceEquals(find.Invoke(set,new object[]{1}),a) && ReferenceEquals(find.Invoke(set,new object[]{2}),b),"Native map reload lost explicit roles");
+        Investment(a.data,1,1);Investment(b.data,0,0);
+        a.data.SetParam(slotKey,2f);bool refused=false;
+        try{find.Invoke(set,new object[]{2});}catch(TargetInvocationException){refused=true;}Check(refused,"Duplicate persisted roles accepted");
+        a.data.SetParam(slotKey,3f);refused=false;
+        try{find.Invoke(set,new object[]{1});}catch(TargetInvocationException){refused=true;}Check(refused,"Invalid persisted role accepted");
+        state.GetMethod("Clear",BindingFlags.Public|BindingFlags.Static).Invoke(null,new object[]{a.data});
+        Check(a.data.GetParam(slotKey,0f)==0f,"Cleanup retained diagnostic role");
+        Console.WriteLine("PASS explicit A/B roles independent of ID order; occupied-role/two-role refusal is read-only; native map serialization preserves roles and independent C/L; invalid/duplicate roles reject; cleanup clears role. Actual Unity button/open-context behavior remains a runtime test.");
     }
     static void TwoOwnerAndNativeZone()
     {
@@ -271,6 +295,7 @@ static class LifecycleTests
         Write(a.data,1,1);a.data.SetParam(Schema,2);bool unknown=false;
         try{Backend("Read").Invoke(null,new object[]{a.data});}catch(TargetInvocationException ex){unknown=ex.InnerException is InvalidOperationException;}
         Check(unknown,"Unknown saved schema accepted");
+        ExplicitRoles();
         TwoOwnerAndNativeZone();
         Console.WriteLine("PASS native binary map serialization + synthetic inventory lifecycle: occupied/empty/replaced grave investment and IDs, original raw anatomy, no cross-grave export, red-bound/decay recalculation, shared action sum, positive-state pruning, cleanup roundtrip and unrelated data, invalid state rejection.");
         Console.WriteLine("LIMIT synthetic definitions/owners and list relocation, explicit headless authorization; actual getter IL and shared backend executed, but no Unity scene, native exhumation/SetObject/scene restore, live context recovery, UI or runtime save acceptance.");

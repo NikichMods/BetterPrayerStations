@@ -17,6 +17,26 @@ namespace NikichMods.BPSFaithProbe
             foreach(var item in Items)if(item.unique_id==grave.unique_id)throw new InvalidOperationException("Duplicate live grave identity");
             Items.Add(grave);Items.Sort((a,b)=>a.unique_id.CompareTo(b.unique_id));
         }
+        public static int SlotOf(WorldGameObject grave)
+        {
+            float slot=grave.data.GetParam(SavedFaithState.SlotKey,0f);
+            if(slot!=0f && slot!=1f && slot!=2f)throw new InvalidOperationException("Unknown diagnostic grave slot");
+            return (int)slot;
+        }
+        public WorldGameObject ForSlot(int slot)
+        {
+            WorldGameObject result=null;
+            foreach(var g in Items)if(SlotOf(g)==slot)
+            {if(!ReferenceEquals(result,null))throw new InvalidOperationException("Duplicate saved diagnostic slot");result=g;}
+            return result;
+        }
+        public bool Assign(WorldGameObject grave,int slot)
+        {
+            if(slot!=1 && slot!=2)throw new ArgumentOutOfRangeException("slot");
+            var existing=ForSlot(slot);int previous=SlotOf(grave);
+            if((!ReferenceEquals(existing,null) && !ReferenceEquals(existing,grave)) || (previous!=0 && previous!=slot))return false;
+            Add(grave);grave.data.SetParam(SavedFaithState.SlotKey,slot);return true;
+        }
         public void Clear(){Items.Clear();}
     }
 }
