@@ -187,3 +187,22 @@ Accepted boundary: one healthy occupied grave, effective-only conversion/wreath 
 Scope: diagnostic schema/C/L on root grave Item, derived N=C+L, dynamic current body, single-target one-time post-start recovery, passive source/destination checkpoints and saved cleanup. Three owned root fields are excluded from immediate per-action physical hashes; recursive body/organ/decoration parameters and currency remain included. Raw body/part logs explicitly show whether diagnostic fields leaked. No faith payment/radius; session activation defaults on after load. Format/count limits are diagnostic, not settled production design.
 
 Headless actual-getter execution uses synthetic owners/definitions and explicit test authorization; list relocation is not actual exhumation/SetObject or scene restoration. Remaining live test: C3/L1 on A -> ordinary exhume/rebury body into unmarked B -> checkpoint and load with A empty -> different body in A, checkpoint and load -> cleanup and ordinary save. Full steps: research/FaithProbe/README.md. Prior accepted0.1.1 and immutable older artifacts remain intact; no main promotion or production release.
+
+### Installed Faith0.2.0 return — bounded saved investment PASS
+
+User confirms native body transfer, load with original grave empty, replacement body burial and second load, with expected visuals. READY identifies0.2.0 and expected host; installed SHA-256 matches frozen f0d81fada80dc02a940f0f08d21c3ecc6b453ab9dac4206e73124b7df78620b2. Private log snapshot SHA-256:16c8f1bba3dc991f84a7dc6b7f6ef25115879cd1dfac2c55b56800f0ee24ea73.
+
+Five REDRAW_END and five OBSERVE records pass with unchanged measured physical hash f32d0f340f0d658e55e3d76529ec3d16d4b33c03ce735036410fc731a64748d6. Initial native rating3 progresses4/5/6 for C1/2/3; L1 gives7 central wreaths while white-capped rating remains6. Raw original body3/3/3 and durability0.9621399 remain unchanged. No FAILED/ROLLBACK/SKIPPED or failed observation occurs.
+
+Two automatic post-load checkpoints recover the same grave unique_id47567 and C3/L1/N4:
+
+| Loaded state | Native/effective rating | Direct body evidence |
+| --- | --- | --- |
+|grave_empty | -2/-2 | body=none; no bonus or conjured body |
+|grave_ground with replacement | -4/0 | raw4red/3white/0available, durability0.305293947; original parts logged; body_probe and every part_probe0,0,0 |
+
+The replacement exercises live decay below90%: three effective conversions leave1red/6white and native decay permits1available white. Actual native effective rating0 is observed, not a healthy-body6 expectation. C/L and derived N survive both boundaries. Neither checkpoint is a post-replacement GUI OBSERVE: central diagram after replacement has user visual confirmation, while automated slot/bar assertions cover the initial five redraws only. No manual CHECKPOINT/other-opened record was emitted; destination grave ID/rating and the transferred original body's complete post-transfer parameters are not instrumented. Therefore live cross-grave non-export has user visual support plus prior source/offline evidence, not a captured destination checkpoint. Do not claim every old/new-body parameter or currency is invariant across ordinary native gameplay.
+
+CLEANUP_DONE grave_params=cleared save_required=true ui_refresh=false occurs, followed by native SaveGame/ToBinary/serialization completion in the same snapshot. No post-cleanup reload is recorded. Existing host/resource/other-plugin warnings/errors are present with unassigned ownership; absence of probe failure is not a globally error-free-session claim.
+
+Accepted boundary: stored grave investment and shared derived count through native empty/replacement state transitions and menu-load, native empty result, replacement-body/decay calculation, user-confirmed visuals and saved cleanup. No need to repeat this whole sequence. Remaining live evidence gaps: instrumented destination non-export and automated replacement GUI observation if needed by a later slice; actual payment/coverage, movement, zone/hint refresh, production schema/migration and broader compatibility remain open. No production release/main promotion follows.
