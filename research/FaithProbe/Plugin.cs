@@ -19,7 +19,7 @@ namespace NikichMods.BPSFaithProbe
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string Id = "nikichmods.bps.faithprobe";
-        public const string Version = "0.6.0";
+        public const string Version = "0.6.1";
         const string Host = "e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const int Limit = SavedFaithState.Limit; // Diagnostic UI/object-count bound, not a product cap.
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
@@ -30,6 +30,7 @@ namespace NikichMods.BPSFaithProbe
         readonly PrayerCoverage coverage=new PrayerCoverage();
         readonly MovePreviewOwner movePreview=new MovePreviewOwner();
         readonly RadiusOverlay radiusOverlay=new RadiusOverlay();
+        readonly Dictionary<long,float> badgeQuality=new Dictionary<long,float>();
         bool showRadius=true,previewLogged;
         int previewSerial,lastBuiltCount=-1;
         string previewSummary="Предпросмотр: нет";
@@ -158,8 +159,27 @@ namespace NikichMods.BPSFaithProbe
                 previewSummary=coverage.HasPreview?(coverage.Owners.Source==null?"Предпросмотр: новая молельня (не построена)":"Предпросмотр: перенос одной молельни; старая позиция исключена"):"Предпросмотр: нет";
                 if(lastBuiltCount!=coverage.Count){lastBuiltCount=coverage.Count;Log("STATION_COUNT built="+lastBuiltCount+" preview="+coverage.HasPreview);}
                 radiusOverlay.Update(coverage,showRadius);
+                foreach(var grave in graves.Items)RefreshQualityBadge(grave);
             }
             catch(Exception ex){Fail(ex);}
+        }
+        void RefreshQualityBadge(WorldGameObject grave)
+        {
+            if(!Trackable(grave) || !grave.show_quality_hint){if(grave!=null)badgeQuality.Remove(grave.unique_id);return;}
+            float value=grave.quality,previous;
+            if(badgeQuality.TryGetValue(grave.unique_id,out previous) && previous==value)return;
+            string before=GraveHash(grave);var data=grave.GetQualityWidgetData();
+            if(data==null)return;
+            // Update only native quality data. Preserve interaction/hint ownership and visibility.
+            grave.SetBubbleWidgetData(data,data.widget_id);grave.bubble.Redraw();
+            var view=grave.bubble.GetBubbleGUI();if(view!=null)view.RefreshAlign(grave);
+            bool retained=false;
+            foreach(var row in grave.bubble.data_list)
+            {var text=row as BubbleWidgetTextData;if(text!=null && text.widget_id==data.widget_id && text.text==data.text)retained=true;}
+            bool intact=before==GraveHash(grave);
+            Log("BADGE_REFRESH target="+grave.unique_id+" quality="+value.ToString("R",Inv)+" native_text="+data.text.Replace("\n","|")+" retained="+retained+" physical_unchanged="+intact+" preview="+coverage.HasPreview+" floating="+FloatingWorldGameObject.IsFloating());
+            if(!retained || !intact)throw new InvalidOperationException("Native quality badge refresh changed physical state or lost native data");
+            badgeQuality[grave.unique_id]=value;
         }
         void SetupMoveTest()
         {
@@ -342,7 +362,7 @@ namespace NikichMods.BPSFaithProbe
                 if(zoneOwner==null || zoneOwner.FieldType!=typeof(WorldZone))throw new MissingFieldException("Native zone ownership/members");
                 Exact(typeof(WorldZone),"GetTotalQuality",typeof(float));Exact(typeof(WorldZone),"GetZoneWGOs",typeof(List<WorldGameObject>));
                 redraw = Exact(typeof(GraveGUI), "Redraw", typeof(void));
-                movePreview.Initialize();var targets = Targets();
+                var targets = Targets();
                 harmony = new Harmony(Id);
                 harmony.Patch(targets[0], transpiler: new HarmonyMethod(Own("QualityPatch")));
                 harmony.Patch(targets[1], transpiler: new HarmonyMethod(Own("UIPatch")));
@@ -356,7 +376,7 @@ namespace NikichMods.BPSFaithProbe
                 harmony.Patch(create,postfix:new HarmonyMethod(Own("PreviewCreated")));
                 harmony.Patch(stop,prefix:new HarmonyMethod(Own("PreviewStopping")),postfix:new HarmonyMethod(Own("PreviewStopped")));
                 ready = true;
-                Log("PREVIEW_ADAPTER "+movePreview.Identity);
+
                 Log("READY version=" + Version + " host=" + hash + " scope=two-graves selection=editing-only zone=explicit-closed-window-sample persistence=grave-C-L-schema-slot payment=player-and-bags native-debit=true diagnostic_price=N+1 coverage=committed-with-single-preview-replacement radius_cells=3 metric=xy-origin-circle poll_seconds=0.25");
             }
             catch (Exception ex)
@@ -434,7 +454,8 @@ namespace NikichMods.BPSFaithProbe
         void Recover()
         {
             if(!ready || !SessionReady())return;
-            session=MainGame.me.save;target=null;body=null;coverage.Clear();coverageTier=-1;graves.Clear();previousTier.Clear();previousCovering.Clear();
+            movePreview.Initialize();Log("PREVIEW_ADAPTER phase=game-ready "+movePreview.Identity);
+            badgeQuality.Clear();session=MainGame.me.save;target=null;body=null;coverage.Clear();coverageTier=-1;graves.Clear();previousTier.Clear();previousCovering.Clear();
             foreach(var grave in WorldMap.objs)
             {
                 if(grave==null || grave.data==null)continue;
@@ -659,7 +680,7 @@ namespace NikichMods.BPSFaithProbe
             if (wasReady && Current() && gui != null && gui.gameObject.activeInHierarchy)
                 Queue(delegate { Log("ROLLBACK_BEGIN"); redraw.Invoke(gui, null); Log("ROLLBACK_END fallback=vanilla-ui"); });
         }
-        void ClearAll(){foreach(var g in graves.Items){Log("CLEAR_OWNER target="+g.unique_id+" slot="+TwoGraves.SlotOf(g));SavedFaithState.Clear(g.data);}zoneCheckRequested=false;editingAssigned=false;editingSummary="Тестовые назначения очищены";aButton="Назначить открытую могилу как A";bButton="Назначить открытую могилу как B";}
+        void ClearAll(){foreach(var g in graves.Items){Log("CLEAR_OWNER target="+g.unique_id+" slot="+TwoGraves.SlotOf(g));SavedFaithState.Clear(g.data);RefreshQualityBadge(g);}zoneCheckRequested=false;editingAssigned=false;editingSummary="Тестовые назначения очищены";aButton="Назначить открытую могилу как A";bButton="Назначить открытую могилу как B";}
         void Cleanup()
         {
             if(!Current() || target==null || target.data==null){status="Нет текущей тестовой могилы.";return;}
@@ -734,7 +755,7 @@ namespace NikichMods.BPSFaithProbe
         {
             var p=self;if(p==null)return;
             if(p.target!=null)p.Log("RESET reason=load saved_grave_params=retained");
-            p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;p.coverage.Clear();p.radiusOverlay.Clear();p.previewLogged=false;p.lastBuiltCount=-1;p.graves.Clear();p.previousTier.Clear();p.previousCovering.Clear();p.zoneCheckRequested=false;p.zoneSampling=false;p.pairSummary="";p.editingSummary="";p.editingAssigned=false;p.aButton="Назначить открытую могилу как A";p.bButton="Назначить открытую могилу как B";p.coverageTier=-1;p.coveringCount=0;p.nearestStation=0;p.nearestCells=float.PositiveInfinity;
+            p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;p.coverage.Clear();p.badgeQuality.Clear();p.radiusOverlay.Clear();p.previewLogged=false;p.lastBuiltCount=-1;p.graves.Clear();p.previousTier.Clear();p.previousCovering.Clear();p.zoneCheckRequested=false;p.zoneSampling=false;p.pairSummary="";p.editingSummary="";p.editingAssigned=false;p.aButton="Назначить открытую могилу как A";p.bButton="Назначить открытую могилу как B";p.coverageTier=-1;p.coveringCount=0;p.nearestStation=0;p.nearestCells=float.PositiveInfinity;
         }
         static void Started()
         {

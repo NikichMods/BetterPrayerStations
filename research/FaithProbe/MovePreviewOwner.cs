@@ -8,10 +8,11 @@ namespace NikichMods.BPSFaithProbe
     // Read-only adapter for the exact installed Move Objects0.6.0, no dependency or writes.
     internal sealed class MovePreviewOwner
     {
-        FieldInfo selected,active;
+        FieldInfo selected,active;bool initialized;
         public string Identity="absent; native construction preview only";
         public void Initialize()
         {
+            if(initialized)return;initialized=true;
             foreach(var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if(assembly.GetName().Name!="GYKMoveMod")continue;

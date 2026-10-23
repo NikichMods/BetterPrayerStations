@@ -42,3 +42,5 @@ Installed Faith0.5.1 now passes bounded A/B context/prices and three real closed
 
 
 Current candidate Faith0.6.0 isolates committed stations from one native preview and replaces moving source position; includes optional temporary radius contour/free grave setup for narrow move/cancel test. This supersedes repeating the full0.5.1 scenario. Native installed source/stop seams and exact Move Objects adapter are statically checked; live correction/visibility pending. Pair-load evidence remains open; final visuals/prices unchanged. README and COVERAGE_RESEARCH.md own current procedure/mechanism.
+
+Current corrective probe Faith0.6.1:0.6.0 confirmed stable built count and visible contours but failed moving-source replacement due early adapter lookup before Move Objects load; above-grave number also remained stale. Adapter now resolves once at game-ready; change-driven native quality-only badge refresh must be accepted during preview/confirm/cancel without menu exit. TEST_BUILD_LOG.md and current README own exact scenario; no full paid/zone replay.
