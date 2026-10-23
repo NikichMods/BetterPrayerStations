@@ -108,7 +108,7 @@ Boundaries: both physical fences are `grave_bot_stn_2`, count1/durability1. The 
 
 The overall host log is not error-free: it contains native resource/GUI/World Object not found messages, including specific missing world IDs during load. Their ownership/cause is not established by this run; the absence of probe failures does not prove universal save integrity or attribute those messages to another mod. Preserve this as a watch item if production redraw strategy or save-integrity symptoms are investigated, rather than infer causality from neighboring lines.
 
-## Faith Probe 0.1.0 — installed; native rating/diagram runtime pending
+## Faith Probe 0.1.0 — partial runtime pass; zero-red observer failure
 
 Separate research-only artifact, independently numbered from Appearance Probe. No stable release or production mechanics are accepted. User authorized one-grave conversion/wreath effects with explicit activation and no spending or station radius.
 
@@ -128,4 +128,16 @@ State: in-memory C/L counts0..12 and explicit synthetic activation on one select
 
 Requested scenario: select -> wreath alone -> reset -> one conversion -> three conversions -> excess conversion -> extra wreath -> disable/enable retained effects -> optional close/reopen same grave -> cleanup. Healthy reference example R3/W3/D6: native3, wreath-only still3, one conversion4, three conversions6, excess remains6. Body panel remains raw3/3; central diagram changes. Other body/decoration/decay states use their actual native bounds. No need to repeat cosmetic removal/exchange/load tests.
 
-Runtime status: not yet launched. Need READY, REDRAW_END physical_unchanged=True, successful OBSERVE raw_panel/chart/total/seams plus user visual judgment, toggled native restoration/reapplication and CLEANUP_DONE. No payment, coverage, saved investment, exhumation/replacement/export, construction/damage interaction, broad compatibility or final native UI acceptance follows from this candidate.
+Runtime status: installed initialization and earlier combinations passed; third conversion reached rating6 but the combined red-bar observation failed and disabled effects. Rollback and cleanup completed. Detailed bounded return follows. No payment, coverage, saved investment, exhumation/replacement/export, construction/damage interaction, broad compatibility or final native UI acceptance follows from this candidate.
+
+### Installed Faith0.1.0 return and narrow observer correction
+
+User varied test order and reports automatic return to native presentation after three conversions. Fresh log identifies exact0.1.0 READY; installed hash still matches the frozen artifact. Preserved private snapshot SHA-256: `de3bc1a51bfac8f534ef12c1a2e8f8e616a41df2c017773f4bce0e47dfe4fd88`. Do not repeat this old binary merely to enforce the originally described order.
+
+Eleven redraws all show physical_unchanged=True and the same physical hash `f32d0f340f0d658e55e3d76529ec3d16d4b33c03ce735036410fc731a64748d6`. The recursive grave/body/organ/item GameRes/currency measurement is unchanged; raw body remains3/3/3 atdurability0.9621399 and logged part skull contributions unchanged. Ten OBSERVE records pass all checks. Observed combinations: C0/L0 native3; C0/L1 decoration7, rating3; C1/L0 effective2red/4available, rating4; C1/L1 active4, dormant3, reactivated4; reset returns3; C2/L0 effective1red/5available, rating5.
+
+At n11 (C3/L0), actual native getter/label both show6; projected diagram inputs0red/6available/decoration6, observed actual_slots6/actual_wreaths6, raw_panel=True,total=True and every seam reached. chart=False then invokes FAILED, followed by ROLLBACK_BEGIN/ROLLBACK_END fallback=vanilla-ui. CLEANUP_DONE persistent_writes=0 occurs later. This is the cause of the visible automatic reset; test ordering is not an identified trigger. Excess conversion and toggle at full conversion were not reached. Overall0.1.0 acceptance is not complete.
+
+The code's remaining failed predicate is either exact bar height or bar visibility;0.1.0 logged neither separately, so the actual failing conjunct/dimension is not established. Fresh installed firstpass IL shows UIWidget.set_height clamps to virtual minHeight and may adjust through anchors; sprite minimums can depend on border/padding. Native GraveGUI.RedrawGraveInventory explicitly hides this widget atzero red before assigning height7. Requiring invisible geometry to equal7 is an unjustified observer condition, even though the specific actual height was not recorded. Corrective0.1.1 checks zero-red hidden state alone, retains positive-red geometry/state and all native count/raw/total checks, and logs every bar predicate. No production decision, effect calculation, native input rewrite or physical data path changes.
+
+Local regression checks pass hidden bars at representative coerced heights, reject visible zero-red bars, reject hidden positive-red bars and wrong visible heights, and retain all installed-IL/native-oracle gates. Mechanism choice remains justified by earlier passing cases; this is a bounded observer correction, not evidence to replace native input projection. New numbered bytes/source must be frozen as0.1.1;0.1.0 preserved.

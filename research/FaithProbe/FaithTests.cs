@@ -90,6 +90,15 @@ static class FaithTests
         foreach (var i in labelled) if (i.labels.Contains(testLabel)) { Assert(i.opcode == OpCodes.Ldarg_0,"Label skips inserted owner argument"); moved = true; }
         Assert(moved && marked.labels.Contains(testLabel),"Source label metadata lost/mutated");
         Console.WriteLine("PASS exact native targets and actual installed-method IL rewrite: only grave inputs projected; generic branch, native floor/min and physical item-card calls retained; changed shapes rejected; branch label preserved.");
+        var bar = Own("RedBarMatches");
+        foreach (int hiddenHeight in new[] {2,7,8,12,46})
+            Assert((bool)bar.Invoke(null,new object[]{0,hiddenHeight,false}),"Invisible zero-red bar rejected because of meaningless height");
+        Assert(!(bool)bar.Invoke(null,new object[]{0,7,true}),"Visible zero-red bar accepted");
+        Assert((bool)bar.Invoke(null,new object[]{1,20,true}),"Correct one-red bar rejected");
+        Assert((bool)bar.Invoke(null,new object[]{3,46,true}),"Correct three-red bar rejected");
+        Assert(!(bool)bar.Invoke(null,new object[]{1,20,false}),"Missing visible red bar accepted");
+        Assert(!(bool)bar.Invoke(null,new object[]{1,7,true}),"Wrong visible bar geometry accepted");
+        Console.WriteLine("PASS native red-bar observation contract: zero red requires hidden state, ignores hidden geometry; positive red requires visible correct-height bar.");
         var convert = Own("ConvertSkulls"); int cases = 0;
         foreach (float durability in new[] {1f,.97f,.9001f,.9f,.8999f,.8f,.01f,0f})
         foreach (var pair in new[] {new[]{3,3},new[]{0,6},new[]{7,0},new[]{1,11},new[]{-2,-1}})

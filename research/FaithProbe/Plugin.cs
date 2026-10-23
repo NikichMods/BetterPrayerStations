@@ -19,7 +19,7 @@ namespace NikichMods.BPSFaithProbe
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string Id = "nikichmods.bps.faithprobe";
-        public const string Version = "0.1.0";
+        public const string Version = "0.1.1";
         const string Host = "e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const int Limit = 12; // Diagnostic UI/object-count bound, not a product cap.
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
@@ -307,6 +307,12 @@ namespace NikichMods.BPSFaithProbe
                 if (child.gameObject != first && child.gameObject != second && child.gameObject.activeSelf) count++;
             return count;
         }
+        internal static bool RedBarMatches(int red, int height, bool visible)
+        {
+            // Native GraveGUI hides this widget at zero red. NGUI can coerce height
+            // through sprite minimums/anchors; invisible height has no displayed meaning.
+            return visible == (red > 0) && (red == 0 || height == 7 + 13 * red);
+        }
         void Observe(string reason, float rating)
         {
             if (!Bound(target) || gui == null || !gui.gameObject.activeInHierarchy) { Log("OBSERVE_SKIPPED reason=window-or-target-changed"); return; }
@@ -314,10 +320,16 @@ namespace NikichMods.BPSFaithProbe
             int slots = Children(gui.tb_slots, gui.prefab_slot_grey, gui.prefab_slot_red);
             int decorations = Children(gui.tb_skulls, gui.prefab_w, gui.prefab_w_red);
             bool rawPanel = gui.body_panel.skull_bar.negative == red && gui.body_panel.skull_bar.positive == white && gui.body_panel.skull_bar.durability == body.durability;
-            bool chart = slots == lastRed + lastAvailable && decorations == Mathf.FloorToInt(lastDecor) && gui.red_vertical_bar.height == 7 + 13 * lastRed && gui.red_vertical_bar.gameObject.activeSelf == (lastRed > 0);
+            bool slotsOk = slots == lastRed + lastAvailable;
+            bool wreathsOk = decorations == Mathf.FloorToInt(lastDecor);
+            int barHeight = gui.red_vertical_bar.height;
+            int barMinimum = gui.red_vertical_bar.minHeight;
+            bool barVisible = gui.red_vertical_bar.gameObject.activeSelf;
+            bool barOk = RedBarMatches(lastRed, barHeight, barVisible);
+            bool chart = slotsOk && wreathsOk && barOk;
             bool total = gui.txt_grave_total_q.text == rating.ToString("0");
             bool reached = qualitySkullHits > 0 && qualityDecorHits > 0 && uiSkullHits > 0 && uiDecorHits > 0;
-            Log("OBSERVE n=" + measurement + " reason=" + reason + " target=" + target.unique_id + " rating=" + rating.ToString("R", Inv) + " label=" + gui.txt_grave_total_q.text + " effective_red=" + lastRed + " effective_available=" + lastAvailable + " decoration=" + lastDecor.ToString("R", Inv) + " actual_slots=" + slots + " actual_wreaths=" + decorations + " raw_panel=" + rawPanel + " chart=" + chart + " total=" + total + " seams=" + qualitySkullHits + "," + qualityDecorHits + "," + uiSkullHits + "," + uiDecorHits);
+            Log("OBSERVE n=" + measurement + " reason=" + reason + " target=" + target.unique_id + " rating=" + rating.ToString("R", Inv) + " label=" + gui.txt_grave_total_q.text + " effective_red=" + lastRed + " effective_available=" + lastAvailable + " decoration=" + lastDecor.ToString("R", Inv) + " actual_slots=" + slots + " actual_wreaths=" + decorations + " slots_ok=" + slotsOk + " wreaths_ok=" + wreathsOk + " red_bar_ok=" + barOk + " red_bar_height=" + barHeight + " red_bar_min=" + barMinimum + " red_bar_visible=" + barVisible + " raw_panel=" + rawPanel + " chart=" + chart + " total=" + total + " seams=" + qualitySkullHits + "," + qualityDecorHits + "," + uiSkullHits + "," + uiDecorHits);
             if (!rawPanel || !chart || !total || !reached) throw new InvalidOperationException("Native rating/diagram/raw-body observation mismatch");
             status = "Проверено: рейтинг " + rating.ToString("0") + "; шкала " + lastRed + " красн. / " + lastAvailable + " доступных бел.; венков " + Mathf.FloorToInt(lastDecor) + ". Тело без изменений.";
             if (reason == "cleanup") { target = null; body = null; conversions = wreaths = 0; Log("CLEANUP_DONE persistent_writes=0"); status = "Тест очищен. В сохранение ничего не записывалось."; }
