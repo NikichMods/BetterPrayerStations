@@ -19,7 +19,7 @@ namespace NikichMods.BPSFaithProbe
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string Id = "nikichmods.bps.faithprobe";
-        public const string Version = "0.3.0";
+        public const string Version = "0.4.0";
         const string Host = "e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const int Limit = SavedFaithState.Limit; // Diagnostic UI/object-count bound, not a product cap.
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
@@ -28,6 +28,8 @@ namespace NikichMods.BPSFaithProbe
         bool ready, effects = true, panel = true;
         int measurement, checkpoint, shownConversions, shownWreaths;
         readonly PrayerCoverage coverage=new PrayerCoverage();
+        readonly FaithPurchase purchase=new FaithPurchase();
+        int shownFaith;
         int coverageTier=-1, coveringCount; long nearestStation; float nearestCells, nextCoveragePoll;
         bool Active { get { long id;float distance;int count;return effects && coverage.Evaluate(target,out id,out distance,out count)>0; } }
         int conversions { get { return target == null || target.data == null ? 0 : SavedFaithState.Read(target.data).Conversions; } }
@@ -250,7 +252,7 @@ namespace NikichMods.BPSFaithProbe
                 harmony.Patch(targets[4], postfix: new HarmonyMethod(Own("Started")));
                 harmony.Patch(targets[5], postfix: new HarmonyMethod(Own("Added")));
                 ready = true;
-                Log("READY version=" + Version + " host=" + hash + " scope=one-grave persistence=three-grave-params payment=none coverage=real-station-positions radius_cells=3 metric=xy-origin-circle poll_seconds=0.25");
+                Log("READY version=" + Version + " host=" + hash + " scope=one-grave persistence=three-grave-params payment=player-and-bags native-debit=true diagnostic_price=N+1 coverage=real-station-positions radius_cells=3 metric=xy-origin-circle poll_seconds=0.25");
             }
             catch (Exception ex)
             {
@@ -309,6 +311,7 @@ namespace NikichMods.BPSFaithProbe
         {
             if(target==null || target.data==null){shownConversions=shownWreaths=0;return;}
             var saved=SavedFaithState.Read(target.data);shownConversions=saved.Conversions;shownWreaths=saved.Wreaths;
+            if(Current())shownFaith=FaithPurchase.Count(MainGame.me.player.data);
         }
         void Recover()
         {
@@ -327,7 +330,7 @@ namespace NikichMods.BPSFaithProbe
             }
             if(target==null){Log("RECOVER target=none");status="Откройте могилу и выберите её. Вложения теперь сохраняются у могилы.";return;}
             UpdateDisplay();
-            Log("RECOVER target="+target.unique_id+" object="+target.obj_id+" conversions="+conversions+" wreaths="+wreaths+" actions="+(conversions+wreaths));
+            Log("RECOVER target="+target.unique_id+" object="+target.obj_id+" conversions="+conversions+" wreaths="+wreaths+" actions="+(conversions+wreaths)+" faith="+shownFaith+" next_price="+FaithPurchase.Price(conversions+wreaths));
             PollCoverage(true);
             Capture("load");
             status="Вложения восстановлены после загрузки. Откройте могилу или запишите этап после эксгумации.";
@@ -350,7 +353,7 @@ namespace NikichMods.BPSFaithProbe
             var saved=SavedFaithState.Read(grave.data);
             bool was=effects;float native;try{effects=false;native=grave.quality;}finally{effects=was;}
             float actual=grave.quality;
-            Log("CHECKPOINT n="+checkpoint+" role="+role+" target="+grave.unique_id+" object="+grave.obj_id+" conversions="+saved.Conversions+" wreaths="+saved.Wreaths+" actions="+saved.Actions+" active="+(ReferenceEquals(grave,target)&&Active)+" coverage_tier="+coverageTier+" native="+native.ToString("R",Inv)+" effective="+actual.ToString("R",Inv)+" "+RawBody(grave.GetBodyFromInventory(true)));
+            Log("CHECKPOINT n="+checkpoint+" role="+role+" target="+grave.unique_id+" object="+grave.obj_id+" conversions="+saved.Conversions+" wreaths="+saved.Wreaths+" actions="+saved.Actions+" active="+(ReferenceEquals(grave,target)&&Active)+" coverage_tier="+coverageTier+" native="+native.ToString("R",Inv)+" effective="+actual.ToString("R",Inv)+" faith="+FaithPurchase.Count(MainGame.me.player.data)+" next_price="+FaithPurchase.Price(saved.Actions)+" "+RawBody(grave.GetBodyFromInventory(true)));
         }
         void Capture(string reason)
         {
@@ -359,6 +362,40 @@ namespace NikichMods.BPSFaithProbe
             CaptureOne(target,"invested");
             if(opened!=null && !ReferenceEquals(opened,target) && Trackable(opened))CaptureOne(opened,"other-opened");
             status="Этап №"+checkpoint+" записан. Вложения остаются у исходной могилы; на другую могилу тела переносятся обычными действиями игры.";
+        }
+        void Buy(bool conversion,int quoteActions,int quoteCost,bool shortage=false)
+        {
+            if(!Bound(target) || gui==null || !gui.gameObject.activeInHierarchy || !ReferenceEquals(graveField.GetValue(gui),target) || !Active || MainGame.me.gui_elements.build_mode_gui.is_shown || FloatingWorldGameObject.IsFloating())
+            {status="Покупка не выполнена: откройте выбранную могилу под готовой молельней вне режима строительства.";Log("PURCHASE_REJECT reason=context-or-coverage");return;}
+            if(conversion && !shortage)
+            {
+                int r,w,a;target.GetBodyFromInventory(true).GetBodySkulls(out r,out w,out a,false);
+                if(conversions>=r){status="Нет красных черепков для ещё одного превращения; вера не списана.";Log("PURCHASE_REJECT reason=no-eligible-red");return;}
+            }
+            string physicalBefore=GraveHash();float moneyBefore=MainGame.me.player.data.money;
+            FaithPurchase.Result result;
+            try{result=purchase.Buy(target.data,MainGame.me.player.data,conversion,quoteActions,quoteCost,shortage);}
+            catch(Exception ex)
+            {
+                Log("PURCHASE_ABORT target="+target.unique_id+" action="+(conversion?"conversion":"wreath")+" cost="+quoteCost+" faith_now="+FaithPurchase.Count(MainGame.me.player.data)+" actions_now="+(conversions+wreaths)+" containment="+ex.Message);
+                throw;
+            }
+            UpdateDisplay();
+            Log("PURCHASE target="+target.unique_id+" action="+(conversion?"conversion":"wreath")+" result="+result.Status+" quote_kind="+(shortage?"balance-plus-one":"N-plus-one")+" cost="+result.Cost+" faith_before="+result.FaithBefore+" faith_after="+result.FaithAfter+" actions_before="+result.ActionsBefore+" actions_after="+result.ActionsAfter+" conversions="+conversions+" wreaths="+wreaths+" grave_physical_unchanged="+(physicalBefore==GraveHash())+" money_unchanged="+(moneyBefore==MainGame.me.player.data.money));
+            if(physicalBefore!=GraveHash() || moneyBefore!=MainGame.me.player.data.money)throw new InvalidOperationException("Purchase changed physical grave or money");
+            if(result.Status=="committed")Measure("purchase-"+(conversion?"conversion":"wreath"),delegate{});
+            else status="Покупка не выполнена: "+result.Status+". Вера и общий счётчик не изменены.";
+        }
+        void QueueBuy(bool conversion,bool shortage=false)
+        {
+            int actions=shownConversions+shownWreaths;
+            int price=shortage?checked(FaithPurchase.Count(MainGame.me.player.data)+1):FaithPurchase.Price(actions);
+            Queue(delegate{Buy(conversion,actions,price,shortage);});
+        }
+        string GraveHash()
+        {
+            var b=new StringBuilder();Append(b,target.data,0);
+            using(var sha=SHA256.Create())return Hex(sha.ComputeHash(Encoding.UTF8.GetBytes(b.ToString())));
         }
         void Measure(string reason, Action change)
         {
@@ -465,28 +502,29 @@ namespace NikichMods.BPSFaithProbe
             if (label == null) { label = new GUIStyle(GUI.skin.label) { fontSize = 14, wordWrap = true }; button = new GUIStyle(GUI.skin.button) { fontSize = 14, wordWrap = true }; }
             window.width = Math.Min(365, Math.Max(260, Screen.width - 24)); window.height = Math.Min(550, Math.Max(260, Screen.height - 24));
             window.x = Mathf.Clamp(window.x, 0, Math.Max(0, Screen.width - window.width)); window.y = Mathf.Clamp(window.y, 0, Math.Max(0, Screen.height - window.height));
-            window = GUI.Window(827402, window, Draw, "BPS: радиус молельни " + Version);
+            window = GUI.Window(827402, window, Draw, "BPS: покупка за веру " + Version);
         }
         void Draw(int id)
         {
             scroll = GUILayout.BeginScrollView(scroll);
-            GUILayout.Label("Радиус для теста: 3 клетки от центра молельни. Без списания веры. F8 — скрыть/показать.", label);
+            GUILayout.Label("Пробник СПИСЫВАЕТ веру у героя и из его сумок. Тестовая цена: N+1. F8 — скрыть/показать.", label);
             GUILayout.Label(status, label);
             GUILayout.Label("Превращения: " + shownConversions + "; доп. венки: " + shownWreaths + "; эффекты: " + (coverageTier>0 ? "покрытие есть" : "вне покрытия"), label);
             GUILayout.Label("Молельни: "+coverage.Count+"; покрывают: "+coveringCount+"; уровень: "+coverageTier+"; ближайшая №"+nearestStation+" на "+(float.IsPositiveInfinity(nearestCells)?"—":nearestCells.ToString("0.00",Inv))+" кл.",label);
+            GUILayout.Label("Вера: "+shownFaith+"; общих действий: "+(shownConversions+shownWreaths)+"; следующая цена: "+FaithPurchase.Price(shownConversions+shownWreaths)+" веры (тест).",label);
             bool previous = GUI.enabled;
             GUI.enabled = ready && SessionReady() && pending == null;
             if (GUILayout.Button("Выбрать открытую могилу", button)) Queue(Select);
             GUI.enabled = ready && Current() && target != null && pending == null;
-            if (GUILayout.Button("Добавить одно превращение", button)) Queue(delegate { if (conversions < Limit) Measure("conversion", delegate { SavedFaithState.Write(target.data,conversions+1,wreaths); }); else status = "Тестовый предел 12."; });
-            if (GUILayout.Button("Добавить один венок", button)) Queue(delegate { if (wreaths < Limit) Measure("wreath", delegate { SavedFaithState.Write(target.data,conversions,wreaths+1); }); else status = "Тестовый предел 12."; });
-            if (GUILayout.Button("Обнулить улучшения", button)) Queue(delegate { Measure("reset", delegate { SavedFaithState.Write(target.data,0,0); }); });
+            if (GUILayout.Button("Купить превращение за "+FaithPurchase.Price(shownConversions+shownWreaths)+" веры",button))QueueBuy(true);
+            if (GUILayout.Button("Купить венок за "+FaithPurchase.Price(shownConversions+shownWreaths)+" веры",button))QueueBuy(false);
+            if (GUILayout.Button("Проверить нехватку: цена = весь запас + 1",button))QueueBuy(false,true);
             if (GUILayout.Button("Повторно проверить рейтинг и шкалу", button)) Queue(delegate { Measure("explicit", delegate { }); });
             GUI.enabled = target != null && pending == null;
             if (GUILayout.Button("Записать этап: могила и другое открытое захоронение",button))Queue(delegate{Capture("manual");});
             if (GUILayout.Button("Очистить вложения и завершить тест", button)) Queue(Cleanup);
             GUI.enabled = previous;
-            GUILayout.Label("Перенесите настоящую молельню за границу и обратно, затем снесите её обычными действиями. Вложения не исчезают. После открытия могилы нажмите проверку рейтинга. Очистку сохраните обычным способом.", label);
+            GUILayout.Label("Купите превращение и венок, проверьте отказ, сохранитесь и загрузитесь. Очистка удаляет тестовые улучшения БЕЗ возврата потраченной веры; затем сохраните игру.", label);
             GUILayout.EndScrollView(); GUI.DragWindow(new Rect(0, 0, 10000, 22));
         }
         static void Opened(GraveGUI __instance, WorldGameObject __0)

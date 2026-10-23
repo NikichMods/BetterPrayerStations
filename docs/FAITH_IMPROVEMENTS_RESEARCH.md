@@ -1,6 +1,6 @@
 # Grave-owned faith improvements — technical research, 2026-10-23
 
-Status: **static source/installed IL, passing offline native skull oracle and bounded installed Faith Probe0.1.1 PASS**. The authorized research-only Faith Probe source now implements the proposed native rating/UI input projections for one grave, with session-only C/L and explicit activation. Its build/install identity is owned by TEST_BUILD_LOG.md; one healthy occupied-grave rating/central-diagram/explicit-activation/cleanup slice passes with user visual confirmation. No saved investment, payment or real coverage acceptance exists. Product rules remain in DESIGN.md. The installed appearance probe 0.1.2 is unchanged; its acceptance does not prove this mechanic.
+Status: static/native arithmetic evidence plus accepted bounded Faith0.1.1 rating/UI,0.2.0 grave persistence/replacement and0.3.0 numeric wooden coverage/load returns. Full product remains unready; preview/construction classification and world-badge refresh are open. Paid-action candidate0.4.0 is owned by FAITH_PAYMENT_RESEARCH.md; real installed payment/player-save acceptance is pending. Exact artifact/return identities remain in TEST_BUILD_LOG.md.
 
 ## Outcome and selected research direction
 

@@ -24,7 +24,7 @@ $refs=@('mscorlib.dll','System.dll','System.Core.dll','Assembly-CSharp.dll','Ass
 $refs += @('BepInEx.dll','0Harmony.dll') | ForEach-Object {Join-Path $core $_}
 $compilerArgs=@('/nologo','/target:library','/nostdlib+','/noconfig','/langversion:7.3','/optimize+','/deterministic+','/warnaserror+',('/out:'+$output))
 $compilerArgs += $refs | ForEach-Object {if (!(Test-Path -LiteralPath $_)) {throw ('Missing reference: '+$_)}; '/reference:'+$_}
-$compilerArgs += @('Plugin.cs','SavedFaithState.cs','PrayerCoverage.cs') | ForEach-Object {Join-Path $PSScriptRoot $_}
+$compilerArgs += @('Plugin.cs','SavedFaithState.cs','PrayerCoverage.cs','FaithPurchase.cs') | ForEach-Object {Join-Path $PSScriptRoot $_}
 & (Join-Path $DotnetRoot 'dotnet.exe') $compiler @compilerArgs
 if ($LASTEXITCODE -ne 0) {throw 'Compilation failed'}
 $asmVersion=[Reflection.AssemblyName]::GetAssemblyName($output).Version.ToString()
@@ -32,7 +32,7 @@ if ($asmVersion -ne ($version+'.0') -or [Diagnostics.FileVersionInfo]::GetVersio
 $testOutput=Join-Path $outDir 'FaithTests.exe'
 $testArgs=@('/nologo','/target:exe','/nostdlib+','/noconfig','/langversion:7.3','/optimize+','/warnaserror+',('/out:'+$testOutput))
 $testArgs += $refs | ForEach-Object {'/reference:'+$_}
-$testArgs += @('FaithTests.cs','LifecycleTests.cs') | ForEach-Object {Join-Path $PSScriptRoot $_}
+$testArgs += @('FaithTests.cs','LifecycleTests.cs','PurchaseTests.cs') | ForEach-Object {Join-Path $PSScriptRoot $_}
 & (Join-Path $DotnetRoot 'dotnet.exe') $compiler @testArgs
 if ($LASTEXITCODE -ne 0) {throw 'Test compilation failed'}
 & $testOutput $managed $core $output

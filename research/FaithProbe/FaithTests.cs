@@ -142,6 +142,13 @@ static class FaithTests
         }
         Console.WriteLine("PASS diagnostic coverage geometry: native96-unit cell scale, inclusive circle, diagonal exclusion, wood/stone, absent/busy/removed, movement out/back. No Unity registry or live move/demolition acceptance.");
         LifecycleTests.Run(assembly);
+        var purchase=assembly.GetType("NikichMods.BPSFaithProbe.FaithPurchase",true);
+        var debitIL=PatchProcessor.GetOriginalInstructions(purchase.GetMethod("NativeDebit",BindingFlags.NonPublic|BindingFlags.Static));
+        Assert(Count(debitIL,"Item","RemoveItem")==1,"Purchase does not call actual native single-resource RemoveItem");
+        var countIL=PatchProcessor.GetOriginalInstructions(purchase.GetMethod("Count"));
+        Assert(Count(countIL,"Item","GetTotalCount")==1 && Count(countIL,"Item","GetItemsCount")==0,"Payment count owner changed");
+        Console.WriteLine("PASS compiled payment native adapter: Item.RemoveItem and player/bag GetTotalCount, no synthetic inventory replacement in the installed debit path.");
+        PurchaseTests.Run(assembly);
         Console.WriteLine("LIMIT no Unity scene/GUI instantiation, live Harmony startup, Unity-native lifecycle/UI, payment, coverage or real-save acceptance. Headless native getter execution is reported separately above.");
     }
 }
