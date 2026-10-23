@@ -12,7 +12,7 @@ Start with the shared evidence linked in `EVIDENCE_AND_ACCEPTANCE.md`. Verify th
 2. The narrow native effective-rating/display seam; actual body/organ data must remain untouched.
 3. Prayer-station coverage geometry and reliable relevant placement/movement/removal updates, without a recurring full-world scan.
 4. Grave-slot appearance persistence: set two appearances -> save/load -> remove/reinstall decorations -> move a physical decoration to a different grave. Source grave choices persist, empty slots stay empty, destination choices apply, and real item quality remains native.
-5. [Native rendering owner](APPEARANCE_RENDERING_RESEARCH.md): descriptor projection is the supported research direction. The narrow installed 0.1.1 refresh/close/menu-load and two loaded looks pass; extend evidence to both slots and physical replacement before a production appearance mutation.
+5. [Native rendering owner](APPEARANCE_RENDERING_RESEARCH.md): descriptor projection is the supported research direction. The narrow installed 0.1.1 refresh/close/menu-load and two loaded looks pass; 0.1.2 also passes both-slot native removal/reinstallation and distinguishable gravestone exchange/menu-load. Remaining production boundaries and limitations are in the rendering research; no production mutation is yet accepted.
 
 If the grave identity or appearance-rendering hypothesis fails, select another mechanism with explicit evidence rather than reduce the product requirement by accident. Do not design a generic persistence/UI framework before the concrete lifecycle is known.
 

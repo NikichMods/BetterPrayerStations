@@ -66,7 +66,7 @@ The screenshot records native UI quality3, body3 red/3 white at97%, and the orig
 
 Limits: one occupied, completed grave; gravestone only, two test looks. No fence-choice mutation, removal/reinstallation, physical item transfer, empty/construction slot runtime test, exhumation, movement, interrupted fitting load/save, full application restart or production payment/coverage/UI acceptance. Cleanup was observed in memory; a subsequent save/load proving persistent cleanup is not recorded. Next useful lifecycle slice is two independent grave-slot choices through decoration removal/reinstallation and destination-grave transfer; do not repeat the passed basic redraw/close scenario without a new reason.
 
-## Appearance Probe 0.1.2 — installed; two-slot lifecycle pending
+## Appearance Probe 0.1.2 — bounded two-slot lifecycle PASS
 
 Research-only extension requested after the passing 0.1.1 slice; not production or stable promotion. Previous 0.1.0/0.1.1 numbered artifacts remain unchanged.
 
@@ -84,4 +84,26 @@ Scope: at most one marked A and B, three diagnostic fields each (marker/top/fenc
 
 Requested procedure and save classification: [README](../research/AppearanceProbe/README.md); question/matrix/why this extension: [PLAN](../research/AppearanceProbe/PLAN.md). A = wooden cross/stone fence I; B = stone cross/stone fence II. Record baseline; native top-only removal; fence removal/pickup; native reinstallation; empty both and exchange actual ordinary decorations; save/menu-load; cleanup both and save. Prefer distinct physical item IDs at A/B so quality/identity transfer is visible. Normal item removal/replacement can change grave quality; unchanged measured state is asserted only immediately across the probe's own cosmetic redraws.
 
-Runtime status: not yet launched with 0.1.2. Need READY and actual loaded resource confirmation, CHECKPOINT observations at each native stage, unchanged grave codes, appropriate actual parts/absent slots, ordinary removed item data, destination preferences with native physical-item quality, two-grave LOAD recovery and cleanup. No passing native lifecycle, user visual outcome, fallback execution or persistent cleanup is implied by the local build gate. Entire-grave movement, exhumation, full restart, fitting interruptions, all styles and final production UI/payment remain outside this candidate.
+Runtime status: installed READY, native slot removal/reinstallation, distinguishable gravestone exchange, empty slots, two-grave menu-load recovery and cleanup passed with user visual confirmation; see the bounded return below. Fallback execution and cleanup persistence after another load remain unverified. Entire-grave movement, exhumation, full restart, fitting interruptions, all styles and final production UI/payment remain outside this candidate.
+
+### Installed 0.1.2 return — 2026-10-23
+
+User confirms removal, reinstallation, exchange and loading visually matched the procedure. Fresh loader/READY identifies 0.1.2 with the expected host hash; installed DLL still matches the frozen artifact hash. Preserved private session log SHA-256: `72710cba9034a89647dc014f99ca80a57fda7e24529587d6d2bcf1d3a0a8d423`. Ten numbered checkpoints each record both graves and player decoration inventory; all captured craft states are idle. Eight own cosmetic/load/cleanup redraws report invariants=True, with no probe FAILED/PROJECTION_FAILED/INIT_FAILED. All logged diagnostic parameter triplets on body/contents/decoration items are `0,0,0`.
+
+| Checkpoint | A=47567 | B=37815 |
+| --- | --- | --- |
+| 1, native baseline | physical plate II + fence II, quality3, codes0/0 | physical stone cross + fence II, quality4, codes0/0 |
+| 3, choices set | wood-cross/fence-I looks, codes1/1, physical originals unchanged | stone-cross/fence-II looks, codes2/2, physical originals unchanged |
+| 4, A top removed | fence-I look only, codes1/1, quality0; ordinary plate in inventory | unchanged |
+| 5, A both removed | no parts, codes1/1, quality-3; ordinary plate/fence in inventory | unchanged |
+| 6, A reinstalled | both A looks return, codes1/1, quality3 | unchanged |
+| 7, both empty | no parts, codes1/1, quality-3 | no parts, codes2/2, quality-2 |
+| 8, incoming items at A | actual stone cross/fence II; still A looks | empty with B choices retained |
+| 9, exchange complete | actual stone cross/fence II; A looks, quality3 | actual plate II/fence II; B looks, quality4 |
+| 10, after menu-load | same exchanged physical data and A looks/codes | same exchanged physical data and B looks/codes |
+
+Body contents/durability and money/faith remain identical in the recorded snapshots; quality responds to actual removal rather than the chosen looks. Natural native crafts, not checkpoint-triggered redraws, produced the observed parts at checkpoints4–9. Cleanup logs both code pairs zero and restores the current exchanged physical items' ordinary appearances, with CLEANUP_DONE active_keys=0. It does not undo the exchange.
+
+Boundaries: both physical fences are `grave_bot_stn_2`, count1/durability1. The log confirms fence removal/reinstallation and independent per-grave fence appearances, but cannot distinguish which identical fence instance moved where or prove a different-ID fence exchange. Gravestone IDs differ and their exchange is unambiguous. Grave scores3/4 after exchange are capped/body-dependent, not evidence that every incoming decoration quality causes a score delta. Only tested healthy stage1 styles and occupied graves are accepted here. No empty-body/exhumation/whole-grave movement, damaged construction runtime path, full restart, interrupted fitting, arbitrary catalog, production UI/payment or broad compatibility acceptance. No subsequent reload after cleanup is recorded.
+
+The overall host log is not error-free: it contains native resource/GUI/World Object not found messages, including specific missing world IDs during load. Their ownership/cause is not established by this run; the absence of probe failures does not prove universal save integrity or attribute those messages to another mod. Preserve this as a watch item if production redraw strategy or save-integrity symptoms are investigated, rather than infer causality from neighboring lines.

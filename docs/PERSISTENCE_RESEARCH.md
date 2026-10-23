@@ -1,6 +1,6 @@
 # Persistence research — 2026-10-23
 
-Status: **bounded static evidence plus passing offline native binary fixture**. A subsequent narrow installed 0.1.1 probe confirms one grave-owned gravestone choice through menu-load; its two diagnostic fields were explicitly written and cleaned in the user save session. No production patch or full lifecycle acceptance exists. `DESIGN.md` owns product semantics; reusable host facts remain in [shared research](https://github.com/NikichMods/GraveyardKeeperResearch/blob/codex/graveyard-design-candidates/docs/GRAVEYARD_RUNTIME.md#grave-and-decoration-persistence--2026-10-23).
+Status: **bounded static evidence plus passing offline native binary fixture**. Subsequent installed 0.1.1/0.1.2 probes confirm grave-owned appearance through menu-load, close-cancel, independent top/fence removal/reinstallation and distinguishable gravestone exchange on two occupied graves; their diagnostic fields were explicitly written and cleaned in the user save sessions. No production patch or full lifecycle acceptance exists. `DESIGN.md` owns product semantics; reusable host facts remain in [shared research](https://github.com/NikichMods/GraveyardKeeperResearch/blob/codex/graveyard-design-candidates/docs/GRAVEYARD_RUNTIME.md#grave-and-decoration-persistence--2026-10-23).
 
 ## Current question and result
 
@@ -27,7 +27,7 @@ Native grave Item parameters remain the first mechanism to pursue. A separate co
 
 Research direction: namespaced schema marker, conversion/wreath/shared-payment counts and separate stable appearance codes for gravestone/fence on grave data. Missing/zero appearance means use the actual installed item's ordinary look. Keep coverage and effective score derived, and never store a station ID as investment ownership. Exact keys, code values, validation/migration and limits are not final.
 
-An empty decoration slot retains its saved choice but displays nothing. A replacement item uses that choice with its own native quality. Moving an ordinary item to another grave does not export a cosmetic preference. Exhumation leaves both choices at the source grave. These are adopted product rules; live execution is still untested.
+An empty decoration slot retains its saved choice but displays nothing. A replacement item uses that choice with its own native quality. Moving an ordinary item to another grave does not export a cosmetic preference. Exhumation leaves both choices at the source grave. Installed 0.1.2 confirms retained choices across empty decoration slots, native removal/reinstallation, distinct gravestone exchange and menu-load on two occupied graves. Identical physical fences prevent individual provenance verification; exhumation and broader lifecycles remain untested.
 
 ## Decoration lifecycle under revised ownership
 
@@ -57,4 +57,4 @@ PASS: WGO ID; faith counters; independent gravestone/fence choices for both occu
 
 ## Next useful slice
 
-Persistence carrier is established at the bounded source/IL/native-binary level. The first grave-owned **world rendering and temporary fitting** slice passed in installed 0.1.1; next test should target independent slots and physical decoration replacement, not item metadata transfer. See `APPEARANCE_RENDERING_RESEARCH.md`: verify one real grave's two choices, unchanged item quality, cancel/close/reload restoration, empty-slot suppression and destination-grave behavior. Inspect actual window lifecycle before handing out a probe. Full production readiness and installed acceptance remain open.
+The bounded installed ownership/rendering/removal/reinstallation/menu-load slice now passes; exact limits belong to APPEARANCE_RENDERING_RESEARCH.md and TEST_BUILD_LOG.md. Do not repeat the same healthy occupied-grave loop or reopen item-owned metadata transfer. Select the next still-open lifecycle only when required by a concrete production slice (for example exhumation, whole-grave movement or fitting interruption). Full production readiness and broad save/compatibility acceptance remain open.
