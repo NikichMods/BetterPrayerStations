@@ -1,6 +1,6 @@
 # Grave-owned faith improvements — technical research, 2026-10-23
 
-Status: static/native arithmetic evidence plus accepted bounded Faith0.1.1 rating/UI,0.2.0 grave persistence/replacement and0.3.0 numeric wooden coverage/load returns. Full product remains unready; preview/construction classification and world-badge refresh are open. Paid-action candidate0.4.0 is owned by FAITH_PAYMENT_RESEARCH.md; real installed payment/player-save acceptance is pending. Exact artifact/return identities remain in TEST_BUILD_LOG.md.
+Status: static/native arithmetic evidence plus accepted bounded Faith0.1.1 rating/UI,0.2.0 grave persistence/replacement and0.3.0 numeric wooden coverage/load returns. Full product remains unready; preview/construction classification and world-badge refresh are open. Paid-action candidate0.4.0 is owned by FAITH_PAYMENT_RESEARCH.md; bounded installed native debit/shared pricing/player recovery now passes; see its accepted return and remaining live mixed-state/fault/bag-only limits. Exact artifact/return identities remain in TEST_BUILD_LOG.md.
 
 ## Outcome and selected research direction
 

@@ -1,6 +1,6 @@
 # Faith payment research — 2026-10-23
 
-Status: research-only0.4.0 candidate; offline backend tests pass, installed native debit/save acceptance pending. DESIGN.md owns product mechanics; test price N+1 and carried-player scope are bounded diagnostic choices.
+Status: research-only0.4.0 bounded installed native debit/shared-sequence/player-save recovery PASS with user visual confirmation. Offline rollback tests remain separate; no production acceptance. DESIGN.md owns product mechanics; test price N+1 and carried-player scope are bounded diagnostic choices.
 
 ## Owners and narrow mechanism
 
@@ -16,6 +16,12 @@ A completed payment/state commit survives later UI observation failure; no repea
 
 Saved grave lifecycle/rating0.2, coverage0.3 and native serialization facts are reused. Native crafting/payment wrappers would introduce unrelated work/inventory ownership; generic multi-resource support is not needed. The new probe is justified because direct free actions cannot prove actual faith debit coupled with shared per-grave persistence.
 
-PurchaseTests passes with compiled backend, actual native GetTotalCount and SmartSerializer but intentionally simulated debit. Cases: successful conversion/wreath1/2 then saved pair/next action3, exact funds, bag-only, actual zero, shortage with no debit, stale count/cost, reentry, limit, failure before debit/after debit/after write, false/partial/wrong/throwing debit. Original payer inventory bytes plus backend reference/order/quantity checks verify restoration. Synthetic map serialization contains two Item owners and is not real GameSave/player restoration. Compiled native-adapter IL check confirms installed path calls actual Item.RemoveItem/GetTotalCount. Real RemoveItem and loader/user-save return remain unaccepted until0.4.0 is exercised.
+PurchaseTests passes with compiled backend, actual native GetTotalCount and SmartSerializer but intentionally simulated debit. Cases: successful conversion/wreath1/2 then saved pair/next action3, exact funds, bag-only, actual zero, shortage with no debit, stale count/cost, reentry, limit, failure before debit/after debit/after write, false/partial/wrong/throwing debit. Original payer inventory bytes plus backend reference/order/quantity checks verify restoration. Synthetic map serialization contains two Item owners and is not real GameSave/player restoration. Compiled native-adapter IL check confirms installed path calls actual Item.RemoveItem/GetTotalCount. Installed0.4.0 now proves the normal native debit/player-save path below; offline fault/debit simulation must still not be described as live rollback acceptance.
 
 Full scenario and no-refund cleanup: research/FaithProbe/README.md. No final numeric balance, wooden cap, production save migration, appearance commission payment, world-badge/placement/overlay work is included.
+
+## Installed bounded return
+
+Exact identity and full return: TEST_BUILD_LOG.md, private log SHA-2562d5aa47c2c8ad3072be8581c938c4ed6c690f8ebd5d6a5ffb3694bb7bb1cd0ef. Three actual commits cost1/2/3 with faith30->29->27->24; C1->C2->wreath gives shared N1/2/3 and next4. Two diagnostic shortage quotes28 against27 refuse unchanged. Load of grave1060 recovers C2/L0/N2, faith27 and next3; wreath purchase after load costs3. Extra conversion after red exhaustion is refused without debit. Eight native GUI/physical observations pass, no probe error/rollback; cleanup restores native inputs and is followed by save.
+
+The actual order differs from the proposed mixed-before-load scenario: both conversions preceded load, wreath followed it. Shared pricing across action switch and normal persistence/next quote pass; live load with both C/L positive remains unobserved here, supported only by synthetic serializer evidence. Source-bag distribution was not logged, so no bag-only live claim. Fault/reentry/crash/broad compatibility/final caps and balance remain outside this return. No need to repeat the full passed payment loop; a later integrated slice can include a mixed-state load cheaply if it needs that boundary.

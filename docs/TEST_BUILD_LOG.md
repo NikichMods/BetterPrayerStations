@@ -249,3 +249,23 @@ User reports world grave badge stays stale after station placement and completio
 Scope: actual carried-player/root/bag faith debit, shared C+L quote and saved investment, synchronous bounded rollback, refusal/reentry guards, post-commit native rating observation. Test quote N+1, shortage-test quote actual balance+1; no fake balance or faith grants. Free add/reset actions replaced by purchases/shortage check; cleanup remains diagnostic and does NOT refund paid faith. Conversion without remaining effective red is refused for this test. Build/floating-preview purchase is refused, while desired preview feedback is preserved. No final price, wooden cap, source-scope expansion, placement/visual/world-badge correction or new saved schema.
 
 Requested scenario: fresh grave (prefer1060 with two raw red skulls) under existing completed station, at least6 carried faith; conversion1 -> wreath2 -> shortage refusal unchanged -> ordinary save/menu-load verifies C1/L1/N2/next3 and faith remaining -> conversion3 gives C2/L1/N3/next4 -> cleanup -> save. Full steps: research/FaithProbe/README.md. Do not repeat prior movement/exhumation/cosmetic scenarios. Normal paid commit survives later GUI failure; no re-charge/retry, backend rollback and later presentation errors are separate log phases. Real payment/player save acceptance pending; no main promotion or production release.
+
+### Installed Faith0.4.0 return — bounded native payment/load PASS
+
+User confirms purchases/refusal/save-load and expected visuals, varying action order and trying extra actions. READY identifies0.4.0/expected host; installed DLL matches frozen a87ccf8bae7078dd1f296965111f73ab79cbce0a703b9d4edd153c15006c26e1 at source8990010743af2c672fab75069b33bc404db454da. Private runtime-return.log SHA-256:2d5aa47c2c8ad3072be8581c938c4ed6c690f8ebd5d6a5ffb3694bb7bb1cd0ef.
+
+| Actual event | Faith | C/L/N and next price |
+| --- | --- | --- |
+|Conversion, cost1 |30->29 |1/0/1, next2 |
+|Conversion, cost2 |29->27 |2/0/2, next3 |
+|Two shortage-test attempts, cost28 each |27->27 both |2/0/2 unchanged |
+|Menu-load recovery, grave1060 |27 |2/0/2, next3 |
+|Conversion attempt with no remaining effective red |no payment record; rejection only |no counter advance; later checkpoint confirms faith27/N2 |
+|Wreath, cost3 after load |27->24 |2/1/3, next4 |
+|Cleanup |no refund |owned improvements cleared, native rating2 |
+
+Exactly three committed PURCHASE records, every exact faith delta equals cost and N advances by1. Total native debit6 equals original30 minus final24; no unexplained probe debit or duplicate commit appears. Both insufficient records preserve faith/actions and physical-grave/money checks. Extra conversion correctly logs PURCHASE_REJECT no-eligible-red; it is not a failed transaction. Switching to wreath after two conversions/load uses shared price3 rather than a separate first-action quote. Normal expected refusals are not circuit-breaker errors.
+
+Eight REDRAW_END and eight OBSERVE records pass; no probe FAILED/INIT_FAILED/PURCHASE_ABORT/ROLLBACK/SKIPPED/failed predicate. All committed/refused purchase records report grave_physical_unchanged=True and money_unchanged=True. Raw body remains2red/2white/2available/durability1; body/part probe fields remain zero. Native ratings progress2->3->4, extra wreath gives central decoration5 while rating remains white-capped4; cleanup restores native2 and central2red/2available/decoration4. Native save occurs after cleanup. Existing host/other-plugin warnings/errors retain unassigned ownership; this is not a globally clean-session claim.
+
+Accepted boundary: real installed native carried-faith debit, amount checks, shared mixed-action sequence, repeat shortage refusal, no-red rejection without charge, real player/grave recovery with correct next quote, paid action after load, native diagram/raw/physical separation and saved cleanup with no refund. Actual load was C2/L0 before the wreath purchase, not the originally requested mixed C1/L1. Thus simultaneous C+L>0 load is supported by earlier native synthetic serialization, not directly by this live return; no need to repeat the whole payment sequence. No post-cleanup reload, native live fault/reentry injection, bag-only source distribution, crash-atomicity, final balance/tier caps or broad compatibility acceptance follows. Previously passed simulated-debit rollback tests remain distinct. No new binary, production release or main promotion in this return.
