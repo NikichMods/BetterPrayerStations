@@ -1,6 +1,6 @@
 # Better Prayer Stations — Faith Probe0.6.1
 
-Research-only move/preview/cancel checkpoint. Version owner Plugin.cs; frozen source/hash/install in docs/TEST_BUILD_LOG.md. Retains accepted0.5.1 A/B payments and native closed-zone backend; no final balance or production UI. This scenario needs one grave and does not require buying improvements.
+Research-only move/preview/cancel checkpoint. Installed0.6.1 bounded scenario now passes with user visual confirmation; exact evidence/limits in TEST_BUILD_LOG.md. Version owner Plugin.cs; frozen source/hash/install in docs/TEST_BUILD_LOG.md. Retains accepted0.5.1 A/B payments and native closed-zone backend; no final balance or production UI. This scenario needs one grave and does not require buying improvements.
 
 ## Короткий тест — одна молельня, одна могила, без расхода веры
 
