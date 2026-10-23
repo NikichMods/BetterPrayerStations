@@ -19,7 +19,7 @@ namespace NikichMods.BPSFaithProbe
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string Id = "nikichmods.bps.faithprobe";
-        public const string Version = "0.7.1";
+        public const string Version = "0.8.0";
         const string Host = "e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const int Limit = SavedFaithState.Limit; // Diagnostic UI/object-count bound, not a product cap.
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
@@ -28,6 +28,8 @@ namespace NikichMods.BPSFaithProbe
         bool ready, effects = true, panel = true;
         int measurement, checkpoint, shownConversions, shownWreaths;
         readonly PrayerCoverage coverage=new PrayerCoverage();
+        readonly PassiveQuality passive=new PassiveQuality();
+        bool passiveEnabled=true;float nextPassiveDescription,nextPassiveCollect;
         readonly MovePreviewOwner movePreview=new MovePreviewOwner();
         readonly RadiusOverlay radiusOverlay=new RadiusOverlay();
         readonly Dictionary<long,float> badgeQuality=new Dictionary<long,float>();
@@ -161,17 +163,18 @@ namespace NikichMods.BPSFaithProbe
             try
             {
                 if(!ready || !Current()){radiusOverlay.Clear();return;}
-                coverage.Refresh();RecordPreview();
+                coverage.Refresh();RefreshPassive(false);RecordPreview();
                 previewSummary=coverage.HasPreview?(coverage.Owners.Source==null?"Предпросмотр: новая молельня (не построена)":"Предпросмотр: перенос одной молельни; старая позиция исключена"):"Предпросмотр: нет";
                 if(lastBuiltCount!=coverage.Count){lastBuiltCount=coverage.Count;Log("STATION_COUNT built="+lastBuiltCount+" preview="+coverage.HasPreview);}
                 radiusOverlay.Update(coverage,showRadius && panel,MainGame.me.player.pos);
                 foreach(var grave in graves.Items)RefreshQualityBadge(grave);
+                foreach(var station in coverage.Owners.Built)RefreshQualityBadge(station);
             }
             catch(Exception ex){Fail(ex);}
         }
         void RefreshQualityBadge(WorldGameObject grave)
         {
-            if(!Trackable(grave) || !grave.show_quality_hint){if(grave!=null)badgeQuality.Remove(grave.unique_id);return;}
+            if((!Trackable(grave) && (grave==null || PrayerCoverage.Tier(grave.obj_id)==0)) || !grave.show_quality_hint){if(grave!=null)badgeQuality.Remove(grave.unique_id);return;}
             float value=grave.quality,previous;
             if(badgeQuality.TryGetValue(grave.unique_id,out previous) && previous==value)return;
             string before=GraveHash(grave);var data=grave.GetQualityWidgetData();
@@ -211,6 +214,63 @@ namespace NikichMods.BPSFaithProbe
                 __result.text=PreviewFeedback.Text(baseline.Text,delta);
             }
             catch(Exception ex){p.Fail(ex);}
+        }
+        void RefreshPassive(bool describe)
+        {
+            if(!ready || !Current() || !passiveEnabled || passive.Collecting)return;
+            if(!describe && Time.realtimeSinceStartup<nextPassiveCollect)return;
+            nextPassiveCollect=Time.realtimeSinceStartup+.25f;
+            bool show=describe || Time.realtimeSinceStartup>=nextPassiveDescription;
+            if(show)nextPassiveDescription=Time.realtimeSinceStartup+.25f;
+            passive.Rebuild(coverage,zoneOwner,Log,show);
+        }
+        static void StationQuality(WorldGameObject __instance,ref float __result)
+        {
+            var p=self;if(p==null || !p.ready || !p.passiveEnabled || !p.Current() || __instance==null || __instance.is_removed || PrayerCoverage.Tier(__instance.obj_id)==0 || __instance.components.craft.is_crafting)return;
+            __result+=p.passive.BonusFor(__instance);
+        }
+        static void BeforeZoneQuality(WorldZone __instance)
+        {
+            var p=self;if(p==null || !p.ready || !p.passiveEnabled || !p.Current())return;
+            try
+            {
+                p.coverage.Refresh();
+                foreach(var s in p.coverage.Owners.Built)if(s!=null && !s.is_removed && ReferenceEquals(p.zoneOwner.GetValue(s),__instance))
+                {p.nextPassiveCollect=0;p.RefreshPassive(false);break;}
+            }
+            catch(Exception ex){p.Fail(ex);}
+        }
+        void CheckPassiveZone()
+        {
+            if(!ready || !Current() || !NativeWindowsClosed())return;
+            coverage.Refresh();RefreshPassive(true);
+            if(passive.Rows.Count==0){status="Для проверки нужна готовая молельня.";return;}
+            var zone=passive.Rows[0].Zone;
+            if(zone.definition==null || zone.definition.calc_method!=WorldZoneDefinition.QualityCalcMethod.Sum)throw new InvalidOperationException("Passive test needs native Sum zone");
+            var members=zone.GetZoneWGOs();float baseline=0,bonus=0;int stations=0;
+            int faith=FaithPurchase.Count(MainGame.me.player.data);float money=MainGame.me.player.data.money;string physical=PairState();
+            bool old=passiveEnabled;passiveEnabled=false;
+            try{foreach(var w in members)if(!w.obj_def.ignore_counting_at_zone)baseline+=w.quality;}finally{passiveEnabled=old;}
+            RefreshPassive(true);passive.Trace(Log);
+            foreach(var w in members)if(!w.obj_def.ignore_counting_at_zone)
+            {
+                int addition=passive.BonusFor(w);bonus+=addition;
+                if(PrayerCoverage.Tier(w.obj_id)>0){stations++;float value=w.quality;Log("PASSIVE_STATION station="+w.unique_id+" native="+(value-addition).ToString("R",Inv)+" bonus="+addition+" actual="+value.ToString("R",Inv));}
+            }
+            zoneEvents=0;sampleZoneId=zone.id;zoneSampling=true;float actual;
+            WorldZone.OnQualityComputed+=ZoneComputed;
+            try{actual=zone.GetTotalQuality();}finally{zoneSampling=false;WorldZone.OnQualityComputed-=ZoneComputed;}
+            bool total=Math.Abs(actual-baseline-bonus)<.001f,notified=zoneEvents>0 && Math.Abs(zoneEventValue-actual)<.001f;
+            bool intact=faith==FaithPurchase.Count(MainGame.me.player.data) && money==MainGame.me.player.data.money && physical==PairState();
+            Log("PASSIVE_ZONE closed=True zone="+zone.id+" station_members="+stations+" baseline_leaf_sum="+baseline.ToString("R",Inv)+" bonus_sum="+bonus.ToString("R",Inv)+" expected="+(baseline+bonus).ToString("R",Inv)+" actual="+actual.ToString("R",Inv)+" native_events="+zoneEvents+" total_ok="+total+" event_ok="+notified+" physical_money_faith_unchanged="+intact);
+            if(!total || !notified || !intact)throw new InvalidOperationException("Passive native zone contribution invariant failed");
+            status="Зона проверена: "+baseline.ToString("0.#",Inv)+" + "+bonus.ToString("0.#",Inv)+" = "+actual.ToString("0.#",Inv)+". Вклад могил записан в журнал.";
+        }
+        void StopPassiveTest()
+        {
+            if(!Current())return;passiveEnabled=false;passive.Clear();badgeQuality.Clear();
+            foreach(var station in coverage.Owners.Built)RefreshQualityBadge(station);
+            status="Пассивный бонус отключён до следующей загрузки. Тела, постройки и материалы не менялись.";Log("PASSIVE_STOP session_only=True native_station_quality_restored=True");
         }
         void GrantStationMaterials(bool stone)
         {
@@ -406,6 +466,8 @@ namespace NikichMods.BPSFaithProbe
                 redraw = Exact(typeof(GraveGUI), "Redraw", typeof(void));
                 var targets = Targets();
                 harmony = new Harmony(Id);
+                harmony.Patch(targets[0],postfix:new HarmonyMethod(Own("StationQuality")));
+                harmony.Patch(Exact(typeof(WorldZone),"GetTotalQuality",typeof(float)),prefix:new HarmonyMethod(Own("BeforeZoneQuality")));
                 harmony.Patch(targets[0], transpiler: new HarmonyMethod(Own("QualityPatch")));
                 harmony.Patch(targets[1], transpiler: new HarmonyMethod(Own("UIPatch")));
                 harmony.Patch(targets[2], postfix: new HarmonyMethod(Own("Opened")));
@@ -420,7 +482,7 @@ namespace NikichMods.BPSFaithProbe
                 harmony.Patch(stop,prefix:new HarmonyMethod(Own("PreviewStopping")),postfix:new HarmonyMethod(Own("PreviewStopped")));
                 ready = true;
 
-                Log("READY version=" + Version + " host=" + hash + " scope=two-graves selection=editing-only zone=explicit-closed-window-sample persistence=grave-C-L-schema-slot payment=player-and-bags native-debit=true diagnostic_price=N+1 coverage=committed-with-single-preview-replacement wood_side_small_cells=18 stone_side_small_cells=24 metric=placement-box-grid-center-square poll_seconds=0.25");
+                Log("READY version=" + Version + " host=" + hash + " scope=two-graves selection=editing-only zone=explicit-closed-window-sample persistence=grave-C-L-schema-slot payment=player-and-bags native-debit=true diagnostic_price=N+1 coverage=committed-with-single-preview-replacement wood_side_small_cells=18 stone_side_small_cells=24 metric=placement-box-grid-center-square poll_seconds=0.25 passive=committed-positive-current-graves divisor=10 allocation=nearest-then-persistent-id addition=after-native-quality zone=actual-members");
             }
             catch (Exception ex)
             {
@@ -498,7 +560,7 @@ namespace NikichMods.BPSFaithProbe
         {
             if(!ready || !SessionReady())return;
             movePreview.Initialize();Log("PREVIEW_ADAPTER phase=game-ready "+movePreview.Identity);
-            badgeQuality.Clear();previewBaseline.Clear();session=MainGame.me.save;target=null;body=null;coverage.Clear();coverageTier=-1;graves.Clear();previousTier.Clear();previousCovering.Clear();
+            passive.Clear();passiveEnabled=true;nextPassiveCollect=nextPassiveDescription=0;badgeQuality.Clear();previewBaseline.Clear();session=MainGame.me.save;target=null;body=null;coverage.Clear();coverageTier=-1;graves.Clear();previousTier.Clear();previousCovering.Clear();
             foreach(var grave in WorldMap.objs)
             {
                 if(grave==null || grave.data==null)continue;
@@ -510,7 +572,8 @@ namespace NikichMods.BPSFaithProbe
                 graves.Add(grave);
             }
             if(graves.Items.Count>0)target=graves.Items[0];
-            if(target==null){Log("RECOVER target=none");status="Откройте могилу и выберите её. Вложения теперь сохраняются у могилы.";return;}
+            RefreshPassive(true);
+            if(target==null){Log("RECOVER target=none");status="Пассивный бонус работает у готовых молелен. Для этого теста выбирать могилу и тратить веру не нужно.";return;}
             UpdateDisplay();
             Log("RECOVER target="+target.unique_id+" object="+target.obj_id+" conversions="+conversions+" wreaths="+wreaths+" actions="+(conversions+wreaths)+" faith="+shownFaith+" next_price="+FaithPurchase.Price(conversions+wreaths));
             Capture("load");
@@ -675,6 +738,7 @@ namespace NikichMods.BPSFaithProbe
         {return !MainGame.me.gui_elements.IsAnyMassiveWindowOpened() && (gui==null || !gui.gameObject.activeInHierarchy) && !FloatingWorldGameObject.IsFloating();}
         void CheckZone()
         {
+            if(passiveEnabled){CheckPassiveZone();return;}
             if(!ready || !Current() || graves.Items.Count!=2 || !NativeWindowsClosed())return;
             foreach(var g in graves.Items)if(!Bound(g)){Log("ZONE_SKIPPED reason=grave-not-idle-occupied");return;}
             var first=graves.Items[0];var zone=zoneOwner.GetValue(first) as WorldZone;
@@ -719,7 +783,7 @@ namespace NikichMods.BPSFaithProbe
         }
         void Fail(Exception ex)
         {
-            bool wasReady = ready; ready = false; effects = false; pending = null;
+            bool wasReady = ready; ready = false; effects = false; passiveEnabled=false;passive.Clear(); pending = null;
             Logger.LogError("BPS_FAITH FAILED action=effects-disabled " + ex);
             status = "Эффекты отключены после ошибки. См. журнал; очистка доступна.";
             pairSummary="Пробник остановлен: улучшения не применяются. Очистка доступна.";radiusOverlay.Clear();
@@ -729,6 +793,7 @@ namespace NikichMods.BPSFaithProbe
         void ClearAll(){foreach(var g in graves.Items){Log("CLEAR_OWNER target="+g.unique_id+" slot="+TwoGraves.SlotOf(g));SavedFaithState.Clear(g.data);RefreshQualityBadge(g);}zoneCheckRequested=false;editingAssigned=false;editingSummary="Тестовые назначения очищены";aButton="Назначить открытую могилу как A";bButton="Назначить открытую могилу как B";}
         void Cleanup()
         {
+            StopPassiveTest();
             if(!Current() || target==null || target.data==null){status="Нет текущей тестовой могилы.";return;}
             if(Bound(target) && gui!=null && gui.gameObject.activeInHierarchy && ReferenceEquals(graveField.GetValue(gui),target))
                 Measure("cleanup",delegate{ClearAll();effects=false;});
@@ -747,7 +812,7 @@ namespace NikichMods.BPSFaithProbe
             if (label == null) { label = new GUIStyle(GUI.skin.label) { fontSize = 14, wordWrap = true }; button = new GUIStyle(GUI.skin.button) { fontSize = 14, wordWrap = true }; }
             window.width = Math.Min(365, Math.Max(260, Screen.width - 24)); window.height = Math.Min(550, Math.Max(260, Screen.height - 24));
             window.x = Mathf.Clamp(window.x, 0, Math.Max(0, Screen.width - window.width)); window.y = Mathf.Clamp(window.y, 0, Math.Max(0, Screen.height - window.height));
-            window = GUI.Window(827402, window, Draw, "BPS: квадрат и изменения " + Version);
+            window = GUI.Window(827402, window, Draw, "BPS: бонус качества молельни " + Version);
         }
         void Draw(int id)
         {
@@ -759,9 +824,14 @@ namespace NikichMods.BPSFaithProbe
             GUILayout.Label("Построенные молельни: "+coverage.Count+"; покрывают: "+coveringCount+"; уровень: "+coverageTier+"; ближайшая №"+nearestStation+" на "+(float.IsPositiveInfinity(nearestCells)?"—":nearestCells.ToString("0.00",Inv))+" кл.",label);
             GUILayout.Label("Вера: "+shownFaith+"; общих действий: "+(shownConversions+shownWreaths)+"; следующая цена: "+FaithPurchase.Price(shownConversions+shownWreaths)+" веры (тест).",label);
             GUILayout.Label(pairSummary,label);
+            GUILayout.Label("Пассивный бонус: "+(passiveEnabled?"включён; только подтверждённые позиции":"отключён"),label);
+            GUILayout.Label(passive.Summary,label);
             GUILayout.Label(previewSummary+". Квадрат: голубой — при подходе, жёлтый — предпросмотр. Дерево 18×18, камень 24×24 маленьких клеток. Центр могилы внутри — вся могила зелёная.",label);
             showRadius=GUILayout.Toggle(showRadius,"Показывать тестовую область");
             bool previous = GUI.enabled;
+            GUI.enabled=ready && Current() && pending==null;
+            if(GUILayout.Button("Записать вклад могил и проверить зону",button))Queue(delegate{zoneCheckRequested=true;status="Закройте игровые окна: пробник проверит реальный итог зоны и запишет распределение могил.";});
+            if(GUILayout.Button("Отключить пассивный бонус до загрузки",button))Queue(StopPassiveTest);
             GUI.enabled=ready && Current() && pending==null && !materialGrantFailed;
             if(GUILayout.Button("Материалы на деревянную молельню",button))Queue(delegate{GrantStationMaterials(false);});
             if(GUILayout.Button("Материалы на каменную молельню",button))Queue(delegate{GrantStationMaterials(true);});
@@ -780,7 +850,7 @@ namespace NikichMods.BPSFaithProbe
             GUI.enabled=ready && Current() && graves.Items.Count==2 && pending==null;
             if(GUILayout.Button("Проверить зону после закрытия игровых окон",button))Queue(delegate{zoneCheckRequested=true;status="Закройте окно могилы обычным способом; затем пробник один раз проверит нативную сумму зоны.";});
             GUI.enabled = previous;
-            GUILayout.Label("Для текущего теста достаточно могилы A и бесплатной подготовки C1/L1. Сравните жёлтый квадрат дерева/камня, отмену и достройку; затем подход и необязательный перенос. Очистка удаляет вложения, но не выданные материалы. Сохраните обычным способом.", label);
+            GUILayout.Label("Назначать A/B и тратить веру для пассивного теста не нужно. Сравните одну/две готовые молельни, их суммы и общий итог зоны. Пассивный бонус меняется после подтверждения постройки/переноса; его предпросмотр пока не включён. Отключение не удаляет постройки или материалы.", label);
             GUILayout.EndScrollView(); GUI.DragWindow(new Rect(0, 0, 10000, 22));
         }
         static void Opened(GraveGUI __instance, WorldGameObject __0)
@@ -804,7 +874,7 @@ namespace NikichMods.BPSFaithProbe
         {
             var p=self;if(p==null)return;
             if(p.target!=null)p.Log("RESET reason=load saved_grave_params=retained");
-            p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;p.coverage.Clear();p.previewBaseline.Clear();p.badgeQuality.Clear();p.radiusOverlay.Clear();p.previewLogged=false;p.lastBuiltCount=-1;p.graves.Clear();p.previousTier.Clear();p.previousCovering.Clear();p.zoneCheckRequested=false;p.zoneSampling=false;p.pairSummary="";p.editingSummary="";p.editingAssigned=false;p.aButton="Назначить открытую могилу как A";p.bButton="Назначить открытую могилу как B";p.coverageTier=-1;p.coveringCount=0;p.nearestStation=0;p.nearestCells=float.PositiveInfinity;
+            p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;p.coverage.Clear();p.passive.Clear();p.passiveEnabled=true;p.previewBaseline.Clear();p.badgeQuality.Clear();p.radiusOverlay.Clear();p.previewLogged=false;p.lastBuiltCount=-1;p.graves.Clear();p.previousTier.Clear();p.previousCovering.Clear();p.zoneCheckRequested=false;p.zoneSampling=false;p.pairSummary="";p.editingSummary="";p.editingAssigned=false;p.aButton="Назначить открытую могилу как A";p.bButton="Назначить открытую могилу как B";p.coverageTier=-1;p.coveringCount=0;p.nearestStation=0;p.nearestCells=float.PositiveInfinity;
         }
         static void Started()
         {

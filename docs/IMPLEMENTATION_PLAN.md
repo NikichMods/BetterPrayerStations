@@ -70,3 +70,6 @@ Current accepted diagnostic milestone: installed Faith0.7.1 passes same-catalog 
 
 
 Passive formula decision2026-10-23: sum positive current quality of exclusively allocated graves; bonus=floor(sum/10), added to ordinary native station quality. Zero/negative contributions count0, never subtract. Current effective/displayed grave quality is the documented interpretation; no other zone decoration/station quality enters the sum. DESIGN.md owns formula/examples. Next is static station-quality/native-zone update/preview evidence, not another replay of accepted0.7.1 or an unsolicited runtime change.
+
+
+Authorized next research slice Faith0.8.0: positive-current-quality passive bonus on completed stations, exclusive nearest/persistent-ID assignment, additive native getter result and actual zone sum/event. First slice is committed-state only; existing faith preview preserved, prospective passive allocation deferred. Read PASSIVE_QUALITY_RESEARCH.md for READY/static owners/limits, FaithProbe README for no-faith/no-A-B scenario, TEST_BUILD_LOG.md for exact candidate. No new persistent fields or final balance/UI.

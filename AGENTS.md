@@ -61,3 +61,6 @@ Current research candidate Faith0.7.0 replaces circle with diagnostic grid-align
 
 
 Faith0.7.0 return fails repeat-preview text readiness and current-part geometry observation at native construction placement (global probe shutdown); material grants pass. Corrective0.7.1 scopes placement-box discovery to native WGO.wop with owner-reference invalidation and defers native text acquisition without rebasing numeric snapshot. Installed0.7.1 bounded same-catalog repeat text/native wooden construction/approach/move scenario now passes with user confirmation; exact evidence/limits in README/COVERAGE_RESEARCH/TEST_BUILD_LOG. No passive quality or production/stable acceptance implied.
+
+
+Faith0.8.0 passive-quality candidate: docs/PASSIVE_QUALITY_RESEARCH.md and current FaithProbe README own scope/readiness. Positive current committed grave quality, exclusive nearest/ID owner, floor(sum/10) added after native station quality; native zone sum/event retained. No new save data, final balance or prospective passive bonus. Existing0.7.1 faith preview retained. Exact immutable artifact/install and runtime acceptance: TEST_BUILD_LOG.md.

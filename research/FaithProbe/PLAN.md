@@ -73,3 +73,8 @@ Current corrective candidate0.7.1: see COVERAGE_RESEARCH.md returned0.7.0 eviden
 
 
 Installed0.7.1 bounded scenario accepted; current canonical result/limits: docs/COVERAGE_RESEARCH.md and exact TEST_BUILD_LOG.md return. Do not repeat this accepted scenario or consume another diagnostic version solely for bookkeeping. Passive station quality remains the next separate unimplemented mechanic, subject to DESIGN.md input decisions.
+
+
+## Faith0.8.0 passive station quality
+
+Method and READY checkpoint: docs/PASSIVE_QUALITY_RESEARCH.md. Narrow committed-state/no-faith/no-A-B scenario: README.md; exact frozen identity/install: TEST_BUILD_LOG.md. Prior0.7.1 remains accepted/frozen; no prospective passive allocation or saved data changes.
