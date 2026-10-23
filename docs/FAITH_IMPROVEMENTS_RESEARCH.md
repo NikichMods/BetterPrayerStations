@@ -1,6 +1,6 @@
 # Grave-owned faith improvements — technical research, 2026-10-23
 
-Status: **static source/installed IL plus passing offline native skull oracle**. No faith runtime patch, payment, native UI integration or installed-game faith acceptance exists. Product rules remain in DESIGN.md. The installed appearance probe 0.1.2 is unchanged; its acceptance does not prove this mechanic.
+Status: **static source/installed IL plus passing offline native skull oracle**. The authorized research-only Faith Probe source now implements the proposed native rating/UI input projections for one grave, with session-only C/L and explicit activation. Its build/install identity is owned by TEST_BUILD_LOG.md; no installed-game faith acceptance, payment or real coverage exists. Product rules remain in DESIGN.md. The installed appearance probe 0.1.2 is unchanged; its acceptance does not prove this mechanic.
 
 ## Outcome and selected research direction
 
@@ -8,7 +8,7 @@ A grave stores purchased conversion capacity C and extra wreaths L, with one sha
 
 User decision in this segment: **converted white skulls obey the native body-decay limit**. They do not cure decay. Apply conversion to total effective red/white counts before calculating available white skulls. Existing price-led access, wooden first-N purchase cap, strongest-tier purchase permission and any-station activation remain unchanged; prices/N/radius are not settled here.
 
-Research direction: narrowly project two inputs at the **grave branch** of WorldGameObject.quality, leaving its native branches, craft ignore-item rule, floor and min calculation intact. Feed corresponding effective inputs to the native central grave diagram. Keep shared Item.GetBodySkulls, BodyPanelGUI and physical item getters unpatched globally. This is a supported candidate mechanism, not yet a production implementation or a compiled transpiler.
+Research direction: narrowly project two inputs at the **grave branch** of WorldGameObject.quality, leaving its native branches, craft ignore-item rule, floor and min calculation intact. Feed corresponding effective inputs to the native central grave diagram. Keep shared Item.GetBodySkulls, BodyPanelGUI and physical item getters unpatched globally. This is a supported candidate mechanism, not a production implementation; the research probe compiles the transpilers and validates their rewrite against the installed native instruction lists, without claiming live startup/UI acceptance.
 
 ## Evidence identity
 
@@ -79,6 +79,6 @@ After an accepted action, only the selected grave's effective state/UI and relev
 
 ## Readiness and next smallest evidence
 
-**BLOCKED for production mutation**: native owners/seams and arithmetic are established, but actual call-site patching, GUI agreement, coverage switching and adjacent consumers have not been exercised. No new diagnostic DLL/version is created in this segment.
+**BLOCKED for production mutation**: native owners/seams and arithmetic are established, but actual call-site patching, GUI agreement, coverage switching and adjacent consumers have not been exercised. The subsequent authorized `research/FaithProbe` candidate supplies these inputs; see its PLAN/README and TEST_BUILD_LOG.md. Numbering and acceptance are independent of the appearance probe.
 
-Next useful installed experiment is an isolated grave-effect slice: one opted-in grave, explicit diagnostic C/L plus active/dormant input (clearly synthetic until real coverage is implemented), native rating and central diagram, unchanged raw body/organ/durability/item snapshots, native zone-total observation and cleanup. Do not bundle unverified payment/coverage geometry into this first proof or repeat accepted cosmetic tests. Then establish body removal/replacement/non-export and persistence through real paths before paid production actions. Temporary diagnostic activation must never be presented as proof of prayer-station radius or spending behavior. Exact scenario/guards must be recorded before any numbered handoff.
+Next useful installed experiment is an isolated grave-effect slice: one opted-in grave, explicit diagnostic C/L plus active/dormant input (clearly synthetic until real coverage is implemented), native rating and central diagram, unchanged raw body/organ/durability/item snapshots, and cleanup. Live zone-total notifications/refresh are deliberately deferred from this first user-requested rating/scale slice because the getter has notification side effects. Do not bundle unverified payment/coverage geometry into this first proof or repeat accepted cosmetic tests. Then establish body removal/replacement/non-export and persistence through real paths before paid production actions. Temporary diagnostic activation must never be presented as proof of prayer-station radius or spending behavior. Exact scenario/guards must be recorded before any numbered handoff.
