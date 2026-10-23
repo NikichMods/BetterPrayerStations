@@ -36,3 +36,6 @@ Authorized next slice: [two-grave/native-zone integration](TWO_GRAVE_ZONE_RESEAR
 
 
 Faith Probe0.5.0 return incomplete: only A registered, stale selected-A quote on native context change; no cross-owner counter failure established. Corrective0.5.1 explicit saved A/B assignment and actual-open quote refresh precede remaining two-owner/closed-zone/move/load acceptance. See TWO_GRAVE_ZONE_RESEARCH.md and current probe README. No new visual/balance scope.
+
+
+Installed Faith0.5.1 now passes bounded A/B context/prices and three real closed-window native-zone totals146->145->146 with independent selective grave coverage and seven GUI checks. Pair mixed C/L live recovery is absent from returned log; user visual report is separate. Transient station count up to8 reported; temporary candidate IDs/count2 are observed and source Count exposes backing-list length. Preview/committed distinction and move replacement/cancel remain open and take priority before full production integration. Preserve desired preview feedback. Exact source/hash/return: TEST_BUILD_LOG.md and TWO_GRAVE_ZONE_RESEARCH.md. No new visual/balance scope or binary.

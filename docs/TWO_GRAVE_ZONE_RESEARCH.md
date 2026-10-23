@@ -1,6 +1,6 @@
 # Two-grave and native zone integration research — 2026-10-23
 
-Status: corrective research-only0.5.1 candidate; explicit saved A/B roles and native-open context refresh pass offline gates.0.5.0 return was incomplete with only A registered; live simultaneous/native-zone/closed-window return remains pending. DESIGN.md owns mechanics. No final prices/radius/caps or product visual work is selected here.
+Status: installed0.5.1 confirms actual A/B addressing/independent prices and simultaneous closed-window native sum/event with selective grave coverage. Pair mixed-state live load is not captured; transient station count/preview classification remains defective. Exact evidence and limits: TEST_BUILD_LOG.md installed0.5.1 return. DESIGN.md owns mechanics. No final prices/radius/caps or product visual work is selected here.
 
 ## Exact question and native owners
 
@@ -31,3 +31,5 @@ The incomplete0.5.0 return contains only SELECT1060, conversion cost1 and wreath
 0.5.1 adds explicit assign-opened-as-A/B buttons and optional grave-owned diagnostic slot, persistent across native serialization. Occupied role/two roles for one grave reject without mutation; legacy unlabelled marks need explicit assignment. Native Open uses actual owner, refreshes quote and purchase enablement, logs OPEN_CONTEXT, cancels pending old-owner work. Unregistered/unlabelled opened grave cannot buy. Role is cleared with improvements, never travels with body. No payment backend or zone formula change; no production visual/balance scope.
 
 Offline role tests pass including ID-order independence, native map role/count reload, refusal invariance, duplicate/invalid roles and cleanup. Unity UI/open/load and simultaneous zone integration remain unaccepted. Repeat the README two-role setup and independent prices first, then previously unperformed closed-zone/move/load steps. No save-file editing or faith refund.
+
+Current live result: A1060 C1/L1/N2 next3; B1061 C1/L0/N1 next2; faith24->20. Three real closed-window totals146->145->146 all match native events/invariants. Selective dormant state occurs when B itself moves outside coverage. Seven native GUI observations pass; both marked graves are cleaned and saved. No post-purchase pair recovery exists in returned log despite user visual load report. User also reports transient count8; actual sampled records show temporary candidate IDs and count2, returning1. Preview count/lifecycle is an open defect, not completed compatibility. See exact0.5.1 evidence in TEST_BUILD_LOG.md. Next narrow work: classify committed/current-preview candidates and replacement/cancel before another pair-load checkpoint; do not replay the entire paid scenario.
