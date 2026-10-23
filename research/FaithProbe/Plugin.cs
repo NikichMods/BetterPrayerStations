@@ -31,7 +31,7 @@ namespace NikichMods.BPSFaithProbe
         readonly MovePreviewOwner movePreview=new MovePreviewOwner();
         readonly RadiusOverlay radiusOverlay=new RadiusOverlay();
         readonly Dictionary<long,float> badgeQuality=new Dictionary<long,float>();
-        bool showRadius=true,previewLogged;
+        bool showRadius=true,previewLogged,materialGrantFailed;
         int previewSerial,lastBuiltCount=-1;
         string previewSummary="Предпросмотр: нет";
         Vector2 previewOriginal;
@@ -180,6 +180,17 @@ namespace NikichMods.BPSFaithProbe
             Log("BADGE_REFRESH target="+grave.unique_id+" quality="+value.ToString("R",Inv)+" native_text="+data.text.Replace("\n","|")+" retained="+retained+" physical_unchanged="+intact+" preview="+coverage.HasPreview+" floating="+FloatingWorldGameObject.IsFloating());
             if(!retained || !intact)throw new InvalidOperationException("Native quality badge refresh changed physical state or lost native data");
             badgeQuality[grave.unique_id]=value;
+        }
+        void GrantStationMaterials(bool stone)
+        {
+            if(!ready || !Current() || materialGrantFailed)return;
+            try
+            {
+                bool granted=StationMaterials.Grant(MainGame.me.player.data,stone,Log);
+                status=granted?"Выдан полный набор на одну "+(stone?"каменную":"деревянную")+" молельню. Это тестовые материалы.":"Для полного набора не хватает места в основном инвентаре. Ничего не выдано.";
+            }
+            catch(Exception ex)
+            {materialGrantFailed=true;status="Выдача материалов отключена после ошибки. Смотрите журнал; не повторяйте выдачу.";Logger.LogError("BPS_FAITH MATERIAL_GRANT_FAILED setup_disabled=True "+ex);}
         }
         void SetupMoveTest()
         {
@@ -716,6 +727,9 @@ namespace NikichMods.BPSFaithProbe
             GUILayout.Label(previewSummary+". Круг: голубой — текущий, жёлтый — предполагаемый; радиус 3 клетки.",label);
             showRadius=GUILayout.Toggle(showRadius,"Показывать тестовый радиус");
             bool previous = GUI.enabled;
+            GUI.enabled=ready && Current() && pending==null && !materialGrantFailed;
+            if(GUILayout.Button("Материалы на деревянную молельню",button))Queue(delegate{GrantStationMaterials(false);});
+            if(GUILayout.Button("Материалы на каменную молельню",button))Queue(delegate{GrantStationMaterials(true);});
             GUI.enabled = ready && SessionReady() && pending == null;
             if(GUILayout.Button(aButton,button))Queue(delegate{Select(1);});
             if(GUILayout.Button(bButton,button))Queue(delegate{Select(2);});
