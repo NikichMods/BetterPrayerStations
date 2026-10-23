@@ -19,7 +19,7 @@ namespace NikichMods.BPSFaithProbe
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string Id = "nikichmods.bps.faithprobe";
-        public const string Version = "0.7.0";
+        public const string Version = "0.7.1";
         const string Host = "e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const int Limit = SavedFaithState.Limit; // Diagnostic UI/object-count bound, not a product cap.
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
@@ -31,8 +31,7 @@ namespace NikichMods.BPSFaithProbe
         readonly MovePreviewOwner movePreview=new MovePreviewOwner();
         readonly RadiusOverlay radiusOverlay=new RadiusOverlay();
         readonly Dictionary<long,float> badgeQuality=new Dictionary<long,float>();
-        readonly Dictionary<long,float> previewBaseline=new Dictionary<long,float>();
-        readonly Dictionary<long,string> baselineText=new Dictionary<long,string>();
+        readonly Dictionary<long,PreviewBaseline> previewBaseline=new Dictionary<long,PreviewBaseline>();
         bool showRadius=true,previewLogged,materialGrantFailed;
         int previewSerial,lastBuiltCount=-1;
         string previewSummary="Предпросмотр: нет";
@@ -105,8 +104,8 @@ namespace NikichMods.BPSFaithProbe
             try
             {
                 var source=p.movePreview.Read();p.coverage.Register(source);
-                p.badgeQuality.Clear();p.previewBaseline.Clear();p.baselineText.Clear();p.coverage.CommittedOnly=true;
-                try{foreach(var g in p.graves.Items){p.previewBaseline[g.unique_id]=g.quality;var d=g.GetQualityWidgetData();if(d!=null)p.baselineText[g.unique_id]=d.text;}}
+                p.badgeQuality.Clear();p.previewBaseline.Clear();p.coverage.CommittedOnly=true;
+                try{foreach(var g in p.graves.Items){float q=g.quality;var d=g.GetQualityWidgetData();p.previewBaseline[g.unique_id]=new PreviewBaseline(q,d==null?null:d.text);}}
                 finally{p.coverage.CommittedOnly=false;}
                 p.coverage.Begin(__result.wobj,source);
                 p.previewOriginal=source==null?Vector2.zero:source.pos;p.previewLogged=false;
@@ -131,7 +130,7 @@ namespace NikichMods.BPSFaithProbe
                     p.RecordPreview();p.coverage.Refresh();
                     __state=new PreviewStopState{Preview=w,Source=p.coverage.Owners.Source,Original=p.previewOriginal,Serial=p.previewSerial,Count=p.coverage.Count,Faith=FaithPurchase.Count(MainGame.me.player.data),Money=MainGame.me.player.data.money,Graves=p.PairState()};
                 }
-                p.coverage.End(w,__0);p.badgeQuality.Clear();p.previewBaseline.Clear();p.baselineText.Clear();p.previewLogged=false;
+                p.coverage.End(w,__0);p.badgeQuality.Clear();p.previewBaseline.Clear();p.previewLogged=false;
             }
             catch(Exception ex){p.Fail(ex);}
         }
@@ -154,7 +153,7 @@ namespace NikichMods.BPSFaithProbe
             if(previewLogged || !coverage.HasPreview)return;
             previewLogged=true;previewSerial++;
             var source=coverage.Owners.Source;var w=coverage.Owners.Preview;
-            foreach(var g in graves.Items){float baseline;if(previewBaseline.TryGetValue(g.unique_id,out baseline))Log("PREVIEW_BASELINE target="+g.unique_id+" quality="+baseline.ToString("R",Inv));}
+            foreach(var g in graves.Items){PreviewBaseline baseline;if(previewBaseline.TryGetValue(g.unique_id,out baseline))Log("PREVIEW_BASELINE target="+g.unique_id+" quality="+baseline.Quality.ToString("R",Inv)+" text_ready="+(baseline.Text!=null));}
             Log("PREVIEW_BEGIN n="+previewSerial+" candidate="+w.unique_id+" source="+(source==null?0:source.unique_id)+" built="+coverage.Count+" source_xy="+PrayerCoverage.Position(source)+" preview_xy="+PrayerCoverage.Position(w));
         }
         void LateUpdate()
@@ -193,11 +192,23 @@ namespace NikichMods.BPSFaithProbe
             var p=self;if(p==null || !p.ready || __result==null || !p.Current() || p.coverage.CommittedOnly || !p.coverage.HasPreview)return;
             try
             {
-                float baseline;string text;
-                if(!p.previewBaseline.TryGetValue(__instance.unique_id,out baseline) || !p.baselineText.TryGetValue(__instance.unique_id,out text))return;
-                float delta=__instance.quality-baseline;
+                PreviewBaseline baseline;
+                if(!p.previewBaseline.TryGetValue(__instance.unique_id,out baseline))return;
+                if(baseline.Text==null)
+                {
+                    bool resolved;p.coverage.CommittedOnly=true;
+                    try
+                    {
+                        float committed=__instance.quality;var native=__instance.GetQualityWidgetData();
+                        resolved=baseline.AcceptText(committed,native==null?null:native.text);
+                    }
+                    finally{p.coverage.CommittedOnly=false;}
+                    p.Log("BASELINE_TEXT target="+__instance.unique_id+" deferred=True resolved="+resolved+" frozen_quality="+baseline.Quality.ToString("R",Inv));
+                    if(!resolved)return;
+                }
+                float delta=__instance.quality-baseline.Quality;
                 if(MainGame.me.gui_elements.build_mode_gui.is_shown && Math.Abs(__instance.quality_k)>.00001f)delta/=__instance.quality_k;
-                __result.text=PreviewFeedback.Text(text,delta);
+                __result.text=PreviewFeedback.Text(baseline.Text,delta);
             }
             catch(Exception ex){p.Fail(ex);}
         }
@@ -487,7 +498,7 @@ namespace NikichMods.BPSFaithProbe
         {
             if(!ready || !SessionReady())return;
             movePreview.Initialize();Log("PREVIEW_ADAPTER phase=game-ready "+movePreview.Identity);
-            badgeQuality.Clear();previewBaseline.Clear();baselineText.Clear();session=MainGame.me.save;target=null;body=null;coverage.Clear();coverageTier=-1;graves.Clear();previousTier.Clear();previousCovering.Clear();
+            badgeQuality.Clear();previewBaseline.Clear();session=MainGame.me.save;target=null;body=null;coverage.Clear();coverageTier=-1;graves.Clear();previousTier.Clear();previousCovering.Clear();
             foreach(var grave in WorldMap.objs)
             {
                 if(grave==null || grave.data==null)continue;
@@ -711,6 +722,7 @@ namespace NikichMods.BPSFaithProbe
             bool wasReady = ready; ready = false; effects = false; pending = null;
             Logger.LogError("BPS_FAITH FAILED action=effects-disabled " + ex);
             status = "Эффекты отключены после ошибки. См. журнал; очистка доступна.";
+            pairSummary="Пробник остановлен: улучшения не применяются. Очистка доступна.";radiusOverlay.Clear();
             if (wasReady && Current() && gui != null && gui.gameObject.activeInHierarchy)
                 Queue(delegate { Log("ROLLBACK_BEGIN"); redraw.Invoke(gui, null); Log("ROLLBACK_END fallback=vanilla-ui"); });
         }
@@ -743,7 +755,7 @@ namespace NikichMods.BPSFaithProbe
             GUILayout.Label("Пробник СПИСЫВАЕТ веру у героя и из его сумок. Тестовая цена: N+1. F8 — скрыть/показать.", label);
             GUILayout.Label(status, label);
             GUILayout.Label(editingSummary,label);
-            GUILayout.Label("Превращения: " + shownConversions + "; доп. венки: " + shownWreaths + "; эффекты: " + (coverageTier>0 ? "покрытие есть" : "вне покрытия"), label);
+            GUILayout.Label("Превращения: " + shownConversions + "; доп. венки: " + shownWreaths + "; эффекты: " + (!ready || !effects ? "отключены после ошибки/очистки" : coverageTier>0 ? "покрытие есть" : "вне покрытия"), label);
             GUILayout.Label("Построенные молельни: "+coverage.Count+"; покрывают: "+coveringCount+"; уровень: "+coverageTier+"; ближайшая №"+nearestStation+" на "+(float.IsPositiveInfinity(nearestCells)?"—":nearestCells.ToString("0.00",Inv))+" кл.",label);
             GUILayout.Label("Вера: "+shownFaith+"; общих действий: "+(shownConversions+shownWreaths)+"; следующая цена: "+FaithPurchase.Price(shownConversions+shownWreaths)+" веры (тест).",label);
             GUILayout.Label(pairSummary,label);
@@ -792,7 +804,7 @@ namespace NikichMods.BPSFaithProbe
         {
             var p=self;if(p==null)return;
             if(p.target!=null)p.Log("RESET reason=load saved_grave_params=retained");
-            p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;p.coverage.Clear();p.previewBaseline.Clear();p.baselineText.Clear();p.badgeQuality.Clear();p.radiusOverlay.Clear();p.previewLogged=false;p.lastBuiltCount=-1;p.graves.Clear();p.previousTier.Clear();p.previousCovering.Clear();p.zoneCheckRequested=false;p.zoneSampling=false;p.pairSummary="";p.editingSummary="";p.editingAssigned=false;p.aButton="Назначить открытую могилу как A";p.bButton="Назначить открытую могилу как B";p.coverageTier=-1;p.coveringCount=0;p.nearestStation=0;p.nearestCells=float.PositiveInfinity;
+            p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;p.coverage.Clear();p.previewBaseline.Clear();p.badgeQuality.Clear();p.radiusOverlay.Clear();p.previewLogged=false;p.lastBuiltCount=-1;p.graves.Clear();p.previousTier.Clear();p.previousCovering.Clear();p.zoneCheckRequested=false;p.zoneSampling=false;p.pairSummary="";p.editingSummary="";p.editingAssigned=false;p.aButton="Назначить открытую могилу как A";p.bButton="Назначить открытую могилу как B";p.coverageTier=-1;p.coveringCount=0;p.nearestStation=0;p.nearestCells=float.PositiveInfinity;
         }
         static void Started()
         {

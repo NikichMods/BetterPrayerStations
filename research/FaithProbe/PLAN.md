@@ -67,3 +67,6 @@ Status: compiled development source only, queued for the next square-coverage pr
 ## Square/grid feedback diagnostic0.7.0 — preparation2026-10-23
 
 Current method/readiness, static geometry inputs and evidence limits are owned by docs/COVERAGE_RESEARCH.md, section of the same name. Current deterministic native-build/approach/optional-move scenario and save/cleanup semantics: README.md. Candidate includes queued material grants; excludes passive station quality and final balance. Exact frozen artifact/install identity: docs/TEST_BUILD_LOG.md.
+
+
+Current corrective candidate0.7.1: see COVERAGE_RESEARCH.md returned0.7.0 evidence/readiness; README priority repeat-preview/native construction/approach scenario. Prior0.7.0 compile success is not runtime acceptance.

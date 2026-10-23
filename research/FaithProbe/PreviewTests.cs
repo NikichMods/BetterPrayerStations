@@ -7,6 +7,25 @@ internal static class PreviewTests
     static void Check(bool ok,string message){if(!ok)throw new InvalidOperationException(message);}
     public static void Run(Assembly probe)
     {
+        var baselineType=probe.GetType("NikichMods.BPSFaithProbe.PreviewBaseline",true);
+        var accept=baselineType.GetMethod("AcceptText");var textProperty=baselineType.GetProperty("Text");
+        var snapshot=Activator.CreateInstance(baselineType,new object[]{2f,null});
+        Check(!(bool)accept.Invoke(snapshot,new object[]{2f,null}),"Absent native text was treated as ready");
+        Check((bool)accept.Invoke(snapshot,new object[]{2f,"(wskull)\n2"}),"Late native text cannot resolve frozen baseline");
+        accept.Invoke(snapshot,new object[]{3f,"(wskull)\n3"});
+        Check((string)textProperty.GetValue(snapshot,null)=="(wskull)\n2" && (float)baselineType.GetField("Quality").GetValue(snapshot)==2f,"Cursor movement overwrote original snapshot");
+        var changed=Activator.CreateInstance(baselineType,new object[]{2f,null});bool rejected=false;
+        try{accept.Invoke(changed,new object[]{3f,"(wskull)\n3"});}catch(TargetInvocationException e){rejected=e.InnerException is InvalidOperationException;}
+        Check(rejected && textProperty.GetValue(changed,null)==null,"Changed committed quality silently rebased deferred snapshot");
+        var geometry=probe.GetType("NikichMods.BPSFaithProbe.GridFootprint",true);
+        bool ownerRead=false,partWalk=false;
+        foreach(var i in PatchProcessor.GetOriginalInstructions(geometry.GetMethod("TryRect")))
+        {
+            var fieldInfo=i.operand as FieldInfo;if(fieldInfo!=null && fieldInfo.DeclaringType==typeof(WorldGameObject) && fieldInfo.Name=="wop")ownerRead=true;
+            var methodInfo=i.operand as MethodInfo;if(methodInfo!=null && methodInfo.Name=="GetComponentsInChildren")partWalk=true;
+        }
+        Check(ownerRead && partWalk,"Geometry no longer selects the native current WOP owner");
+        Console.WriteLine("PASS compiled deferred native-text readiness: null then ready, immutable numeric/text baseline, changed committed value rejected. Geometry reads current native WOP before subtree discovery; Unity old/new hierarchy transition still requires live observation.");
         var feedback=probe.GetType("NikichMods.BPSFaithProbe.PreviewFeedback",true).GetMethod("Text");
         Func<float,string> text=d=>(string)feedback.Invoke(null,new object[]{"(wskull)\n3",d});
         Check(text(0)=="(wskull)\n3","Zero preview delta changes committed number");

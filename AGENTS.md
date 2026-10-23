@@ -58,3 +58,6 @@ Current corrective probe Faith0.6.1:0.6.0 confirmed stable built count and visib
 
 
 Current research candidate Faith0.7.0 replaces circle with diagnostic grid-aligned squares (wood18/stone24 small-cell sides), native placement-footprint center membership, highlighted real graves, frozen native old-number-plus-delta text during preview, nearest-station approach and native construction-stage observation. Includes queued native-recipe material buttons. No passive station quality or final balance. Runtime/visual acceptance pending; current README/COVERAGE_RESEARCH/TEST_BUILD_LOG own exact candidate and limits. Historical0.6.1 acceptance remains bounded to its old circular geometry.
+
+
+Faith0.7.0 return fails repeat-preview text readiness and current-part geometry observation at native construction placement (global probe shutdown); material grants pass. Corrective0.7.1 scopes placement-box discovery to native WGO.wop with owner-reference invalidation and defers native text acquisition without rebasing numeric snapshot. Runtime acceptance pending; README/COVERAGE_RESEARCH/TEST_BUILD_LOG own current state.

@@ -9,7 +9,7 @@ namespace NikichMods.BPSFaithProbe
     internal sealed class GridFootprint
     {
         public const float Cell=32f,HalfCheck=14.4f;
-        sealed class Shape {public string Id;public Transform Transform;public Vector2 Offset,Size;}
+        sealed class Shape {public string Id;public WorldObjectPart Part;public Transform Transform;public Vector2 Offset,Size;}
         readonly Dictionary<WorldGameObject,Shape> shapes=new Dictionary<WorldGameObject,Shape>();
         static readonly FieldInfo Cells=typeof(WorldGameObject).GetField("_cells",BindingFlags.Instance|BindingFlags.NonPublic);
         public void Clear(){shapes.Clear();}
@@ -25,11 +25,12 @@ namespace NikichMods.BPSFaithProbe
         public bool TryRect(WorldGameObject w,out Rect rect)
         {
             rect=new Rect();if(w==null || w.is_removed)return false;
+            var part=w.wop;if(part==null)return false;
             Shape shape;
-            if(!shapes.TryGetValue(w,out shape) || shape.Id!=w.obj_id || shape.Transform==null)
+            if(!shapes.TryGetValue(w,out shape) || shape.Id!=w.obj_id || !ReferenceEquals(shape.Part,part) || shape.Transform==null)
             {
                 BoxCollider2D found=null;
-                foreach(var c in w.GetComponentsInChildren<Collider2D>(true))
+                foreach(var c in part.GetComponentsInChildren<Collider2D>(true))
                 {
                     if(c.gameObject.layer!=23 || BuildGrid.SkipCollider(c,w))continue;
                     var box=c as BoxCollider2D;
@@ -37,7 +38,7 @@ namespace NikichMods.BPSFaithProbe
                     found=box;
                 }
                 if(found==null)return false;
-                shape=new Shape{Id=w.obj_id,Transform=found.transform,Offset=found.offset,Size=found.size};shapes[w]=shape;
+                shape=new Shape{Id=w.obj_id,Part=part,Transform=found.transform,Offset=found.offset,Size=found.size};shapes[w]=shape;
             }
             var t=shape.Transform;var a=t.TransformPoint(shape.Offset-shape.Size/2f);var b=t.TransformPoint(shape.Offset+shape.Size/2f);
             if(Math.Abs(t.eulerAngles.z)>.01f && Math.Abs(t.eulerAngles.z-360f)>.01f)throw new InvalidOperationException("Rotated placement box is outside diagnostic geometry");
@@ -47,6 +48,7 @@ namespace NikichMods.BPSFaithProbe
         public string NativeCheck(WorldGameObject w)
         {
             Rect rect;if(!TryRect(w,out rect))return "geometry=missing";
+            if(w.GetComponent<FloatingWorldGameObject>()!=null)return "geometry=current-wop-box native_cells=not-compared-floating center="+rect.center+" size="+rect.size;
             var cells=Cells.GetValue(w) as List<DungeonGenerator.IntVector2>;
             if(cells==null || cells.Count==0)return "geometry=box native_cells=empty";
             int minX=int.MaxValue,minY=int.MaxValue,maxX=int.MinValue,maxY=int.MinValue;
