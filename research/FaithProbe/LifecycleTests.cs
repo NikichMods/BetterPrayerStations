@@ -15,7 +15,7 @@ static class LifecycleTests
     static Assembly probe;
     static Type state;
     static MethodInfo applySkulls, applyDecoration;
-    static WorldGameObject selected;
+    static WorldGameObject selected,secondarySelected,dormant;
     static bool enabled;
     static Func<WorldGameObject,float> nativeReplay, projectedReplay;
     static readonly BindingFlags Flags=BindingFlags.Public|BindingFlags.NonPublic|BindingFlags.Instance;
@@ -79,7 +79,7 @@ static class LifecycleTests
     }
     static bool Scope(WorldGameObject grave)
     {
-        return ReferenceEquals(grave,selected) && enabled && grave.obj_id=="grave_ground" && !grave.components.craft.is_crafting && grave.GetBodyFromInventory(true)!=null;
+        return (ReferenceEquals(grave,selected) || ReferenceEquals(grave,secondarySelected)) && !ReferenceEquals(grave,dormant) && enabled && grave.obj_id=="grave_ground" && !grave.components.craft.is_crafting && grave.GetBodyFromInventory(true)!=null;
     }
     static void SkullInput(Item body,out int red,out int white,out int available,bool dontCountSelf,WorldGameObject grave)
     {
@@ -168,6 +168,40 @@ static class LifecycleTests
         Check(Count(body,Schema)==0 && Count(body,C)==0 && Count(body,L)==0,"Grave parameters exported to body/item");
         foreach(var child in body.inventory)NoExport(child);
     }
+    static void TwoOwnerAndNativeZone()
+    {
+        var a=Fixture(3,3,1f,6f);a.unique_id=101;var b=Fixture(1,5,.8f,3f);b.unique_id=202;
+        var setType=probe.GetType("NikichMods.BPSFaithProbe.TwoGraves",true);var set=Activator.CreateInstance(setType);var add=setType.GetMethod("Add");var contains=setType.GetMethod("Contains");
+        add.Invoke(set,new object[]{b});add.Invoke(set,new object[]{a});add.Invoke(set,new object[]{a});
+        var items=(List<WorldGameObject>)setType.GetField("Items").GetValue(set);
+        Check(items.Count==2 && ReferenceEquals(items[0],a) && ReferenceEquals(items[1],b),"Two-owner set lost identity/order");
+        Check((bool)contains.Invoke(set,new object[]{a}) && (bool)contains.Invoke(set,new object[]{b}),"Membership tied to selected editor");
+        var c=Fixture(0,9,1f,9f);c.unique_id=303;bool refused=false;
+        try{add.Invoke(set,new object[]{c});}catch(TargetInvocationException){refused=true;}Check(refused,"Third diagnostic owner accepted");
+        var duplicateSet=Activator.CreateInstance(setType);add.Invoke(duplicateSet,new object[]{a});var duplicate=Fixture(0,9,1f,9f);duplicate.unique_id=101;refused=false;
+        try{add.Invoke(duplicateSet,new object[]{duplicate});}catch(TargetInvocationException){refused=true;}Check(refused,"Duplicate live ID accepted");
+        Write(a.data,1,1);Write(b.data,1,0);selected=a;secondarySelected=b;dormant=null;enabled=true;
+        Check(projectedReplay(a)==4 && projectedReplay(b)==3,"Two simultaneous projected native getters");
+        dormant=a;Check(projectedReplay(a)==3 && projectedReplay(b)==3,"A coverage loss affected B");
+        dormant=b;Check(projectedReplay(a)==4 && projectedReplay(b)==2,"B coverage loss affected A");
+        dormant=null;var pair=Roundtrip(a,b);a=pair[0];b=pair[1];selected=a;secondarySelected=b;
+        Investment(a.data,1,1);Investment(b.data,1,0);Check(projectedReplay(a)==4 && projectedReplay(b)==3,"Both saved owners not projected after reload");
+        var zone=Bare<WorldZone>();var definition=Bare<WorldZoneDefinition>();definition.calc_method=WorldZoneDefinition.QualityCalcMethod.Sum;
+        Set(zone,"_definition",definition);zone.id="synthetic_graveyard";c.obj_def.ignore_counting_at_zone=true;
+        Set(zone,"_wgos",new List<WorldGameObject>{a,b,c});
+        int events=0;string eventId=null;float eventValue=0;Action<string,float> listener=(id,value)=>{events++;eventId=id;eventValue=value;};
+        WorldZone.OnQualityComputed+=listener;
+        try
+        {
+            float total=zone.GetTotalQuality();
+            Check(total==5 && events==1 && eventId==zone.id && eventValue==total,"Actual native zone sum/ignored member/notification");
+            Check(zone.GetZoneWGOs().Count==3,"Native member getter changed membership");
+        }
+        finally{WorldZone.OnQualityComputed-=listener;}
+        selected=a;secondarySelected=null;dormant=null;
+        Console.WriteLine("PASS two-owner set and projected native getter IL: simultaneous independent C/L, selective dormant/active result, both-owner native serialization including mixed C/L. PASS actual native WorldZone sum, ignored member and one native quality callback on synthetic objects.");
+        Console.WriteLine("LIMIT native zone fixture calls unpatched native leaf getters; combined live two-owner Harmony activation/closed-window zone/Unity coverage still requires0.5.0 installed return.");
+    }
     public static void Run(Assembly assembly)
     {
         probe=assembly;state=probe.GetType("NikichMods.BPSFaithProbe.SavedFaithState",true);
@@ -237,6 +271,7 @@ static class LifecycleTests
         Write(a.data,1,1);a.data.SetParam(Schema,2);bool unknown=false;
         try{Backend("Read").Invoke(null,new object[]{a.data});}catch(TargetInvocationException ex){unknown=ex.InnerException is InvalidOperationException;}
         Check(unknown,"Unknown saved schema accepted");
+        TwoOwnerAndNativeZone();
         Console.WriteLine("PASS native binary map serialization + synthetic inventory lifecycle: occupied/empty/replaced grave investment and IDs, original raw anatomy, no cross-grave export, red-bound/decay recalculation, shared action sum, positive-state pruning, cleanup roundtrip and unrelated data, invalid state rejection.");
         Console.WriteLine("LIMIT synthetic definitions/owners and list relocation, explicit headless authorization; actual getter IL and shared backend executed, but no Unity scene, native exhumation/SetObject/scene restore, live context recovery, UI or runtime save acceptance.");
     }

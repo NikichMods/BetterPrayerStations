@@ -1,18 +1,16 @@
-# Faith Probe0.4.0 — research-method checkpoint
+# Faith Probe0.5.0 — research-method checkpoint
 
-Question: can one grave convert actual player-carried faith into one persisted improvement, advancing the same C+L sequence regardless of action, with no debit on shortage/stale context and contained failure between debit and state commit?
+Question: do two independently saved/paid graves contribute through the real native zone sum without an open grave window or selected-owner dependency, preserve independent prices, respond independently to station relocation and recover together including mixed C/L?
 
-Existing accepted0.2/0.3 proves saved grave inputs, arithmetic and bounded actual coverage, but all actions are free. Native single-resource Item.RemoveItem and GetTotalCount source/IL establish root/bag scope and direct list/value mutation; a boolean alone does not prove exact debit. Native crafting would add work/craft state and ingredient service owners beyond an instant optional grave action. A generic multi-resource transaction/framework is unnecessary. Existing exact baseline code is extended only with paid action, not reconstructed.
+Existing0.4.0 already proves native paid single-owner actions/refusal/load. Its explicit selected-grave authorization cannot prove simultaneous owners, so another run of that binary is insufficient. Source/installed IL confirms native WorldZone.GetTotalQuality sums _wgos (except ignored definitions), then invokes OnQualityComputed. GetZoneWGOs returns that list directly. Calling native zone once with effects disabled would send a false baseline to native listeners, so that method is NOT used for the diagnostic baseline.
 
-Choice: native single-resource debit + exact before/after count + existing grave saved-state write, all in one synchronous main-thread method. Small snapshot of only verified mutable root/bag lists/item quantities and owned grave values supports bounded rollback; no Item deep clone replacing native references, global player inventory replacement or asynchronous save machinery. No GUI call/yield inside the transaction; normal save later serializes current player/grave owners. Quoted count/cost and reentry guard are checked, failures disable rather than retry. Native getter/UI work follows a completed commit and is not a second debit phase.
+Choice: retain exact known getter/UI/payment backend, replace only selected-owner scope with a bounded TwoGraves registry; selection is editing only. Actual per-grave argument drives saved-state/body/coverage reads. Existing post-load discovery recovers two marks without an external ledger. One explicit closed-window zone call observes real inputs/result/event, compared with native individual vanilla leaf sum plus per-owner deltas; temporary listener detached in finally. No fake zone result/event, no polling all zone/world objects, no global input/transform interception. Normal native mirrors can consume only the real current total. This is narrower than a new generic registry/payment/UI framework.
 
-Test-only N+1 prices and shortage quote(actual faith+1) are explicit diagnostic inputs, not balance or simulated funds. Conversion/wreath share N=C+L. Successful setup from zero and three purchases costs6 faith; cleanup removes owned improvements without refund. Probe UI/context excludes build/floating preview purchase; preview of affected grave results stays intact.
-
-| Case | Independent evidence | Cleanup |
+| Scenario | Independent evidence | Cleanup |
 | --- | --- | --- |
-|Conversion then wreath | Actual native faith delta and saved C/L/N, native rating/UI and physical grave hash | Explicit clear then save; paid faith stays spent |
-|Insufficient | Actual balance vs larger diagnostic quote, unchanged faith/C/L/N, no debit call | No change |
-|Save/menu-load + next conversion | Recovered native payer balance, same grave ID/C/L, derived price3 then4 | Ordinary save |
-|Stale/reentrant/fault | Compiled real backend with simulated debit and seven fault classes; native counting/serializer retained | Snapshot verification |
+|A conversion1+wreath2, B conversion1 | Actual per-owner C/L/N/quote and paid faith, other_unchanged snapshot; each native GUI observation | Clear both, no refund |
+|Both windows closed | Actual native GetTotalQuality result/notification, both owner input hits; baseline only native leaf getters | No false-baseline notification |
+|Station outside only one grave | Per-owner current coordinate coverage and retained investments; repeat closed native sum | Ordinary station move remains |
+|Menu-load both | Restored IDs, mixed/nonmixed C/L, independent quotes and actual payer balance; automatic one closed sample | Clear both then ordinary save |
 
-Native debit itself and real player save restoration remain live-only; do not describe simulated debit tests as installed payment proof. No visual/placement/zone/coverage fix, final price/cap policy or production format change is included. Exact user steps README; immutable source/artifact/hash/runtime return TEST_BUILD_LOG.
+Offline tests retain old gates and add actual native sum/ignore/event fixtures, explicit two-owner headless projection and selective activation, both-owner serializer, duplicate/third owner rejection and independent price sequence. They do not manufacture a combined live zone result: native zone fixture is raw, headless projection separate. Combined actual Unity/Harmony zone coupling is this runtime question. Native sum's callback is a side effect, so no background/per-frame total sampling or getter replacement. Exact source/hash/status in TEST_BUILD_LOG; user steps README. No visual/balance/placement scope added.

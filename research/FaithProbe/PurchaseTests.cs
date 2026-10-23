@@ -70,6 +70,10 @@ static class PurchaseTests
         r=Buy(service,g,p,false,3,1);Check(Status(r)=="stale-quote" && calls==beforeCalls,"Wrong cost accepted");
         var exactPayer=Payer(0,1);var exactGrave=New("grave_fixture");r=Buy(service,exactGrave,exactPayer,true,0,1);Check(Status(r)=="committed" && Faith(exactPayer)==0,"Exact funds/bag-only debit");
         var empty=Payer(0,0);beforeCalls=calls;r=Buy(service,New("grave_fixture"),empty,false,0,1);Check(Status(r)=="insufficient" && calls==beforeCalls,"Actual zero funds accepted");
+        var ga=New("grave_fixture");var gb=New("grave_fixture");var sharedPayer=Payer(10,0);
+        Buy(service,ga,sharedPayer,true,0,1);Buy(service,ga,sharedPayer,false,1,2);Buy(service,gb,sharedPayer,true,0,1);
+        Check(Actions(ga)==2 && Actions(gb)==1 && Price(Actions(ga))==3 && Price(Actions(gb))==2 && Faith(sharedPayer)==6,"Per-grave price/count independence");
+        Roundtrip(ref ga,ref gb);Check(Actions(ga)==2 && Actions(gb)==1 && ga.GetParam("nikichmods.bps.faith_probe.wreaths",0)==1 && gb.GetParam("nikichmods.bps.faith_probe.wreaths",0)==0,"Independent mixed/nonmixed saved action counts");
         int failures=0;
         foreach(string phase in new[]{"before-debit","after-debit","after-state"})
         {
@@ -87,8 +91,8 @@ static class PurchaseTests
         reentrant=Service((owner,cost)=>{blocked=Status(Buy(reentrant,rg,rp,false,0,1))=="busy";return Debit(owner,cost);});
         r=Buy(reentrant,rg,rp,true,0,1);Check(blocked && Status(r)=="committed" && Actions(rg)==1 && Faith(rp)==2,"Reentrant duplicate purchase");
         state.GetMethod("Write").Invoke(null,new object[]{rg,12,0});beforeCalls=calls;r=Buy(service,rg,rp,true,12,13);Check(Status(r)=="limit" && calls==beforeCalls,"Bounded action debited");
-        Console.WriteLine("PASS purchase transaction: exact/bag/zero funds, shared conversion/wreath quote, stale quote, insufficient without debit, reentry guard, count bound, seven injected rollback classes, original inventory references/order/amounts and native map serialization of synthetic payer/grave pair.");
+        Console.WriteLine("PASS purchase transaction: exact/bag/zero funds, shared conversion/wreath quote, independent two-grave price/count and pair reload, stale quote, insufficient without debit, reentry guard, count bound, seven injected rollback classes, original inventory references/order/amounts and native map serialization of synthetic payer/grave pair.");
         Check(failures==7,"Fault test coverage");
-        Console.WriteLine("LIMIT purchase tests use simulated debit with actual native counting/serializer; actual Item.RemoveItem, live payer/save/UI and cross-mod debit behavior require installed0.4.0 return. Synthetic map is not real player GameSave restoration.");
+        Console.WriteLine("LIMIT purchase tests use simulated debit with actual native counting/serializer; these tests do not execute Item.RemoveItem or live payer/save/UI; bounded normal native0.4.0 acceptance is separate, live two-owner0.5.0 integration remains pending. Synthetic map is not real player GameSave restoration.");
     }
 }

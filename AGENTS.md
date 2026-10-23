@@ -49,3 +49,5 @@ Faith Probe0.2.0 extends the accepted input projection with diagnostic grave-own
 Coverage research/candidate owner: docs/COVERAGE_RESEARCH.md and Faith Probe0.3.0 README/PLAN. PrayerCoverage.cs provides diagnostic three-cell actual-station activation; no payment/tier cap or final radius is selected. Preserve0.2.0 accepted persistence and all older frozen identities.
 
 Faith payment research/candidate: docs/FAITH_PAYMENT_RESEARCH.md and Faith Probe0.4.0 README/PLAN. FaithPurchase.cs owns native carried-faith transaction and bounded rollback; PurchaseTests.cs uses simulated debit explicitly. Test price N+1 is not balance. This probe spends real faith; cleanup does not refund it. Bounded installed0.4.0 native debit/shared sequence/player recovery passes; full limits and exact return are in TEST_BUILD_LOG.md.
+
+Two-grave research/candidate: docs/TWO_GRAVE_ZONE_RESEARCH.md, Faith Probe0.5.0 README/PLAN. TwoGraves.cs bounds current owners at two; selection is editing only. Explicit closed-window native zone sample observes real OnQualityComputed, never a disabled-baseline zone event. Live two-owner/zone integration remains pending; no visual/balance scope added.

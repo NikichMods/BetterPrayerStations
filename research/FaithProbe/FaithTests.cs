@@ -141,6 +141,9 @@ static class FaithTests
             Assert(tier("pray_stand_wd",false,false,offset,0)==expected,"Move out/return");
         }
         Console.WriteLine("PASS diagnostic coverage geometry: native96-unit cell scale, inclusive circle, diagonal exclusion, wood/stone, absent/busy/removed, movement out/back. No Unity registry or live move/demolition acceptance.");
+        var zoneCheck=PatchProcessor.GetOriginalInstructions(plugin.GetMethod("CheckZone",BindingFlags.NonPublic|BindingFlags.Instance));
+        Assert(Count(zoneCheck,"WorldZone","GetTotalQuality")==1 && Count(zoneCheck,"WorldZone","GetZoneWGOs")==1,"Zone probe must use one real native total and native membership, never a fake-baseline total");
+        Console.WriteLine("PASS compiled zone observer uses one actual native GetTotalQuality call and verified native member list; baseline is leaf-only.");
         LifecycleTests.Run(assembly);
         var purchase=assembly.GetType("NikichMods.BPSFaithProbe.FaithPurchase",true);
         var debitIL=PatchProcessor.GetOriginalInstructions(purchase.GetMethod("NativeDebit",BindingFlags.NonPublic|BindingFlags.Static));
