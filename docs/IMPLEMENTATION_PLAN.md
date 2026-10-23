@@ -39,3 +39,6 @@ Faith Probe0.5.0 return incomplete: only A registered, stale selected-A quote on
 
 
 Installed Faith0.5.1 now passes bounded A/B context/prices and three real closed-window native-zone totals146->145->146 with independent selective grave coverage and seven GUI checks. Pair mixed C/L live recovery is absent from returned log; user visual report is separate. Transient station count up to8 reported; temporary candidate IDs/count2 are observed and source Count exposes backing-list length. Preview/committed distinction and move replacement/cancel remain open and take priority before full production integration. Preserve desired preview feedback. Exact source/hash/return: TEST_BUILD_LOG.md and TWO_GRAVE_ZONE_RESEARCH.md. No new visual/balance scope or binary.
+
+
+Current candidate Faith0.6.0 isolates committed stations from one native preview and replaces moving source position; includes optional temporary radius contour/free grave setup for narrow move/cancel test. This supersedes repeating the full0.5.1 scenario. Native installed source/stop seams and exact Move Objects adapter are statically checked; live correction/visibility pending. Pair-load evidence remains open; final visuals/prices unchanged. README and COVERAGE_RESEARCH.md own current procedure/mechanism.

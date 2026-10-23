@@ -144,7 +144,7 @@ static class FaithTests
         var zoneCheck=PatchProcessor.GetOriginalInstructions(plugin.GetMethod("CheckZone",BindingFlags.NonPublic|BindingFlags.Instance));
         Assert(Count(zoneCheck,"WorldZone","GetTotalQuality")==1 && Count(zoneCheck,"WorldZone","GetZoneWGOs")==1,"Zone probe must use one real native total and native membership, never a fake-baseline total");
         Console.WriteLine("PASS compiled zone observer uses one actual native GetTotalQuality call and verified native member list; baseline is leaf-only.");
-        LifecycleTests.Run(assembly);
+        PreviewTests.Run(assembly);LifecycleTests.Run(assembly);
         var purchase=assembly.GetType("NikichMods.BPSFaithProbe.FaithPurchase",true);
         var debitIL=PatchProcessor.GetOriginalInstructions(purchase.GetMethod("NativeDebit",BindingFlags.NonPublic|BindingFlags.Static));
         Assert(Count(debitIL,"Item","RemoveItem")==1,"Purchase does not call actual native single-resource RemoveItem");
