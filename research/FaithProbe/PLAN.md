@@ -78,3 +78,6 @@ Installed0.7.1 bounded scenario accepted; current canonical result/limits: docs/
 ## Faith0.8.0 passive station quality
 
 Method and READY checkpoint: docs/PASSIVE_QUALITY_RESEARCH.md. Narrow committed-state/no-faith/no-A-B scenario: README.md; exact frozen identity/install: TEST_BUILD_LOG.md. Prior0.7.1 remains accepted/frozen; no prospective passive allocation or saved data changes.
+
+
+Current0.8.0 bounded installed numeric return accepted2026-10-24; exact trace/zone/base restoration and remaining scope in docs/PASSIVE_QUALITY_RESEARCH.md and TEST_BUILD_LOG.md. No new binary for bookkeeping. Faith-upgrade/passive-threshold integration is next distinct probe question; prospective passive preview remains separate.

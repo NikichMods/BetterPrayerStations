@@ -1,6 +1,6 @@
 # Better Prayer Stations — Faith Probe0.8.0
 
-Research-only passive-quality candidate. Exact frozen source/hash/install: docs/TEST_BUILD_LOG.md. Not a production release; installed acceptance pending. Keeps accepted0.7.1 geometry/faith preview and earlier purchase/persistence backend. New passive contribution uses only committed stations/positions; its prospective allocation is deliberately not previewed in this slice.
+Research-only passive-quality candidate. Exact frozen source/hash/install: docs/TEST_BUILD_LOG.md. Not a production release; bounded installed committed-state numeric scenario accepted; exact return/limits in docs/TEST_BUILD_LOG.md. Keeps accepted0.7.1 geometry/faith preview and earlier purchase/persistence backend. New passive contribution uses only committed stations/positions; its prospective allocation is deliberately not previewed in this slice.
 
 ## Короткая проверка — без веры и без назначения могил
 
@@ -24,3 +24,5 @@ Explicit closed-window observer sums native member leaves with only station addi
 Offline checks cover actual compiled allocation helper (thresholds, positive-only, square boundary, stable tie/order, same-zone restriction, overlap unique sums and per-station floor, relocation/return), compiled nonrecursive getter/collector route and all earlier native160/2700 skull/rating, serializer, payment, source-preview/native badge gates. Runtime getter/Harmony, actual exclusive distribution, quality badge/HUD/native zone contribution, demolition/build transitions and performance are not accepted by compilation alone. No new final UI, passive preview, saved-schema, cap or production release in this candidate.
 
 Native save-slot quality summaries may naturally observe the modified total through the host's existing getter; the probe does not create a saved bonus field or write a parallel authoritative quality value. Disable before comparing vanilla metadata; no claim that ordinary native save-summary fields ignore gameplay quality.
+
+Current return accepted2026-10-24: four native zone checks (148+7=155 three times,144+2=146 after removal),31-unique-grave independent trace verification each time, negative/zero exclusion, ordinary base preserved and final station badge restored on disable. User reports completing scenario; no new screenshot. Joint faith threshold/passive preview/clean no-Move/full production acceptance remain separate.

@@ -74,3 +74,6 @@ Passive formula decision2026-10-23: sum positive current quality of exclusively 
 
 
 Authorized next research slice Faith0.8.0: positive-current-quality passive bonus on completed stations, exclusive nearest/persistent-ID assignment, additive native getter result and actual zone sum/event. First slice is committed-state only; existing faith preview preserved, prospective passive allocation deferred. Read PASSIVE_QUALITY_RESEARCH.md for READY/static owners/limits, FaithProbe README for no-faith/no-A-B scenario, TEST_BUILD_LOG.md for exact candidate. No new persistent fields or final balance/UI.
+
+
+Current accepted diagnostic milestone2026-10-24: installed Faith0.8.0 committed passive-quality/native-zone slice passes. Four real sum/event checks, independent31-grave positive/exclusive trace sums, stone construction, relocation aggregates/removal and final station-base restoration recorded; exact evidence/limits in PASSIVE_QUALITY_RESEARCH.md and TEST_BUILD_LOG.md. No new artifact/stable promotion. Next narrow integration priority is an actual faith grave improvement crossing a10-quality station threshold; prospective passive preview is a separate still-unimplemented mechanism.
