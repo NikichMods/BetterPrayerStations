@@ -23,7 +23,7 @@ Both are complementary options in **one escalating payment sequence per grave**.
 
 The first payment must be a meaningful early sacrifice; 10 faith is an illustrative user proposal. Subsequent prices, curve, caps and income calibration remain open. The preview's 10/20/40 sequence is not a final balance formula. Do not present a faith amount as a fixed number of weeks independent of sermon/income assumptions.
 
-The action changes the **effective burial result**, not the physical body, organs or original decoration. It does not create independent white skull capacity after all eligible red skulls are exhausted. Available white capacity, decoration, decay and the native rating formula must remain distinct; decay handling needs explicit technical/balance resolution.
+The action changes the **effective burial result**, not the physical body, organs or original decoration. It does not create independent white skull capacity after all eligible red skulls are exhausted. Available white capacity, decoration, decay and the native rating formula must remain distinct; converted white skulls obey the same native durability/decay limit as original white skulls (explicitly adopted 2026-10-23). Conversion is applied to effective total whites before available-white rounding; it does not restore durability.
 
 ## Coverage and station tiers
 
