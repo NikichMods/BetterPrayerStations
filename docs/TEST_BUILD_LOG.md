@@ -142,7 +142,7 @@ The code's remaining failed predicate is either exact bar height or bar visibili
 
 Local regression checks pass hidden bars at representative coerced heights, reject visible zero-red bars, reject hidden positive-red bars and wrong visible heights, and retain all installed-IL/native-oracle gates. Mechanism choice remains justified by earlier passing cases; this is a bounded observer correction, not evidence to replace native input projection. New numbered bytes/source must be frozen as0.1.1;0.1.0 preserved.
 
-## Faith Probe 0.1.1 — corrective observer installed; short runtime retest pending
+## Faith Probe 0.1.1 — bounded native rating/diagram/activation PASS
 
 - Exact clean source: `7818cb977ab151fae8cdc893eb5ba94987eb914e`; frozen `probe/faith-0.1.1`.
 - Numbered artifact: `BetterPrayerStationsFaithProbe-0.1.1.dll`; installed basename `BetterPrayerStationsFaithProbe.dll`.
@@ -153,4 +153,24 @@ Local regression checks pass hidden bars at representative coerced heights, reje
 
 Scope: only zero-red hidden-bar observer semantics and diagnostic detail changed. Zero-red must still hide the bar; positive-red still needs correct visible height. Slot/wreath counts, raw body panel, physical hash, total and seam assertions remain unchanged. No new game behavior, saved field, payment, radius or native redraw strategy.
 
-Runtime status: pending. Short retest on same grave: select -> three conversions one at a time, expect4/5/6 -> fourth conversion, still6 -> one wreath -> disable/enable,3/6 -> cleanup. Reuse prior passing wreath-only/reset/C1-toggle evidence rather than require the entire original sequence. Check zero-red visibility telemetry to identify whether the earlier aggregate failure was hidden geometry or an actual visibility defect; that exact failed conjunct remains unknown until observed. Need physical_unchanged and all OBSERVE predicates plus visual confirmation; no full product acceptance follows.
+Runtime status: requested short scenario passed with fresh log and user visual confirmation; detailed return below. The reproduced zero-red widget is hidden with height/minimum18, explaining the obsolete exact7 observer assumption. Prior0.1.0 did not record its actual dimensions; preserve that historical limitation. No full product acceptance follows.
+
+### Installed Faith0.1.1 return — 2026-10-23
+
+User confirms three conversions, fourth conversion, extra wreath and off/on with no automatic reset and expected visuals. Fresh READY identifies0.1.1 and expected host; installed DLL matches the frozen artifact hash above. Preserved private log SHA-256: `104be9513c25fc8d87212ef0ab2154137455d3710d37f33147ea49da8cf8c38d`. Nine REDRAW_END records all physical_unchanged=True; nine OBSERVE records pass slots_ok/wreaths_ok/red_bar_ok/raw_panel/chart/total and reach all four seams. No probe failure, skipped observation or rollback occurs. The identical physical hash on all nine actions is `f32d0f340f0d658e55e3d76529ec3d16d4b33c03ce735036410fc731a64748d6`, also matching the preceding session's baseline.
+
+| Step | Stored C/L and activation | Native observed result |
+| --- | --- | --- |
+| Select | 0/0 active | rating/label3, raw3red/3white, central3red/3available,6 wreaths |
+| Conversions1/2/3 | 1/0,2/0,3/0 active | ratings4/5/6; effective2/4,1/5,0/6; actual slots6 and wreaths6 throughout |
+| Excess conversion | 4/0 active | rating6, effective0red/6available; no seventh white |
+| Extra wreath | 4/1 active | actual wreaths7, slots6, rating6 (white cap preserved) |
+| Disable | 4/1 dormant | native rating3, central3red/3available, actual wreaths6 |
+| Re-enable | 4/1 active | rating6, central0red/6available, actual wreaths7 |
+| Cleanup | 0/0 dormant | native rating3, central3red/3available, wreaths6; CLEANUP_DONE persistent_writes=0 |
+
+Raw body3/3/3 and durability0.9621399, original organ contributions, recursive physical grave/item GameRes and money/faith remain unchanged under the measured hash. This is the defined selected-grave/currency snapshot, not bytewise equality of an entire save or unrelated objects. Source has no persistent writes; cleanup clears only transient state and needs no save.
+
+Observed bar heights are46,33,20 for3/2/1 red. Atzero red: red_bar_visible=False, red_bar_height=18, red_bar_min=18. This directly confirms native minimum-height coercion in the repeated condition; the corrected semantic observer accepts the hidden widget while retaining all positive-red checks. It explains why requiring7 was invalid; the earlier artifact's unlogged actual field values are not retroactively asserted.
+
+Accepted boundary: one healthy occupied grave, effective-only conversion/wreath inputs, native rating/central-diagram agreement, excess capacity, synthetic activation off/on, raw anatomy/item/currency preservation and cleanup, with user visual confirmation.0.1.0's earlier successful wreath-only/reset checks remain separate supporting evidence. Production payment/radius/tier/save-investment, live decay below90%, exhumation/replacement/export, other grave states, native craft/zone refresh, broad compatibility and final UI remain unaccepted. No production merge/release is authorized by this diagnostic return. Next useful investigation is grave-owned saved investment and real body removal/replacement without export, before adding spending/coverage policy.
