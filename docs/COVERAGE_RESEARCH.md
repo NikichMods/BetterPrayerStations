@@ -1,6 +1,6 @@
 # Coverage research — 2026-10-23
 
-Status: narrow research candidate, no live acceptance. Product coverage semantics remain owned by DESIGN.md; no final radius or purchase cap chosen.
+Status: bounded installed numeric activation/load slice passes; preview/construction classification and world-badge refresh remain open. Product coverage semantics remain owned by DESIGN.md; no final radius or purchase cap chosen.
 
 Goal: existing grave investment becomes active under any actual prayer station and dormant outside all coverage, surviving station movement/removal/replacement and load. Highest covering tier is reported; no stacking. No investment ownership is assigned to a station.
 
@@ -13,3 +13,13 @@ Probe0.3.0 PrayerCoverage caches only real world-registered station refs. One ex
 Diagnostic radius3 cells/288 world units, inclusive XY circle between native origins. Station IDs pray_stand_wd/stn; busy is_crafting stations are temporarily excluded, so removal marking may disable early. These geometry/eligibility choices are a bounded test convention, not adopted product balance. Construction placeholder IDs are not eligible; completed station/new replacement discovery must be proven live. Native aura subsystem would require additional receiver/emitter definition/lifecycle ownership and broader traversal for the same boolean; direct bounded position input was selected. No native aura effect is claimed.
 
 Offline compiled tests pass boundary/diagonal/outside, known/unknown/busy/removed and movement-out/back conditions, alongside preserved rating/serializer gates. They do not instantiate Unity registry/transforms. Runtime success must establish COVERAGE transitions plus explicit native rating/diagram observations and unchanged C/L/N under real move/demolition/rebuild/load. Test plan: research/FaithProbe/README.md. Zone/hint refresh, payment, production purchase caps, final radius/anchor and arbitrary movement compatibility remain open.
+
+## Installed0.3.0 return and next refinement
+
+Numeric activation is verified on grave1060: twelve invariant-preserving native GUI observations pass; raw2/2 healthy body gives native2/effective4 under C3/L1.23 coverage samples retain N4, repeatedly switch at2.748737/3.0731802cells and recover wooden coverage after menu-load. Cleanup/save recorded. Exact identity, hashes and limits: TEST_BUILD_LOG.md installed return.
+
+User explicitly wants construction preview to show prospective improved grave results; preserve this feature. The registry includes instances seen during native building preview, so current0.3.0 does not cleanly label preview/committed/unfinished construction. Do not report this as final committed station eligibility. Before selection, hide sentinel tier=-1 and default nearest0/0 rather than show them as measured data; count2 before target pruning cannot be attributed to exact instances from existing telemetry.
+
+World badge freshness is an open consumer: user sees stale grave quality after placement/completion until interaction focus, despite correct getter/open-grave results. Native IL identifies WorldGameObject.GetQualityWidgetData as the quality-text builder gated by show_quality_hint/zone/definition, SetQualityHint(bool)->RedrawBubble and RedrawBubble->components.interaction.RefreshBubblesData + bubble.Redraw/RefreshAlign. OnQualityChanged instead emits a transient quality-change popup and is not established as the persistent badge refresh owner. This is a source-supported investigation route, not an implemented refresh fix. Avoid broad redraws or recurring world scans.
+
+Native FloatingWorldGameObject has current-floater ownership and StopCurrentFloating(bool); BuildModeLogics owns placement/cancel/build-mode flows. These provide a candidate explicit preview/commit/cancel boundary to investigate; no signature/field by name alone proves safe integration. Next narrow work should distinguish these phases and refresh only affected grave badges. Additional adopted layout/station-label changes live in DESIGN.md and require native placement/anchor investigation. Do not add them as guessed broad patches to a frozen candidate. No new DLL in this return.
