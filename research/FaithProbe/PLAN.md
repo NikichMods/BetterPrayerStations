@@ -1,5 +1,7 @@
 # Faith Probe0.5.0 — research-method checkpoint
 
+Current next diagnostic: Faith0.9.0 joint paid faith/passive threshold. One explicit free existing-C/L preparation, then the existing real purchase route; actual native grave +1, station +1 and zone +2 are live assertions, not accepted results. No body/decor changes, final balance or passive preview. Method: docs/PASSIVE_QUALITY_RESEARCH.md; current steps: research/FaithProbe/README.md; immutable identity: docs/TEST_BUILD_LOG.md. Historical accepted0.8.0 remains unchanged.
+
 Question: do two independently saved/paid graves contribute through the real native zone sum without an open grave window or selected-owner dependency, preserve independent prices, respond independently to station relocation and recover together including mixed C/L?
 
 Existing0.4.0 already proves native paid single-owner actions/refusal/load. Its explicit selected-grave authorization cannot prove simultaneous owners, so another run of that binary is insufficient. Source/installed IL confirms native WorldZone.GetTotalQuality sums _wgos (except ignored definitions), then invokes OnQualityComputed. GetZoneWGOs returns that list directly. Calling native zone once with effects disabled would send a false baseline to native listeners, so that method is NOT used for the diagnostic baseline.

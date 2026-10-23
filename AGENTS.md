@@ -64,3 +64,6 @@ Faith0.7.0 return fails repeat-preview text readiness and current-part geometry 
 
 
 Faith0.8.0 passive-quality candidate: docs/PASSIVE_QUALITY_RESEARCH.md and current FaithProbe README own scope/readiness. Positive current committed grave quality, exclusive nearest/ID owner, floor(sum/10) added after native station quality; native zone sum/event retained. No new save data, final balance or prospective passive bonus. Existing0.7.1 faith preview retained. Installed0.8.0 bounded committed passive/native-zone numeric scenario now passes; independent trace checks and limits in PASSIVE_QUALITY_RESEARCH.md and TEST_BUILD_LOG.md. No joint faith threshold, prospective passive preview or full production acceptance implied.
+
+
+Faith0.9.0 integration candidate: existing C/L free setup to threshold-minus-one, one real existing Buy/FaithPurchase step, actual native grave/station/zone before-after assertions. No product balance/preview or production version. README owns short steps; PASSIVE_QUALITY_RESEARCH owns readiness; TEST_BUILD_LOG exact identity. Live acceptance pending.

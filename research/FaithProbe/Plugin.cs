@@ -16,10 +16,10 @@ using UnityEngine;
 namespace NikichMods.BPSFaithProbe
 {
     [BepInPlugin(Id, "Better Prayer Stations - Faith Probe", Version)]
-    public sealed class Plugin : BaseUnityPlugin
+    public sealed partial class Plugin : BaseUnityPlugin
     {
         public const string Id = "nikichmods.bps.faithprobe";
-        public const string Version = "0.8.0";
+        public const string Version = "0.9.0";
         const string Host = "e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const int Limit = SavedFaithState.Limit; // Diagnostic UI/object-count bound, not a product cap.
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
@@ -560,7 +560,7 @@ namespace NikichMods.BPSFaithProbe
         {
             if(!ready || !SessionReady())return;
             movePreview.Initialize();Log("PREVIEW_ADAPTER phase=game-ready "+movePreview.Identity);
-            passive.Clear();passiveEnabled=true;nextPassiveCollect=nextPassiveDescription=0;badgeQuality.Clear();previewBaseline.Clear();session=MainGame.me.save;target=null;body=null;coverage.Clear();coverageTier=-1;graves.Clear();previousTier.Clear();previousCovering.Clear();
+            ResetThreshold();passive.Clear();passiveEnabled=true;nextPassiveCollect=nextPassiveDescription=0;badgeQuality.Clear();previewBaseline.Clear();session=MainGame.me.save;target=null;body=null;coverage.Clear();coverageTier=-1;graves.Clear();previousTier.Clear();previousCovering.Clear();
             foreach(var grave in WorldMap.objs)
             {
                 if(grave==null || grave.data==null)continue;
@@ -573,7 +573,7 @@ namespace NikichMods.BPSFaithProbe
             }
             if(graves.Items.Count>0)target=graves.Items[0];
             RefreshPassive(true);
-            if(target==null){Log("RECOVER target=none");status="Пассивный бонус работает у готовых молелен. Для этого теста выбирать могилу и тратить веру не нужно.";return;}
+            if(target==null){Log("RECOVER target=none");status="Пассивный бонус работает у готовых молелен. Для порогового теста нажмите бесплатную подготовку при закрытых игровых окнах.";return;}
             UpdateDisplay();
             Log("RECOVER target="+target.unique_id+" object="+target.obj_id+" conversions="+conversions+" wreaths="+wreaths+" actions="+(conversions+wreaths)+" faith="+shownFaith+" next_price="+FaithPurchase.Price(conversions+wreaths));
             Capture("load");
@@ -793,7 +793,7 @@ namespace NikichMods.BPSFaithProbe
         void ClearAll(){foreach(var g in graves.Items){Log("CLEAR_OWNER target="+g.unique_id+" slot="+TwoGraves.SlotOf(g));SavedFaithState.Clear(g.data);RefreshQualityBadge(g);}zoneCheckRequested=false;editingAssigned=false;editingSummary="Тестовые назначения очищены";aButton="Назначить открытую могилу как A";bButton="Назначить открытую могилу как B";}
         void Cleanup()
         {
-            StopPassiveTest();
+            ResetThreshold();StopPassiveTest();
             if(!Current() || target==null || target.data==null){status="Нет текущей тестовой могилы.";return;}
             if(Bound(target) && gui!=null && gui.gameObject.activeInHierarchy && ReferenceEquals(graveField.GetValue(gui),target))
                 Measure("cleanup",delegate{ClearAll();effects=false;});
@@ -829,6 +829,11 @@ namespace NikichMods.BPSFaithProbe
             GUILayout.Label(previewSummary+". Квадрат: голубой — при подходе, жёлтый — предпросмотр. Дерево 18×18, камень 24×24 маленьких клеток. Центр могилы внутри — вся могила зелёная.",label);
             showRadius=GUILayout.Toggle(showRadius,"Показывать тестовую область");
             bool previous = GUI.enabled;
+            GUI.enabled=ready && Current() && pending==null;
+            GUILayout.Label(thresholdInfo,label);
+            if(GUILayout.Button("Подготовить могилу перед порогом (бесплатно)",button))Queue(PrepareThreshold);
+            GUI.enabled=ready && Current() && pending==null && threshold!=null;
+            if(GUILayout.Button("Купить шаг через порог"+(threshold==null?"":" за "+threshold.Cost+" веры"),button))Queue(BuyThreshold);
             GUI.enabled=ready && Current() && pending==null;
             if(GUILayout.Button("Записать вклад могил и проверить зону",button))Queue(delegate{zoneCheckRequested=true;status="Закройте игровые окна: пробник проверит реальный итог зоны и запишет распределение могил.";});
             if(GUILayout.Button("Отключить пассивный бонус до загрузки",button))Queue(StopPassiveTest);
@@ -874,7 +879,7 @@ namespace NikichMods.BPSFaithProbe
         {
             var p=self;if(p==null)return;
             if(p.target!=null)p.Log("RESET reason=load saved_grave_params=retained");
-            p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;p.coverage.Clear();p.passive.Clear();p.passiveEnabled=true;p.previewBaseline.Clear();p.badgeQuality.Clear();p.radiusOverlay.Clear();p.previewLogged=false;p.lastBuiltCount=-1;p.graves.Clear();p.previousTier.Clear();p.previousCovering.Clear();p.zoneCheckRequested=false;p.zoneSampling=false;p.pairSummary="";p.editingSummary="";p.editingAssigned=false;p.aButton="Назначить открытую могилу как A";p.bButton="Назначить открытую могилу как B";p.coverageTier=-1;p.coveringCount=0;p.nearestStation=0;p.nearestCells=float.PositiveInfinity;
+            p.ResetThreshold();p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;p.coverage.Clear();p.passive.Clear();p.passiveEnabled=true;p.previewBaseline.Clear();p.badgeQuality.Clear();p.radiusOverlay.Clear();p.previewLogged=false;p.lastBuiltCount=-1;p.graves.Clear();p.previousTier.Clear();p.previousCovering.Clear();p.zoneCheckRequested=false;p.zoneSampling=false;p.pairSummary="";p.editingSummary="";p.editingAssigned=false;p.aButton="Назначить открытую могилу как A";p.bButton="Назначить открытую могилу как B";p.coverageTier=-1;p.coveringCount=0;p.nearestStation=0;p.nearestCells=float.PositiveInfinity;
         }
         static void Started()
         {
