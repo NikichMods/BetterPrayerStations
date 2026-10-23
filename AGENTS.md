@@ -45,3 +45,5 @@ This repository owns this mod's product behavior, architecture, balance and acce
 - MPL-2.0: see `LICENSE` and `LICENSING.md`; add SPDX notices when original source files are introduced.
 
 Faith Probe0.2.0 extends the accepted input projection with diagnostic grave-owned C/L/schema fields and one-time post-start recovery. Read research/FaithProbe/README.md and PLAN.md for cleanup/save requirements and live acceptance boundaries. SavedFaithState.cs owns the diagnostic backend; LifecycleTests.cs verifies actual native getter IL and SmartSerializer on synthetic owners. Do not confuse offline relocation with native exhumation or this diagnostic format with a production schema. Exact artifact state remains in TEST_BUILD_LOG.md.
+
+Coverage research/candidate owner: docs/COVERAGE_RESEARCH.md and Faith Probe0.3.0 README/PLAN. PrayerCoverage.cs provides diagnostic three-cell actual-station activation; no payment/tier cap or final radius is selected. Preserve0.2.0 accepted persistence and all older frozen identities.

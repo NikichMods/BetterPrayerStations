@@ -57,7 +57,7 @@ static class FaithTests
         string version = (string)plugin.GetField("Version").GetRawConstantValue();
         Assert(assembly.GetName().Version.ToString() == version + ".0", "Version mismatch");
         var targets = (MethodInfo[])Own("Targets").Invoke(null, null);
-        Assert(targets.Length == 5 && targets[0].DeclaringType == typeof(WorldGameObject) && targets[1].DeclaringType == typeof(GraveGUI) && targets[2].GetParameters()[0].ParameterType == typeof(WorldGameObject), "Wrong exact targets");
+        Assert(targets.Length == 6 && targets[0].DeclaringType == typeof(WorldGameObject) && targets[1].DeclaringType == typeof(GraveGUI) && targets[2].GetParameters()[0].ParameterType == typeof(WorldGameObject), "Wrong exact targets");
         bool rejected = false;
         try { Own("Exact").Invoke(null, new object[] { typeof(GraveGUI), "Open", typeof(void), Type.EmptyTypes }); }
         catch (TargetInvocationException ex) { rejected = ex.InnerException is MissingMethodException; }
@@ -123,6 +123,24 @@ static class FaithTests
             cases++;
         }
         Console.WriteLine("PASS compiled conversion against independent native skull oracle: "+cases+" cases; red bound, decay thresholds, unchanged original and unbound body pass-through.");
+        var coverage=assembly.GetType("NikichMods.BPSFaithProbe.PrayerCoverage",true);
+        var eligible=coverage.GetMethod("EligibleTier");
+        Func<string,bool,bool,float,float,int> tier=(id,removed,busy,x,y)=>(int)eligible.Invoke(null,new object[]{id,removed,busy,x,y});
+        Assert(tier("pray_stand_wd",false,false,288,0)==1,"Boundary not inclusive");
+        Assert(tier("pray_stand_stn",false,false,0,-288)==2,"Stone boundary");
+        Assert(tier("pray_stand_stn",false,false,288.01f,0)==0,"Outside circle accepted");
+        Assert(tier("pray_stand_wd",false,false,210,210)==0,"Square corner accepted");
+        Assert(tier("pray_stand_wd",false,false,172.8f,230.4f)==1,"Circle diagonal rejected");
+        Assert(tier("pray_stand_stn",true,false,0,0)==0,"Removed station active");
+        Assert(tier("pray_stand_stn",false,true,0,0)==0,"Busy station active");
+        Assert(tier("pray_stand_wd_place",false,false,0,0)==0,"Placeholder station accepted");
+        Assert(tier("grave_ground",false,false,0,0)==0,"Nonstation accepted");
+        foreach(float offset in new[]{-500f,-288.01f,-288f,0f,288f,288.01f,500f})
+        {
+            int expected=Math.Abs(offset)<=288f?1:0;
+            Assert(tier("pray_stand_wd",false,false,offset,0)==expected,"Move out/return");
+        }
+        Console.WriteLine("PASS diagnostic coverage geometry: native96-unit cell scale, inclusive circle, diagonal exclusion, wood/stone, absent/busy/removed, movement out/back. No Unity registry or live move/demolition acceptance.");
         LifecycleTests.Run(assembly);
         Console.WriteLine("LIMIT no Unity scene/GUI instantiation, live Harmony startup, Unity-native lifecycle/UI, payment, coverage or real-save acceptance. Headless native getter execution is reported separately above.");
     }
