@@ -20,11 +20,11 @@ $outDir=Join-Path $repoRoot ('artifacts\FaithProbe-'+$version)
 New-Item -ItemType Directory -Path $outDir -Force | Out-Null
 $output=Join-Path $outDir $(if ($CheckOnly) {'compile-check.dll'} else {'BetterPrayerStationsFaithProbe-'+$version+'.dll'})
 if (!$CheckOnly -and (Test-Path -LiteralPath $output)) {throw 'Immutable numbered artifact already exists'}
-$refs=@('mscorlib.dll','System.dll','System.Core.dll','Assembly-CSharp.dll','Assembly-CSharp-firstpass.dll','UnityEngine.dll','UnityEngine.CoreModule.dll','UnityEngine.IMGUIModule.dll','UnityEngine.InputLegacyModule.dll') | ForEach-Object {Join-Path $managed $_}
+$refs=@('mscorlib.dll','System.dll','System.Core.dll','Assembly-CSharp.dll','Assembly-CSharp-firstpass.dll','UnityEngine.dll','UnityEngine.CoreModule.dll','UnityEngine.Physics2DModule.dll','UnityEngine.IMGUIModule.dll','UnityEngine.InputLegacyModule.dll') | ForEach-Object {Join-Path $managed $_}
 $refs += @('BepInEx.dll','0Harmony.dll') | ForEach-Object {Join-Path $core $_}
 $compilerArgs=@('/nologo','/target:library','/nostdlib+','/noconfig','/langversion:7.3','/optimize+','/deterministic+','/warnaserror+',('/out:'+$output))
 $compilerArgs += $refs | ForEach-Object {if (!(Test-Path -LiteralPath $_)) {throw ('Missing reference: '+$_)}; '/reference:'+$_}
-$compilerArgs += @('Plugin.cs','SavedFaithState.cs','PrayerCoverage.cs','FaithPurchase.cs','TwoGraves.cs','StationSet.cs','MovePreviewOwner.cs','RadiusOverlay.cs','StationMaterials.cs') | ForEach-Object {Join-Path $PSScriptRoot $_}
+$compilerArgs += @('Plugin.cs','SavedFaithState.cs','PrayerCoverage.cs','FaithPurchase.cs','TwoGraves.cs','StationSet.cs','MovePreviewOwner.cs','RadiusOverlay.cs','StationMaterials.cs','GridFootprint.cs','PreviewFeedback.cs') | ForEach-Object {Join-Path $PSScriptRoot $_}
 & (Join-Path $DotnetRoot 'dotnet.exe') $compiler @compilerArgs
 if ($LASTEXITCODE -ne 0) {throw 'Compilation failed'}
 $asmVersion=[Reflection.AssemblyName]::GetAssemblyName($output).Version.ToString()

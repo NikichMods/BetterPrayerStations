@@ -7,6 +7,18 @@ internal static class PreviewTests
     static void Check(bool ok,string message){if(!ok)throw new InvalidOperationException(message);}
     public static void Run(Assembly probe)
     {
+        var feedback=probe.GetType("NikichMods.BPSFaithProbe.PreviewFeedback",true).GetMethod("Text");
+        Func<float,string> text=d=>(string)feedback.Invoke(null,new object[]{"(wskull)\n3",d});
+        Check(text(0)=="(wskull)\n3","Zero preview delta changes committed number");
+        Check(text(2)=="(wskull)\n3 [4DFF4D]+2[-]","Positive preview shows projected total or changes baseline");
+        Check(text(-1)=="(wskull)\n3 [FF7366]-1[-]","Negative preview loses baseline/sign");
+        Check(text(2)==text(2) && text(0)=="(wskull)\n3","Cursor return accumulates delta");
+        var snap=probe.GetType("NikichMods.BPSFaithProbe.GridFootprint",true).GetMethod("Snap");
+        var rect=(UnityEngine.Rect)snap.Invoke(null,new object[]{-46f,-86f,46f,6f});
+        Check(rect.xMin==-48 && rect.xMax==48 && rect.yMin==-112 && rect.yMax==16,"Placement grid center/footprint is shifted by half a cell");
+        var shifted=(UnityEngine.Rect)snap.Invoke(null,new object[]{18f,-54f,110f,38f});
+        Check(shifted.center==rect.center+new UnityEngine.Vector2(64,32),"Grid translation changes local footprint center");
+        Console.WriteLine("PASS compiled preview text retains frozen native number/icon with zero/positive/negative/returned deltas; native32-unit placement footprint fixture and translation. Actual box versus native occupied-cell comparison is logged live, not asserted by this fixture.");
         var type=probe.GetType("NikichMods.BPSFaithProbe.StationSet`1",true).MakeGenericType(typeof(object));
         var set=Activator.CreateInstance(type);var register=type.GetMethod("Register");var begin=type.GetMethod("Begin");var end=type.GetMethod("End");var suppressed=type.GetMethod("Suppressed");
         var field=type.GetField("Built");Func<int> count=()=>((System.Collections.ICollection)field.GetValue(set)).Count;

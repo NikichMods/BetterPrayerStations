@@ -124,13 +124,19 @@ static class FaithTests
         }
         Console.WriteLine("PASS compiled conversion against independent native skull oracle: "+cases+" cases; red bound, decay thresholds, unchanged original and unbound body pass-through.");
         var coverage=assembly.GetType("NikichMods.BPSFaithProbe.PrayerCoverage",true);
+        var previewEligible=coverage.GetMethod("PreviewEligibleTier");
+        Assert((int)previewEligible.Invoke(null,new object[]{"pray_stand_wd_place",288f,288f})==1,"Native construction preview rejected at square corner");
+        Assert((int)previewEligible.Invoke(null,new object[]{"pray_stand_stn_place",384.01f,0f})==0,"Native construction preview accepted outside square");
+        Assert((int)previewEligible.Invoke(null,new object[]{"grave_ground",0f,0f})==0,"Nonstation cursor contributes coverage");
+        var accumulate=PatchProcessor.GetOriginalInstructions(coverage.GetMethod("Accumulate",BindingFlags.NonPublic|BindingFlags.Instance));
+        Assert(Count(accumulate,"PrayerCoverage","PreviewEligibleTier")==1,"Actual coverage accumulator bypasses placeholder preview eligibility");
         var eligible=coverage.GetMethod("EligibleTier");
         Func<string,bool,bool,float,float,int> tier=(id,removed,busy,x,y)=>(int)eligible.Invoke(null,new object[]{id,removed,busy,x,y});
         Assert(tier("pray_stand_wd",false,false,288,0)==1,"Boundary not inclusive");
-        Assert(tier("pray_stand_stn",false,false,0,-288)==2,"Stone boundary");
-        Assert(tier("pray_stand_stn",false,false,288.01f,0)==0,"Outside circle accepted");
-        Assert(tier("pray_stand_wd",false,false,210,210)==0,"Square corner accepted");
-        Assert(tier("pray_stand_wd",false,false,172.8f,230.4f)==1,"Circle diagonal rejected");
+        Assert(tier("pray_stand_stn",false,false,0,-384)==2,"Stone boundary");
+        Assert(tier("pray_stand_stn",false,false,384.01f,0)==0,"Outside square accepted");
+        Assert(tier("pray_stand_wd",false,false,288,288)==1,"Square corner rejected");
+        Assert(tier("pray_stand_wd",false,false,172.8f,230.4f)==1,"Square interior rejected");
         Assert(tier("pray_stand_stn",true,false,0,0)==0,"Removed station active");
         Assert(tier("pray_stand_stn",false,true,0,0)==0,"Busy station active");
         Assert(tier("pray_stand_wd_place",false,false,0,0)==0,"Placeholder station accepted");
@@ -140,7 +146,7 @@ static class FaithTests
             int expected=Math.Abs(offset)<=288f?1:0;
             Assert(tier("pray_stand_wd",false,false,offset,0)==expected,"Move out/return");
         }
-        Console.WriteLine("PASS diagnostic coverage geometry: native96-unit cell scale, inclusive circle, diagonal exclusion, wood/stone, absent/busy/removed, movement out/back. No Unity registry or live move/demolition acceptance.");
+        Console.WriteLine("PASS diagnostic coverage geometry: native32-unit cell scale, inclusive square corners, tier-specific half-side, wood/stone, absent/busy/removed, movement out/back. No Unity registry or live move/demolition acceptance.");
         var zoneCheck=PatchProcessor.GetOriginalInstructions(plugin.GetMethod("CheckZone",BindingFlags.NonPublic|BindingFlags.Instance));
         Assert(Count(zoneCheck,"WorldZone","GetTotalQuality")==1 && Count(zoneCheck,"WorldZone","GetZoneWGOs")==1,"Zone probe must use one real native total and native membership, never a fake-baseline total");
         Console.WriteLine("PASS compiled zone observer uses one actual native GetTotalQuality call and verified native member list; baseline is leaf-only.");
