@@ -19,14 +19,16 @@ namespace NikichMods.BPSFaithProbe
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string Id = "nikichmods.bps.faithprobe";
-        public const string Version = "0.1.1";
+        public const string Version = "0.2.0";
         const string Host = "e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
-        const int Limit = 12; // Diagnostic UI/object-count bound, not a product cap.
+        const int Limit = SavedFaithState.Limit; // Diagnostic UI/object-count bound, not a product cap.
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
         static Plugin self;
         Harmony harmony;
         bool ready, effects = true, panel = true;
-        int conversions, wreaths, measurement;
+        int measurement, checkpoint, shownConversions, shownWreaths;
+        int conversions { get { return target == null || target.data == null ? 0 : SavedFaithState.Read(target.data).Conversions; } }
+        int wreaths { get { return target == null || target.data == null ? 0 : SavedFaithState.Read(target.data).Wreaths; } }
         WorldGameObject target, opened;
         Item body;
         GameSave session;
@@ -55,7 +57,8 @@ namespace NikichMods.BPSFaithProbe
                 Exact(typeof(WorldGameObject), "get_quality", typeof(float)),
                 Exact(typeof(GraveGUI), "RedrawGraveInventory", typeof(void)),
                 Exact(typeof(GraveGUI), "Open", typeof(void), typeof(WorldGameObject)),
-                Exact(typeof(MainGame), "OnGameLoaded", typeof(void), typeof(GameSave))
+                Exact(typeof(MainGame), "OnGameLoaded", typeof(void), typeof(GameSave)),
+                Exact(typeof(MainGame), "OnGameStartedPlaying", typeof(void))
             };
         }
         static MethodInfo Own(string name) { return typeof(Plugin).GetMethod(name, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic); }
@@ -152,12 +155,7 @@ namespace NikichMods.BPSFaithProbe
         static IEnumerable<CodeInstruction> UIPatch(IEnumerable<CodeInstruction> instructions) { return RewriteUI(instructions); }
         internal static void ConvertSkulls(ref int red, ref int white, ref int available, float durability, int count)
         {
-            int changed = Math.Min(count, red);
-            if (changed <= 0) return;
-            red -= changed; white += changed;
-            int percent = Mathf.CeilToInt(durability * 100f);
-            if (percent > 90) percent = 100;
-            available = Mathf.FloorToInt((float)(white * percent) / 100f);
+            SavedFaithState.Convert(ref red,ref white,ref available,durability,count);
         }
         bool SessionReady()
         {
@@ -168,16 +166,18 @@ namespace NikichMods.BPSFaithProbe
         bool Bound(WorldGameObject grave)
         {
             return ready && ReferenceEquals(grave, target) && target != null && Current() && !target.is_removed && target.obj_id == "grave_ground" &&
-                !target.components.craft.is_crafting && ReferenceEquals(target.GetBodyFromInventory(true), body) && body != null;
+                !target.components.craft.is_crafting && target.GetBodyFromInventory(true) != null;
         }
         bool BoundUI(GraveGUI view) { return view != null && Bound(graveField.GetValue(view) as WorldGameObject); }
         static void QualitySkulls(Item source, out int red, out int white, out int available, bool dontCountSelf, WorldGameObject grave)
         {
             source.GetBodySkulls(out red, out white, out available, dontCountSelf);
             var p = self;
-            if (p == null || !p.Bound(grave) || !ReferenceEquals(source, p.body) || dontCountSelf) return;
+            if (p == null || !p.Bound(grave) || !ReferenceEquals(source, p.target.GetBodyFromInventory(true)) || dontCountSelf) return;
             p.qualitySkullHits++;
-            if (p.effects) ConvertSkulls(ref red, ref white, ref available, source.durability, p.conversions);
+            int rawRed=red,rawWhite=white,rawAvailable=available;
+            try { SavedFaithState.ApplySkulls(p.target.data,source,p.effects,ref red,ref white,ref available); }
+            catch(Exception ex){red=rawRed;white=rawWhite;available=rawAvailable;p.Fail(ex);}
         }
         static float QualityDecoration(Item inventory, string ignore, WorldGameObject grave)
         {
@@ -185,15 +185,17 @@ namespace NikichMods.BPSFaithProbe
             var p = self;
             if (p == null || !p.Bound(grave) || !ReferenceEquals(inventory, grave.data)) return value;
             p.qualityDecorHits++;
-            return value + (p.effects ? p.wreaths : 0);
+            try{return SavedFaithState.ApplyDecoration(grave.data,value,p.effects);}catch(Exception ex){p.Fail(ex);return value;}
         }
         static void UISkulls(Item source, out int red, out int white, out int available, bool dontCountSelf, GraveGUI view)
         {
             source.GetBodySkulls(out red, out white, out available, dontCountSelf);
             var p = self;
-            if (p == null || !p.BoundUI(view) || !ReferenceEquals(source, p.body) || dontCountSelf) return;
+            if (p == null || !p.BoundUI(view) || !ReferenceEquals(source, p.target.GetBodyFromInventory(true)) || dontCountSelf) return;
             p.uiSkullHits++;
-            if (p.effects) ConvertSkulls(ref red, ref white, ref available, source.durability, p.conversions);
+            int rawRed=red,rawWhite=white,rawAvailable=available;
+            try { SavedFaithState.ApplySkulls(p.target.data,source,p.effects,ref red,ref white,ref available); }
+            catch(Exception ex){red=rawRed;white=rawWhite;available=rawAvailable;p.Fail(ex);}
             p.lastRed = red; p.lastAvailable = available;
         }
         static float UIDecoration(float nativeSum, GraveGUI view)
@@ -201,7 +203,7 @@ namespace NikichMods.BPSFaithProbe
             var p = self;
             if (p == null || !p.BoundUI(view)) return nativeSum;
             p.uiDecorHits++;
-            p.lastDecor = nativeSum + (p.effects ? p.wreaths : 0);
+            try{p.lastDecor=SavedFaithState.ApplyDecoration(p.target.data,nativeSum,p.effects);}catch(Exception ex){p.lastDecor=nativeSum;p.Fail(ex);}
             return p.lastDecor;
         }
         void Awake()
@@ -230,8 +232,9 @@ namespace NikichMods.BPSFaithProbe
                 harmony.Patch(targets[1], transpiler: new HarmonyMethod(Own("UIPatch")));
                 harmony.Patch(targets[2], postfix: new HarmonyMethod(Own("Opened")));
                 harmony.Patch(targets[3], prefix: new HarmonyMethod(Own("Loading")));
+                harmony.Patch(targets[4], postfix: new HarmonyMethod(Own("Started")));
                 ready = true;
-                Log("READY version=" + Version + " host=" + hash + " scope=one-grave synthetic_activation=true persistence=none payment=none coverage=none");
+                Log("READY version=" + Version + " host=" + hash + " scope=one-grave synthetic_activation=true persistence=three-grave-params payment=none coverage=none");
             }
             catch (Exception ex)
             {
@@ -251,7 +254,7 @@ namespace NikichMods.BPSFaithProbe
             var names = (List<string>)resNames.GetValue(parameters); var values = (List<float>)resValues.GetValue(parameters);
             if (names.Count != values.Count) throw new InvalidOperationException("Native parameter lists differ");
             var ordered = new List<string>();
-            for (int i = 0; i < names.Count; i++) ordered.Add(names[i] + "=" + values[i].ToString("R", Inv));
+            for (int i = 0; i < names.Count; i++) if (depth != 0 || !SavedFaithState.IsOwned(names[i])) ordered.Add(names[i] + "=" + values[i].ToString("R", Inv));
             ordered.Sort(StringComparer.Ordinal);
             foreach (string value in ordered) b.Append(value).Append(';');
             foreach (var field in resFloats) b.Append(field.Name).Append('=').Append(((float)field.GetValue(parameters)).ToString("R", Inv)).Append(';');
@@ -267,28 +270,84 @@ namespace NikichMods.BPSFaithProbe
             b.Append("money=").Append(MainGame.me.player.data.money.ToString("R", Inv)).Append(";faith=").Append(MainGame.me.player.data.GetItemsCount("faith", true));
             using (var sha = SHA256.Create()) return Hex(sha.ComputeHash(Encoding.UTF8.GetBytes(b.ToString())));
         }
-        string Raw()
+        string RawBody(Item current)
         {
-            int red, white, available; body.GetBodySkulls(out red, out white, out available, false);
-            var b = new StringBuilder("body=" + red + "/" + white + "/" + available + " durability=" + body.durability.ToString("R", Inv));
-            foreach (var item in body.inventory) b.Append(" part=").Append(item.id).Append(':').Append(item.GetRedSkullsValue()).Append('/').Append(item.GetWhiteSkullsValue());
+            if(current==null) return "body=none";
+            int red,white,available;current.GetBodySkulls(out red,out white,out available,false);
+            var b=new StringBuilder("body="+red+"/"+white+"/"+available+" durability="+current.durability.ToString("R",Inv));
+            foreach(var item in current.inventory)
+            {
+                b.Append(" part=").Append(item.id).Append(':').Append(item.GetRedSkullsValue()).Append('/').Append(item.GetWhiteSkullsValue());
+                b.Append(" part_probe=").Append(item.GetParam(SavedFaithState.SchemaKey,0)).Append(',').Append(item.GetParam(SavedFaithState.ConversionKey,0)).Append(',').Append(item.GetParam(SavedFaithState.WreathKey,0));
+            }
+            b.Append(" body_probe=").Append(current.GetParam(SavedFaithState.SchemaKey,0)).Append(',').Append(current.GetParam(SavedFaithState.ConversionKey,0)).Append(',').Append(current.GetParam(SavedFaithState.WreathKey,0));
             return b.ToString();
+        }
+        string Raw(){return RawBody(target==null?null:target.GetBodyFromInventory(true));}
+        bool Trackable(WorldGameObject grave)
+        {
+            if(grave==null || grave.is_removed || grave.data==null)return false;
+            return grave.obj_id=="grave_ground" || grave.obj_id=="grave_empty" || grave.obj_id=="grave_corp" || grave.obj_id=="grave_exhume";
+        }
+        void UpdateDisplay()
+        {
+            if(target==null || target.data==null){shownConversions=shownWreaths=0;return;}
+            var saved=SavedFaithState.Read(target.data);shownConversions=saved.Conversions;shownWreaths=saved.Wreaths;
+        }
+        void Recover()
+        {
+            if(!ready || !SessionReady())return;
+            session=MainGame.me.save;target=null;body=null;
+            foreach(var grave in WorldMap.objs)
+            {
+                if(grave==null || grave.data==null)continue;
+                float schema=grave.data.GetParam(SavedFaithState.SchemaKey,0f);
+                if(schema==0f)continue;
+                if(target!=null)throw new InvalidOperationException("Multiple saved faith-probe graves");
+                target=grave;
+                SavedFaithState.Read(grave.data);
+                if(!Trackable(grave))throw new InvalidOperationException("Saved faith-probe target is not a grave");
+            }
+            if(target==null){Log("RECOVER target=none");status="Откройте могилу и выберите её. Вложения теперь сохраняются у могилы.";return;}
+            UpdateDisplay();
+            Log("RECOVER target="+target.unique_id+" object="+target.obj_id+" conversions="+conversions+" wreaths="+wreaths+" actions="+(conversions+wreaths));
+            Capture("load");
+            status="Вложения восстановлены после загрузки. Откройте могилу или запишите этап после эксгумации.";
         }
         void Select()
         {
-            if (!SessionReady() || opened == null || opened.is_removed || opened.obj_id != "grave_ground" || opened.components.craft.is_crafting) { status = "Откройте занятую закопанную могилу без работы."; return; }
-            if (target != null && !ReferenceEquals(target, opened)) { status = "Сначала очистите предыдущую могилу."; return; }
-            var candidate = opened.GetBodyFromInventory(true);
-            if (candidate == null) { status = "Нужна могила с телом."; return; }
-            session = MainGame.me.save; target = opened; body = candidate;
-            Log("SELECT target=" + target.unique_id + " " + Raw());
-            Measure("select", delegate { conversions = 0; wreaths = 0; effects = true; });
+            if(!SessionReady() || !Trackable(opened) || opened.components.craft.is_crafting){status="Откройте обычную могилу без текущей работы.";return;}
+            if(!Current()){Recover();status="Дождитесь восстановления и повторите выбор.";return;}
+            if(target!=null && !ReferenceEquals(target,opened)){status="Сначала очистите предыдущую тестовую могилу.";return;}
+            target=opened;body=target.GetBodyFromInventory(true);
+            var saved=SavedFaithState.Read(target.data);
+            SavedFaithState.Write(target.data,saved.Conversions,saved.Wreaths);UpdateDisplay();
+            effects=true;
+            Log("SELECT target="+target.unique_id+" conversions="+conversions+" wreaths="+wreaths+" "+Raw());
+            if(Bound(target))Measure("select",delegate{});else Capture("select-empty");
+        }
+        void CaptureOne(WorldGameObject grave,string role)
+        {
+            if(grave==null || grave.data==null || grave.is_removed)return;
+            var saved=SavedFaithState.Read(grave.data);
+            bool was=effects;float native;try{effects=false;native=grave.quality;}finally{effects=was;}
+            float actual=grave.quality;
+            Log("CHECKPOINT n="+checkpoint+" role="+role+" target="+grave.unique_id+" object="+grave.obj_id+" conversions="+saved.Conversions+" wreaths="+saved.Wreaths+" actions="+saved.Actions+" active="+effects+" native="+native.ToString("R",Inv)+" effective="+actual.ToString("R",Inv)+" "+RawBody(grave.GetBodyFromInventory(true)));
+        }
+        void Capture(string reason)
+        {
+            if(!Current() || target==null || target.data==null){Log("CHECKPOINT_SKIPPED reason=missing-target-or-session");status="Нет выбранной текущей могилы; см. журнал.";return;}
+            UpdateDisplay();checkpoint++;Log("CHECKPOINT_BEGIN n="+checkpoint+" reason="+reason);
+            CaptureOne(target,"invested");
+            if(opened!=null && !ReferenceEquals(opened,target) && Trackable(opened))CaptureOne(opened,"other-opened");
+            status="Этап №"+checkpoint+" записан. Вложения остаются у исходной могилы; на другую могилу тела переносятся обычными действиями игры.";
         }
         void Measure(string reason, Action change)
         {
             if (!Bound(target) || gui == null || !gui.gameObject.activeInHierarchy || !ReferenceEquals(graveField.GetValue(gui), target)) { status = "Откройте окно выбранной могилы; изменения не применены."; return; }
+            body = target.GetBodyFromInventory(true);
             string before = PhysicalHash();
-            change();
+            change();UpdateDisplay();
             qualitySkullHits = qualityDecorHits = uiSkullHits = uiDecorHits = 0;
             bool enabled = effects; float native;
             try { effects = false; native = target.quality; } finally { effects = enabled; }
@@ -332,7 +391,7 @@ namespace NikichMods.BPSFaithProbe
             Log("OBSERVE n=" + measurement + " reason=" + reason + " target=" + target.unique_id + " rating=" + rating.ToString("R", Inv) + " label=" + gui.txt_grave_total_q.text + " effective_red=" + lastRed + " effective_available=" + lastAvailable + " decoration=" + lastDecor.ToString("R", Inv) + " actual_slots=" + slots + " actual_wreaths=" + decorations + " slots_ok=" + slotsOk + " wreaths_ok=" + wreathsOk + " red_bar_ok=" + barOk + " red_bar_height=" + barHeight + " red_bar_min=" + barMinimum + " red_bar_visible=" + barVisible + " raw_panel=" + rawPanel + " chart=" + chart + " total=" + total + " seams=" + qualitySkullHits + "," + qualityDecorHits + "," + uiSkullHits + "," + uiDecorHits);
             if (!rawPanel || !chart || !total || !reached) throw new InvalidOperationException("Native rating/diagram/raw-body observation mismatch");
             status = "Проверено: рейтинг " + rating.ToString("0") + "; шкала " + lastRed + " красн. / " + lastAvailable + " доступных бел.; венков " + Mathf.FloorToInt(lastDecor) + ". Тело без изменений.";
-            if (reason == "cleanup") { target = null; body = null; conversions = wreaths = 0; Log("CLEANUP_DONE persistent_writes=0"); status = "Тест очищен. В сохранение ничего не записывалось."; }
+            if (reason == "cleanup") { target = null; body = null; shownConversions=shownWreaths=0; Log("CLEANUP_DONE grave_params=cleared save_required=true"); status = "Тест очищен. Сохраните игру, чтобы закрепить очистку."; }
         }
         void Queue(Action action) { if (pending == null) pending = action; }
         void Update()
@@ -352,8 +411,15 @@ namespace NikichMods.BPSFaithProbe
         }
         void Cleanup()
         {
-            if (Bound(target) && gui != null && gui.gameObject.activeInHierarchy && ReferenceEquals(graveField.GetValue(gui), target)) Measure("cleanup", delegate { conversions = wreaths = 0; effects = false; });
-            else { target = null; body = null; effects = false; conversions = wreaths = 0; status = "Тест очищен; постоянных записей нет."; Log("CLEANUP_DONE persistent_writes=0 ui_refresh=false"); }
+            if(!Current() || target==null || target.data==null){status="Нет текущей тестовой могилы.";return;}
+            if(Bound(target) && gui!=null && gui.gameObject.activeInHierarchy && ReferenceEquals(graveField.GetValue(gui),target))
+                Measure("cleanup",delegate{SavedFaithState.Clear(target.data);effects=false;});
+            else
+            {
+                long id=target.unique_id;SavedFaithState.Clear(target.data);effects=false;target=null;body=null;shownConversions=shownWreaths=0;
+                status="Вложения очищены. Сохраните игру; тела и украшения остаются на своих местах.";
+                Log("CLEANUP_DONE target="+id+" grave_params=cleared save_required=true ui_refresh=false");
+            }
         }
         void Log(string text) { Logger.LogInfo("BPS_FAITH " + text); }
         void OnGUI()
@@ -362,27 +428,28 @@ namespace NikichMods.BPSFaithProbe
             if (label == null) { label = new GUIStyle(GUI.skin.label) { fontSize = 14, wordWrap = true }; button = new GUIStyle(GUI.skin.button) { fontSize = 14, wordWrap = true }; }
             window.width = Math.Min(365, Math.Max(260, Screen.width - 24)); window.height = Math.Min(550, Math.Max(260, Screen.height - 24));
             window.x = Mathf.Clamp(window.x, 0, Math.Max(0, Screen.width - window.width)); window.y = Mathf.Clamp(window.y, 0, Math.Max(0, Screen.height - window.height));
-            window = GUI.Window(827402, window, Draw, "BPS: тест улучшений " + Version);
+            window = GUI.Window(827402, window, Draw, "BPS: сохранение вложений " + Version);
         }
         void Draw(int id)
         {
             scroll = GUILayout.BeginScrollView(scroll);
-            GUILayout.Label("Только текущий сеанс. Без веры и радиуса. F8 — скрыть/показать.", label);
+            GUILayout.Label("Вложения записываются в сохранение могилы. Без списания веры и радиуса. F8 — скрыть/показать.", label);
             GUILayout.Label(status, label);
-            GUILayout.Label("Превращения: " + conversions + "; доп. венки: " + wreaths + "; эффекты: " + (effects ? "включены" : "отключены"), label);
+            GUILayout.Label("Превращения: " + shownConversions + "; доп. венки: " + shownWreaths + "; эффекты: " + (effects ? "включены" : "отключены"), label);
             bool previous = GUI.enabled;
             GUI.enabled = ready && SessionReady() && pending == null;
             if (GUILayout.Button("Выбрать открытую могилу", button)) Queue(Select);
             GUI.enabled = ready && Current() && target != null && pending == null;
-            if (GUILayout.Button("Добавить одно превращение", button)) Queue(delegate { if (conversions < Limit) Measure("conversion", delegate { conversions++; }); else status = "Тестовый предел 12."; });
-            if (GUILayout.Button("Добавить один венок", button)) Queue(delegate { if (wreaths < Limit) Measure("wreath", delegate { wreaths++; }); else status = "Тестовый предел 12."; });
+            if (GUILayout.Button("Добавить одно превращение", button)) Queue(delegate { if (conversions < Limit) Measure("conversion", delegate { SavedFaithState.Write(target.data,conversions+1,wreaths); }); else status = "Тестовый предел 12."; });
+            if (GUILayout.Button("Добавить один венок", button)) Queue(delegate { if (wreaths < Limit) Measure("wreath", delegate { SavedFaithState.Write(target.data,conversions,wreaths+1); }); else status = "Тестовый предел 12."; });
             if (GUILayout.Button(effects ? "Отключить эффекты" : "Включить эффекты", button)) Queue(delegate { Measure("toggle", delegate { effects = !effects; }); });
-            if (GUILayout.Button("Обнулить улучшения", button)) Queue(delegate { Measure("reset", delegate { conversions = wreaths = 0; }); });
+            if (GUILayout.Button("Обнулить улучшения", button)) Queue(delegate { Measure("reset", delegate { SavedFaithState.Write(target.data,0,0); }); });
             if (GUILayout.Button("Повторно проверить рейтинг и шкалу", button)) Queue(delegate { Measure("explicit", delegate { }); });
             GUI.enabled = target != null && pending == null;
-            if (GUILayout.Button("Очистить и завершить тест", button)) Queue(Cleanup);
+            if (GUILayout.Button("Записать этап: могила и другое открытое захоронение",button))Queue(delegate{Capture("manual");});
+            if (GUILayout.Button("Очистить вложения и завершить тест", button)) Queue(Cleanup);
             GUI.enabled = previous;
-            GUILayout.Label("Панель тела показывает настоящие черепки; центральная шкала — результат улучшений. Не снимайте тело/украшения в этом узком тесте.", label);
+            GUILayout.Label("Панель тела показывает настоящие черепки; центральная шкала — результат улучшений. После обычной эксгумации, перезахоронения и загрузки запишите этап. Очистку нужно сохранить обычным способом.", label);
             GUILayout.EndScrollView(); GUI.DragWindow(new Rect(0, 0, 10000, 22));
         }
         static void Opened(GraveGUI __instance, WorldGameObject __0)
@@ -392,9 +459,13 @@ namespace NikichMods.BPSFaithProbe
         }
         static void Loading()
         {
-            var p = self; if (p == null) return;
-            if (p.target != null) p.Log("RESET reason=load persistent_writes=0");
-            p.target = p.opened = null; p.body = null; p.gui = null; p.session = null; p.pending = null; p.conversions = p.wreaths = 0; p.effects = true;
+            var p=self;if(p==null)return;
+            if(p.target!=null)p.Log("RESET reason=load saved_grave_params=retained");
+            p.target=p.opened=null;p.body=null;p.gui=null;p.session=null;p.pending=null;p.effects=true;p.shownConversions=p.shownWreaths=0;
+        }
+        static void Started()
+        {
+            var p=self;if(p!=null && p.ready)p.Queue(p.Recover);
         }
         void OnDestroy()
         {

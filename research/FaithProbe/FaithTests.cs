@@ -57,7 +57,7 @@ static class FaithTests
         string version = (string)plugin.GetField("Version").GetRawConstantValue();
         Assert(assembly.GetName().Version.ToString() == version + ".0", "Version mismatch");
         var targets = (MethodInfo[])Own("Targets").Invoke(null, null);
-        Assert(targets.Length == 4 && targets[0].DeclaringType == typeof(WorldGameObject) && targets[1].DeclaringType == typeof(GraveGUI) && targets[2].GetParameters()[0].ParameterType == typeof(WorldGameObject), "Wrong exact targets");
+        Assert(targets.Length == 5 && targets[0].DeclaringType == typeof(WorldGameObject) && targets[1].DeclaringType == typeof(GraveGUI) && targets[2].GetParameters()[0].ParameterType == typeof(WorldGameObject), "Wrong exact targets");
         bool rejected = false;
         try { Own("Exact").Invoke(null, new object[] { typeof(GraveGUI), "Open", typeof(void), Type.EmptyTypes }); }
         catch (TargetInvocationException ex) { rejected = ex.InnerException is MissingMethodException; }
@@ -123,6 +123,7 @@ static class FaithTests
             cases++;
         }
         Console.WriteLine("PASS compiled conversion against independent native skull oracle: "+cases+" cases; red bound, decay thresholds, unchanged original and unbound body pass-through.");
-        Console.WriteLine("LIMIT no Unity scene/GUI instantiation, live Harmony startup, rating execution, payment, coverage or real-save acceptance.");
+        LifecycleTests.Run(assembly);
+        Console.WriteLine("LIMIT no Unity scene/GUI instantiation, live Harmony startup, Unity-native lifecycle/UI, payment, coverage or real-save acceptance. Headless native getter execution is reported separately above.");
     }
 }
