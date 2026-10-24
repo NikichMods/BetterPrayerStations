@@ -2,7 +2,9 @@
 
 Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier combined-concept runtime plans below are historical research, not the next production step by default.
 
-Current menu research: `BUILD_MENU_RESEARCH.md` records exact static CraftGUI/custom-interface dispatch, transient card input and unsafe ordinary removal/script-building assumptions. Native menu reuse is supported by direct IL/data; actual UI/editor/payment/persistence integration is not installed-accepted. No new probe or runtime change was made.
+Current menu research: `BUILD_MENU_RESEARCH.md` records exact static CraftGUI/custom-interface dispatch, transient card input and unsafe ordinary removal/script-building assumptions. Native menu reuse is supported by direct IL/data; actual UI/editor/payment/persistence integration is not installed-accepted. The static study itself made no runtime change; the subsequent authorized candidate is recorded below.
+
+Current menu candidate: separate Menu Probe0.1.0 is now frozen, clean-built and installed host-closed; exact source/hash/previous-probe backup in TEST_BUILD_LOG. Local compiled policy/native-dispatch/no-payment-write gates pass. Native three-card layout, station interaction, grid/input/camera cleanup and visual marker usability still await the user's game return. No faith spending, save persistence or burial effect is part of this candidate.
 
 ## Blind balance screen — 2026-10-24
 

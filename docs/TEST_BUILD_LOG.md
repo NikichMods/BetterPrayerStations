@@ -6,6 +6,12 @@ User authorizes an isolated session-only native three-card menu and point editor
 
 Local SDK6.0.406 warning-as-error compile/version gate passes. Executable gates inspect compiled BeamState for prices, support/purchase caps, duplicate refusal, placement-order removal/replacement, dormancy/reactivation and cleanup; actual native CanCraft/OnCraft interface dispatch and compiled no-payment/item/world/save-write call boundaries are checked. These are headless policy/structure checks, not real UI/input/camera acceptance. Ten-purchase diagnostic bound uses exactly the adopted trial row; no price continuation invented. Live native station entry, three-card layout/counts, mouse/gamepad repeated Place/Remove/cancel and ordinary UI restoration remain pending. Source is frozen and artifact identity recorded below after clean build.
 
+### Menu0.1.0 frozen build and installation
+
+Frozen source `1d9068e1a364232996c2b479dc459923394a71bb`, tag `probe/menu-0.1.0`, branch codex/persistence-research. Exact numbered artifact `artifacts/MenuProbe-0.1.0/BetterPrayerStationsMenuProbe-0.1.0.dll`, assembly/file0.1.0.0, SHA256 `2f2d4404d91726dff674b2111c6a88b5e918c8ca4c52aa0b52dc98cf33978d87`. Clean-source SDK6.0.406 build and2788 structural/policy assertions pass; exact local reference hashes in build-identity.json. No production version, main promotion or Release.
+
+Installed with host closed and exact hash verified at canonical BepInEx/plugins/BetterPrayerStationsMenuProbe/BetterPrayerStationsMenuProbe.dll. Previous Faith0.9.0 SHA256 `044550e6c3f81d57278cb1df274aec2bbb4aa778afa895bf194faaf480e0c0d7` copied and verified outside loader under ignored `.local/evidence/menu-probe-0.1.0/previous-installed-faith-0.9.0.dll`, then its installed DLL removed. Exactly one active BetterPrayerStations DLL remains; other mods/configuration/saves untouched. Prior log snapshot SHA256 `809dc4b30bc36e6155c1bae8af334c25ef8daf249f2ab087e2c536006bae1004` is pre-install history, not a return for this probe. Installation identity is in the same ignored folder. Game was not launched and live acceptance is pending.
+
 ## Appearance Probe 0.1.0 — failed initialization; preserved
 
 Research-only plugin, not production Better Prayer Stations or a stable release. Compiled/installed on 2026-10-23; user launch reported the disabled-panel message. Current session log confirms INIT_FAILED before READY, so no rendering/save/preview scenario was exercised or accepted.
