@@ -1,6 +1,6 @@
 # Implementation plan
 
-Current product work follows the revised blessing-capacity concept in DESIGN.md. Session-only Menu Probe0.1.0 has bounded live ordinary-entry/three-card/free-buy/point-edit evidence. User authorized stage1 corrections only. Menu0.1.1 corrects the sampled grid's camera-follow movement, the clipped header and missing outer-list reposition after row redraw; source readiness is recorded in BUILD_MENU_RESEARCH. Exact artifact/install identity and runtime status: TEST_BUILD_LOG. Payment, persistence and grave effects remain outside this slice.
+Current product work follows the revised blessing-capacity concept in DESIGN.md. Session-only Menu Probe0.1.0 has bounded live ordinary-entry/three-card/free-buy/point-edit evidence. User authorized stage1 corrections only. Menu0.1.1 corrects the sampled grid's camera-follow movement, the clipped header and missing outer-list reposition after row redraw; source readiness is recorded in BUILD_MENU_RESEARCH. Installed grid/action behavior is now confirmed; remaining menu layout polish is explicitly deferred by the user. Exact artifact/install identity and runtime status: TEST_BUILD_LOG. Payment, persistence and grave effects remain outside this slice.
 
 ## Forward plan after the Menu0.1.0 return —2026-10-24
 
@@ -36,7 +36,7 @@ Move the proven mechanism into a coherent production entry point after the above
 
 ## Immediate next step and remaining decisions
 
-Stage1 is now explicitly authorized and implemented as corrective Menu0.1.1, with static readiness in BUILD_MENU_RESEARCH and exact handoff status in TEST_BUILD_LOG. Next is its narrow installed visual check, before adding effects/payment/persistence. Later stages are still a plan, not automatic authorization to implement them.
+Stage1 Menu0.1.1 has bounded installed/user acceptance for native entry/actions, stable grid under camera pan, point editing and ordinary construction-desk regression. Exact return is in TEST_BUILD_LOG. A repeat-redraw card-height defect remains, but the user explicitly defers station-menu visual/layout work until functional mechanics are implemented; the technical placeholder is sufficient to continue. Do not block stage2 on cosmetic/menu polish or issue another layout-only candidate. Next functional work is session-only blessing integration, first resolving exact cell-to-grave membership. Payment/persistence follow their separate readiness gates; this return does not itself authorize implementing all later stages.
 
 Two concrete decisions remain to close at their owning stages: exact field/grave membership before stage2 and price continuation after purchase10 before unrestricted payment/shipping. Native presentation, save carrier, lifecycle compatibility and production packaging are engineering/acceptance tasks; return to the user only for actual product tradeoffs or real visual judgment.
 

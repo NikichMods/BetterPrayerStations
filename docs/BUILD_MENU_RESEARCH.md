@@ -51,6 +51,8 @@ A narrow in-game UI prototype should prove: open either completed station, show 
 Static research does not establish the actual native layout, a safe final grid adapter, clean optional-mod compatibility or installed acceptance. No diagnostic was built/installed in this investigation.
 # Menu0.1.1 corrective readiness — 2026-10-24
 
+Subsequent installed result: stable grid under pan and working editor/actions confirmed by user and seven zero-origin-delta end records. Header is expanded, but row heights change44/64/54 ->44/44/44 after purchases and overlap remains; the earlier outer-list reposition correction was insufficient to close all menu layout behavior. User explicitly defers further station-window visual/layout work and accepts it as a technical placeholder while functional mechanics proceed. TEST_BUILD_LOG owns exact evidence; do not equate bounded functional acceptance with finished visual acceptance.
+
 User authorized only correction of menu/grid geometry, retaining the session-only three actions. READY for a corrective research candidate; installed visual acceptance remains required.
 
 - Grid owner: BuildGrid.RefreshGrid samples world-zone cells relative to its transform and stores them in its texture. MoveBuildGridTo only snaps/moves that transform (96-unit steps plus48); it does not repaint the texture. Menu0.1.0 called it every editor frame after the initial paint, moving an already world-sampled mask. Native focus positions the grid before painting. Correction: retain that initial world origin while the camera moves. Repainting on every camera move would add unnecessary physics/texture work; an arbitrary screen offset would conceal the ownership error.
