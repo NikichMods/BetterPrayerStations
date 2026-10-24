@@ -20,6 +20,8 @@ Faith buys **one more simultaneous beam slot**, not a particular positioned beam
 
 Demolishing stations does not erase P or saved field locations. With C=0, all beams go dark and their grave effects cease. Rebuilding sufficient station capacity restores support without payment or another purchase. P>C is a valid temporary state, not grounds for deleting investment. Dormant fields remain removable in management mode. **Adopted priority: earliest placed fields stay active; latest placed fields go dormant first.** Increasing support restores fields in the same placement order. Removing and placing a field again makes it the newest/last field; placement order persists through save/load. Do not preserve fictional per-field purchase identities.
 
+User authorizes Menu0.3.0 persistence prototype for this global P/position/order state after bounded0.2.0 effect acceptance. Use the native per-save carrier under GLOBAL_BEAM_PERSISTENCE.md; support/active flags remain derived. No faith debit or visual polish is part of this slice. Diagnostic schema selection is not a final production migration-format promise.
+
 Neither the old nearest-station rule nor the earlier per-station beam ownership proposal applies.
 
 ### Adopted free placement and reusable paid beams

@@ -2,6 +2,8 @@
 
 Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier combined-concept runtime plans below are historical research, not the next production step by default.
 
+Current work: Menu0.3.0 global P/coordinate/priority persistence is explicitly authorized without payment/visual work. GLOBAL_BEAM_PERSISTENCE owns carrier/schema and passing native binary fixtures; TEST_BUILD_LOG exact artifact/install and pending live acceptance. Bounded0.2.0 effect/grid acceptance remains unchanged and is not a save/load proof.
+
 Current candidate: user adopts any occupied native grave construction cell and authorizes Menu0.2.0 session-only full effective conversion. BLESSING_MEMBERSHIP_RESEARCH owns readiness; TEST_BUILD_LOG owns frozen artifact/install, bounded accepted return and remaining limits. Menu0.1.1 grid/point-edit/native-desk regression has bounded live/user acceptance; remaining menu layout is explicitly deferred. No paid/save/visual extension is authorized in0.2.0. The earlier0.1.0 return below remains historical, not the current grid state.
 
 Menu0.2.0 return now accepts the bounded installed single-grave spatial conversion/nonstacking/removal-restoration scenario with native physics agreement, central diagram/raw body separation, unchanged measured physical parameters and native total feedback. TEST_BUILD_LOG owns exact evidence and remaining state/tier/lifecycle limits. Full persistence/payment/product acceptance remains open; no automatic stable promotion or new implementation follows from this result.

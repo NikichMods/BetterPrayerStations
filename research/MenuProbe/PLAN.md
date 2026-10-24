@@ -1,4 +1,12 @@
-# Menu Probe 0.2.0 — readiness and method
+# Menu Probe 0.3.0 — readiness and method
+
+User authorizes global persistence only after bounded0.2.0 acceptance, without payment or visual polish. GLOBAL_BEAM_PERSISTENCE.md owns selected native player-root carrier/schema and readiness. SavedBeamState validates and writes only its exact23 numeric metadata keys; no station/grave ownership, new inventory entry, sidecar or forced save. The native GameSave._inventory/current live-player reference gate is retained and extended with the bound saved-owner ref. Recover before support/effect evaluation; local buys/Place/Remove/explicit cleanup persist after Current() guard. Session reset/load/unload/failure only release memory, never write/clear the old owner's metadata.
+
+Rank order, not historical serial identity, is serialized. Support remains derived; P>C and dormant positions survive recovery. Unknown/invalid input is preserved and disables the candidate; validated commits snapshot owned values and roll them back on a setter failure. Explicit cleanup zeroes the current group and needs an ordinary subsequent save. Preserve a verified ignored backup of local save payloads before install. README carries the short normal-save/menu-load/restart/optional-cross-save/cleanup loop.
+
+Offline gates use actual native SmartSerializer<GameSave>, native Item/GameRes and zero pruning for counts/signed-zero coordinates/order/reinsertion, support0/recovery, separate save graphs, inventory/money/foreign metadata, cleanup, malformed-data/proposed-state rejection and deterministic partial-write rollback. Existing0.2.0 skull-oracle/geometry/IL/state checks remain; structural no-mutation gate permits Item.SetParam only inside validated SavedBeamState.SetOwned. Actual installed save lifecycle remains pending. The older method below is history, not the current session-only contract.
+
+## Historical0.2.0 method
 
 User authorizes any occupied grave cell plus full effective conversion, no payment/persistence/visual work. BLESSING_MEMBERSHIP_RESEARCH owns adopted geometry and separate input-projection readiness. Current part/optimized-collider initialization is cached; actual transformed box derives discrete32-unit cell bounds through the reused GridFootprint implementation. Existing registry scan also collects graves, then native add/definition event maintains candidates; cached refresh checks supported owners, no recurring global scan. Native getter and central diagram replace only the skull call; generic quality branch, decoration inputs, floor/min and physical body panel remain native. Original state caps/prices/order and UI/grid handling retained.
 

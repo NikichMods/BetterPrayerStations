@@ -1,6 +1,6 @@
 # Implementation plan
 
-Current product work follows the revised blessing-capacity concept in DESIGN.md. Session-only Menu Probe0.1.0 has bounded live ordinary-entry/three-card/free-buy/point-edit evidence. User authorized stage1 corrections only. Menu0.1.1 corrects the sampled grid's camera-follow movement, the clipped header and missing outer-list reposition after row redraw; source readiness is recorded in BUILD_MENU_RESEARCH. Installed grid/action behavior is now confirmed; remaining menu layout polish is explicitly deferred by the user. Exact artifact/install identity and runtime status: TEST_BUILD_LOG. User now adopts any occupied grave cell and authorizes session-only conversion as Menu0.2.0. Payment/persistence and visual polish remain outside this slice.
+Current product work follows the revised blessing-capacity concept in DESIGN.md. Menu0.1.1 editor/grid and Menu0.2.0 spatial conversion have bounded installed/user acceptance. User now authorizes Menu0.3.0 global P/coordinate/priority persistence; GLOBAL_BEAM_PERSISTENCE owns the native player-root carrier/schema and offline evidence, TEST_BUILD_LOG exact artifact/install and pending runtime acceptance. Payment and visual polish remain outside this slice.
 
 ## Forward plan after the Menu0.1.0 return —2026-10-24
 
@@ -20,7 +20,7 @@ Menu0.2.0 now has bounded live/user acceptance for one-grave full conversion, te
 
 ### 3. Add durable capacity/field state, then actual payment
 
-First choose the smallest verified save carrier for cemetery-wide purchased count plus point locations/order. Earlier per-grave serialization evidence is useful but does not prove a global-state schema. Establish recovery across same/cross-save loads, session separation, correct dormancy after station demolition, reactivation after rebuilding and harmless disabled/uninstalled behavior; no automatic migration of old diagnostic grave investments. Distinguish product decisions from carrier research.
+Selected for Menu0.3.0: exact namespaced numeric metadata on the native per-save player-root Item, with actual GameSave binary roundtrip evidence and current-owner guards (GLOBAL_BEAM_PERSISTENCE). Earlier per-grave investment is not migrated. Establish recovery across same/cross-save loads, session separation, correct dormancy after station demolition, reactivation after rebuilding and harmless disabled/uninstalled behavior; no automatic migration of old diagnostic grave investments. Distinguish product decisions from carrier research.
 
 After durable state is proved, couple real faith debit to exactly one capacity increment and price progression. Reuse accepted counting/debit/current-player boundaries; verify insufficient funds, support ceiling, duplicate clicks, reopening/load and rollback/containment at the actual commit seam. Free Place/Remove never spends faith or resets price. Trials may be batched only when their independent readiness gates and coherent scenarios allow it; no ceremony of one build per rule is required.
 
@@ -38,9 +38,9 @@ Move the proven mechanism into a coherent production entry point after the above
 
 ## Immediate next step and remaining decisions
 
-Stage1 Menu0.1.1 has bounded installed/user acceptance for native entry/actions, stable grid under camera pan, point editing and ordinary construction-desk regression. Exact return is in TEST_BUILD_LOG. A repeat-redraw card-height defect remains, but the user explicitly defers station-menu visual/layout work until functional mechanics are implemented; the technical placeholder is sufficient to continue. Do not block stage2 on cosmetic/menu polish or issue another layout-only candidate. The any-occupied-cell rule is now adopted; Menu0.2.0 connects session-only full effective conversion for installed testing. Payment/persistence follow their separate readiness gates; this return does not itself authorize implementing all later stages.
+Stage1 Menu0.1.1 has bounded installed/user acceptance for native entry/actions, stable grid under camera pan, point editing and ordinary construction-desk regression. Exact return is in TEST_BUILD_LOG. A repeat-redraw card-height defect remains, but the user explicitly defers station-menu visual/layout work until functional mechanics are implemented; the technical placeholder is sufficient to continue. Do not block stage2 on cosmetic/menu polish or issue another layout-only candidate. The any-occupied-cell rule and bounded0.2.0 effect return are accepted. User now authorizes0.3.0 persistence; next is its short ordinary-save/load/restart/cleanup test. Real payment follows accepted durable state under a separate implementation scope.
 
-Two concrete decisions remain to close at their owning stages: exact field/grave membership before stage2 and price continuation after purchase10 before unrestricted payment/shipping. Native presentation, save carrier, lifecycle compatibility and production packaging are engineering/acceptance tasks; return to the user only for actual product tradeoffs or real visual judgment.
+Field/grave membership is resolved. Price continuation after purchase10 remains a product decision before unrestricted payment/shipping. Native presentation, save carrier, lifecycle compatibility and production packaging are engineering/acceptance tasks; return to the user only for actual product tradeoffs or real visual judgment.
 
 ## Historical combined-concept implementation notes
 

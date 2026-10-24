@@ -20,6 +20,18 @@ namespace NikichMods.BPSMenuProbe
         internal bool Place(int x,int y,int support)
         {if(Free(support)==0 || Index(x,y)>=0)return false;Points.Add(new Point{X=x,Y=y,Order=++serial});return true;}
         internal bool Remove(int x,int y){int i=Index(x,y);if(i<0)return false;Points.RemoveAt(i);return true;}
+        internal void Restore(int purchased,IList<Point> points)
+        {
+            if(purchased<0 || purchased>Prices.Length || points==null || points.Count>purchased)throw new InvalidOperationException("Invalid saved beam capacity/count");
+            var copy=new List<Point>();
+            for(int i=0;i<points.Count;i++)
+            {
+                var p=points[i];if(p==null || p.X < -1000000 || p.X>1000000 || p.Y < -1000000 || p.Y>1000000)throw new InvalidOperationException("Invalid saved beam coordinates");
+                foreach(var q in copy)if(q.X==p.X && q.Y==p.Y)throw new InvalidOperationException("Duplicate saved beam cell");
+                copy.Add(new Point{X=p.X,Y=p.Y,Order=i+1});
+            }
+            Points.Clear();Points.AddRange(copy);Purchased=purchased;serial=copy.Count;
+        }
         internal void Clear(){Points.Clear();Purchased=0;serial=0;}
     }
 }

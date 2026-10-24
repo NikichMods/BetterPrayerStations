@@ -29,6 +29,7 @@ class MenuTests
         Assert(hash=="e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8","Host identity");
         var probe=Assembly.LoadFrom(args[2]);var type=probe.GetType("NikichMods.BPSMenuProbe.BeamState",true);var state=Activator.CreateInstance(type,true);
         EffectTests.Run(probe);
+        SavedBeamTests.Run(probe);
         var points=(IList)type.GetField("Points",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(state);
         Assert(Value(state,"Purchased")==0 && (int)Invoke(state,"Free",5)==0,"Initial zero paid capacity");
         int[] prices={1,2,3,4,6,9,12,15,18,21};
@@ -77,13 +78,14 @@ class MenuTests
             {
                 var call=instruction.operand as MethodBase;if(call==null)continue;
                 string owner=call.DeclaringType.Name,name=call.Name;
-                Assert(!(owner=="Item" && (name.StartsWith("RemoveItem") || name.StartsWith("AddItem") || name=="SetParam" || name=="SetParamAdd")),"No item mutation: "+method.Name);
+                bool ownedMetadata=ownerType.FullName=="NikichMods.BPSMenuProbe.SavedBeamState" && method.Name=="SetOwned" && name=="SetParam";
+                Assert(!(owner=="Item" && (name.StartsWith("RemoveItem") || name.StartsWith("AddItem") || (name=="SetParam" && !ownedMetadata) || name=="SetParamAdd")),"Only saved-backend metadata mutation allowed: "+method.Name);
                 Assert(!(owner=="WorldGameObject" && (name=="SetParam" || name=="MarkForRemoval" || name=="SetObject")),"No world-data mutation: "+method.Name);
                 Assert(!(owner=="FloatingWorldGameObject" && (name.StartsWith("Create") || name.StartsWith("Stop"))),"No floating object or commit: "+method.Name);
                 Assert(!(owner=="BuildModeLogics" && (name=="DoPlace" || name=="DoRemove" || name=="CraftBuilding")),"No native physical edit: "+method.Name);
                 Assert(!(owner=="GameSave" && name.StartsWith("Save")),"No save request");
             }
         }
-        Console.WriteLine("PASS "+assertions+" assertions: compiled state policy, native dispatch, no payment/save/world-write call paths. Live UI/input remains pending.");
+        Console.WriteLine("PASS "+assertions+" assertions: compiled state policy, native dispatch, only owned metadata setter; no payment/forced-save/world-write paths. Live UI/input remains pending.");
     }
 }

@@ -18,15 +18,15 @@ $dll=Join-Path $out $(if($CheckOnly){'compile-check.dll'}else{'BetterPrayerStati
 if(!$CheckOnly -and (Test-Path -LiteralPath $dll)){throw 'Immutable artifact already exists'}
 $common=@('/nologo','/nostdlib+','/noconfig','/langversion:7.3','/optimize+','/deterministic+','/warnaserror+')
 $common+=@($refs | ForEach-Object {if(!(Test-Path -LiteralPath $_)){throw ('Missing reference '+$_)};'/reference:'+$_})
-& (Join-Path $DotnetRoot 'dotnet.exe') $compiler @common '/target:library' ('/out:'+$dll) (Join-Path $PSScriptRoot 'Plugin.cs') (Join-Path $PSScriptRoot 'BeamState.cs') (Join-Path $PSScriptRoot 'SkullProjection.cs') (Join-Path $PSScriptRoot 'FieldGeometry.cs') (Join-Path $PSScriptRoot 'PhysicalSnapshot.cs') (Join-Path $PSScriptRoot '../FaithProbe/GridFootprint.cs')
+& (Join-Path $DotnetRoot 'dotnet.exe') $compiler @common '/target:library' ('/out:'+$dll) (Join-Path $PSScriptRoot 'Plugin.cs') (Join-Path $PSScriptRoot 'BeamState.cs') (Join-Path $PSScriptRoot 'SavedBeamState.cs') (Join-Path $PSScriptRoot 'SkullProjection.cs') (Join-Path $PSScriptRoot 'FieldGeometry.cs') (Join-Path $PSScriptRoot 'PhysicalSnapshot.cs') (Join-Path $PSScriptRoot '../FaithProbe/GridFootprint.cs')
 if($LASTEXITCODE -ne 0){throw 'Probe compilation failed'}
 if([Reflection.AssemblyName]::GetAssemblyName($dll).Version.ToString() -ne ($version+'.0') -or [Diagnostics.FileVersionInfo]::GetVersionInfo($dll).FileVersion -ne ($version+'.0')){throw 'Version mismatch'}
 $test=Join-Path $out 'MenuTests.exe'
-& (Join-Path $DotnetRoot 'dotnet.exe') $compiler @common '/target:exe' ('/out:'+$test) (Join-Path $PSScriptRoot 'MenuTests.cs') (Join-Path $PSScriptRoot 'EffectTests.cs')
+& (Join-Path $DotnetRoot 'dotnet.exe') $compiler @common '/target:exe' ('/out:'+$test) (Join-Path $PSScriptRoot 'MenuTests.cs') (Join-Path $PSScriptRoot 'EffectTests.cs') (Join-Path $PSScriptRoot 'SavedBeamTests.cs')
 if($LASTEXITCODE -ne 0){throw 'Test compilation failed'}
 & $test $managed $core $dll
 if($LASTEXITCODE -ne 0){throw 'Menu tests failed'}
 if($CheckOnly){Write-Output 'Development compile and menu gates passed; not a handoff artifact';return}
-$manifest=[ordered]@{kind='research-only session field and skull-effect probe';version=$version;source=$head;compiler='SDK6.0.406 Roslyn';file=(Split-Path $dll -Leaf);sha256=(Get-FileHash -LiteralPath $dll).Hash.ToLowerInvariant();references=@($refs | ForEach-Object {[ordered]@{name=(Split-Path $_ -Leaf);sha256=(Get-FileHash -LiteralPath $_).Hash.ToLowerInvariant()}})}
+$manifest=[ordered]@{kind='research-only persisted global field and skull-effect probe';version=$version;source=$head;compiler='SDK6.0.406 Roslyn';file=(Split-Path $dll -Leaf);sha256=(Get-FileHash -LiteralPath $dll).Hash.ToLowerInvariant();references=@($refs | ForEach-Object {[ordered]@{name=(Split-Path $_ -Leaf);sha256=(Get-FileHash -LiteralPath $_).Hash.ToLowerInvariant()}})}
 $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $out 'build-identity.json') -Encoding UTF8
 Write-Output ('Built '+$dll+' SHA256='+$manifest.sha256+' source='+$head)

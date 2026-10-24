@@ -1,5 +1,13 @@
 # Test-build log
 
+## Menu0.3.0 — global purchased-capacity/field-order persistence candidate2026-10-25
+
+User authorizes persistence of P, positioned small-cell coordinates and activation order; no payment or visual changes. GLOBAL_BEAM_PERSISTENCE owns native carrier/schema/readiness and failure/cleanup policy. One player-root namespaced group in native GameSave._inventory; normal game save handles disk persistence. State recovers only after current save/live player/saved owner references agree and before support/effects. No automatic saved cleanup on session transition, no old diagnostic migration. Earlier0.2.0 conversion/editor and deferred layout defect retained.
+
+Development SDK6.0.406 warning-as-error/version gate passes.216 bounded persistence checks include actual native GameSave binary roundtrips, rank/reinsertion and zero/signed coordinates, support0/recovery without clamping investment, separate save graphs, foreign inventory/money/metadata, cleanup, malformed/current/proposed data rejection and controlled partial-write rollback. Existing40 native skull/decay oracle cases and5984 structural/policy assertions pass; structural writer exception is only SavedBeamState.SetOwned with exact-key validation, never physical item/world/currency edits or forced save. No installed save/load/restart acceptance yet. README owns the short test; exact frozen source/artifact/install will follow clean numbered build.
+
+With the host closed, preserved66 local native .dat/.backup/.info files (162904651 bytes) in ignored `.local/evidence/menu-probe-0.3.0/save-backup/`, each copy hash verified against its source; manifest.json records names/hashes/source/capture time. This backup is private local recovery evidence, not a committed/public payload or a newly modified save. No save file was rewritten by the agent.
+
 ## Menu0.2.0 — session-only spatial skull-conversion candidate
 
 ### Installed return — bounded field/conversion scenario accepted2026-10-24

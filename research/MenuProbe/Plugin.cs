@@ -15,7 +15,7 @@ namespace NikichMods.BPSMenuProbe
     [BepInPlugin(Id,"Better Prayer Stations - Menu Probe",Version)]
     public sealed class Plugin:BaseUnityPlugin,CraftInterface
     {
-        public const string Id="nikichmods.bps.menuprobe",Version="0.2.0";
+        public const string Id="nikichmods.bps.menuprobe",Version="0.3.0";
         const string Host="e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const string BuyId="bps_menu_probe_buy",PlaceId="bps_menu_probe_place",RemoveId="bps_menu_probe_remove";
         static Plugin self;
@@ -35,6 +35,7 @@ namespace NikichMods.BPSMenuProbe
         sealed class DefinitionSnapshot{internal ObjectDefinition.InteractionType Interaction;internal string Zone;}
         Harmony harmony;
         GameSave session;
+        Item savedOwner;
         WorldGameObject source;
         WorldGameObject previousDesk;
         CraftInterface previousController;
@@ -59,7 +60,7 @@ namespace NikichMods.BPSMenuProbe
         static bool StationCandidate(string id){return Station(id) || id=="pray_stand_wd_place" || id=="pray_stand_stn_place";}
         static bool GraveCandidate(string id){return id=="grave_ground" || id=="grave_empty" || id=="grave_corp" || id=="grave_exhume";}
         bool Current()
-        {return ready && MainGame.me!=null && MainGame.game_started && MainGame.me.save!=null && MainGame.me.player!=null && MainGame.me.player.data!=null && ReferenceEquals(session,MainGame.me.save) && ReferenceEquals(saveInventory.GetValue(session),MainGame.me.player.data);}
+        {return ready && MainGame.me!=null && MainGame.game_started && MainGame.me.save!=null && MainGame.me.player!=null && MainGame.me.player.data!=null && ReferenceEquals(session,MainGame.me.save) && ReferenceEquals(savedOwner,MainGame.me.player.data) && ReferenceEquals(saveInventory.GetValue(session),savedOwner);}
         void Log(string value){Logger.LogInfo("BPS_MENU "+value);}
         void Awake()
         {
@@ -88,7 +89,7 @@ namespace NikichMods.BPSMenuProbe
                 Patch(typeof(GJL),"L",nameof(Localize),null,new[]{typeof(string)});
                 SkullProjection.Install(harmony);
                 Patch(typeof(GraveGUI),"Redraw",null,nameof(GraveRedrawn),Type.EmptyTypes);
-                ready=true;Log("READY version="+Version+" persistent=False faith_debit=False quality_effect=True");
+                ready=true;Log("READY version="+Version+" persistent=True faith_debit=False quality_effect=True");
             }
             catch(Exception ex){Fail(ex);}
         }
@@ -125,6 +126,8 @@ namespace NikichMods.BPSMenuProbe
             ResetSession("start");
             if(MainGame.me==null || MainGame.me.save==null || MainGame.me.player==null || !ReferenceEquals(saveInventory.GetValue(MainGame.me.save),MainGame.me.player.data))return;
             session=MainGame.me.save;
+            savedOwner=MainGame.me.player.data;
+            var restored=SavedBeamState.Read(savedOwner);state.Restore(restored.Purchased,restored.Points);
             foreach(var w in WorldMap.objs)if(w!=null){if(StationCandidate(w.obj_id))stations.Add(w);if(GraveCandidate(w.obj_id))graves.Add(w);}
             foreach(string id in new[]{"pray_stand_wd","pray_stand_stn"})
             {
@@ -133,7 +136,15 @@ namespace NikichMods.BPSMenuProbe
                 d.interaction_type=ObjectDefinition.InteractionType.Builder;d.zone_id="graveyard";
             }
             RefreshSupport();status="Подойдите к молельне и взаимодействуйте. F8 — панель теста.";
-            Log("SESSION station_candidates="+stations.Count+" support="+support+" state_reset=True");
+            Log("SESSION station_candidates="+stations.Count+" support="+support+" recovered=True purchased="+state.Purchased+" placed="+state.Points.Count+" active="+state.Active(support)+" order="+PointOrder());
+        }
+        string PointOrder()
+        {var cells=new List<string>();for(int i=0;i<state.Points.Count;i++){var p=state.Points[i];cells.Add((i+1)+":"+p.X+","+p.Y);}return string.Join(";",cells.ToArray());}
+        void SaveState(string reason)
+        {
+            if(!Current())throw new InvalidOperationException("Saved beam owner is no longer the current player/save");
+            SavedBeamState.Write(savedOwner,state);
+            Log("PERSIST reason="+reason+" purchased="+state.Purchased+" placed="+state.Points.Count+" order="+PointOrder()+" disk=native-next-save");
         }
         void RefreshSupport()
         {
@@ -210,7 +221,7 @@ namespace NikichMods.BPSMenuProbe
             {
                 menu.object_info.text_header.text="Благословения — прототип";
                 menu.object_info.text_descr.gameObject.SetActive(true);
-                menu.object_info.text_descr.text=Counts()+"\nСледующая цена: "+(state.NextPrice==0?"предел теста":state.NextPrice+" веры")+". Сейчас бесплатно.\nТест ограничен 10 покупками. Конвертация действует только в текущей сессии.";
+                menu.object_info.text_descr.text=Counts()+"\nСледующая цена: "+(state.NextPrice==0?"предел теста":state.NextPrice+" веры")+". Сейчас бесплатно.\nТочки и вместимость записываются обычным сохранением игры.";
                 var description=menu.object_info.text_descr;
                 description.UpdateAnchors();description.ProcessText(false,true);
                 int extra=Math.Max(0,description.height-headerDescriptionHeight);
@@ -242,7 +253,7 @@ namespace NikichMods.BPSMenuProbe
             {
                 RefreshSupport();if(!CanCraft(cd,multi,amount,needs))return false;
                 var player=MainGame.me.player.data;int faith=player.GetTotalCount("faith",true);float money=player.money;
-                if(cd.id==BuyId){int quote=state.NextPrice;if(!state.Buy(support))return false;status="Вместимость +1. Вера не списана.";Log("BUY simulated=True quote="+quote+" purchased="+state.Purchased);refreshRequested=true;}
+                if(cd.id==BuyId){int quote=state.NextPrice;if(!state.Buy(support))return false;SaveState("buy");status="Вместимость +1. Вера не списана.";Log("BUY simulated=True quote="+quote+" purchased="+state.Purchased);refreshRequested=true;}
                 else if(cd.id==PlaceId)pending=()=>BeginEditor(false);
                 else if(cd.id==RemoveId)pending=()=>BeginEditor(true);
                 else return false;
@@ -266,7 +277,7 @@ namespace NikichMods.BPSMenuProbe
             var cameraTarget=cameraField.GetValue(game.build_mode_logics) as Transform;
             gamepadCursor=cameraTarget!=null?(Vector2)cameraTarget.position:(Vector2)game.player.transform.position;
             status=remove?"Выберите точку для удаления. Вера и оплаченная вместимость сохраняются.":"Любая клетка могилы подходит. Активная точка конвертирует все красные черепа.";
-            Log("EDITOR mode="+(remove?"remove":"place")+" persistent=False grid_origin="+gridOrigin);
+            Log("EDITOR mode="+(remove?"remove":"place")+" persistent=True grid_origin="+gridOrigin);
         }
         bool Allowed(Vector2 pos)
         {
@@ -315,9 +326,9 @@ namespace NikichMods.BPSMenuProbe
             {
                 if(removing)
                 {
-                    if(state.Remove(x,y)){auditRequested=true;status="Точка убрана. Вместимость сохранена.";Log("REMOVE x="+x+" y="+y+" purchased="+state.Purchased);}
+                    if(state.Remove(x,y)){SaveState("remove");auditRequested=true;status="Точка убрана. Вместимость сохранена.";Log("REMOVE x="+x+" y="+y+" purchased="+state.Purchased);}
                 }
-                else if(validCell && state.Place(x,y,support)){auditRequested=true;status="Точка поставлена. Порядок: последняя.";Log("PLACE x="+x+" y="+y+" placed="+state.Points.Count+" active="+state.Active(support));}
+                else if(validCell && state.Place(x,y,support)){SaveState("place");auditRequested=true;status="Точка поставлена. Порядок: последняя.";Log("PLACE x="+x+" y="+y+" placed="+state.Points.Count+" active="+state.Active(support));}
             }
             MainGame.me.gui_elements.build_mode_gui.RedrawScriptMode(false);
         }
@@ -368,13 +379,13 @@ namespace NikichMods.BPSMenuProbe
                 if(editor)
                 {
                     if(cursorSet)DrawCell(cursorX,cursorY,(removing?state.Index(cursorX,cursorY)>=0:validCell && state.Free(support)>0)?Color.yellow:Color.red,true);
-                    GUI.Box(new Rect(370,10,Math.Max(260,Screen.width-390),72),(removing?"Убрать свет":"При размещении на могиле превращает все красные черепа в белые.")+"\nЭффект только в текущей сессии. "+Counts().Replace("\n"," · ")+"\nЛКМ / действие — выбрать; ПКМ / назад — к меню. Мышь у края — камера.");
+                    GUI.Box(new Rect(370,10,Math.Max(260,Screen.width-390),72),(removing?"Убрать свет":"При размещении на могиле превращает все красные черепа в белые.")+"\nСохранение — обычным способом в игре. "+Counts().Replace("\n"," · ")+"\nЛКМ / действие — выбрать; ПКМ / назад — к меню. Мышь у края — камера.");
                 }
                 if(showPanel)
                 {
-                    GUI.Box(panel,"BPS Menu Probe "+Version+" — только текущая сессия");
+                    GUI.Box(panel,"BPS Menu Probe "+Version+" — данные сохраняются");
                     GUI.Label(new Rect(panel.x+10,panel.y+24,panel.width-20,65),Counts()+"\n"+status,label);
-                    if(GUI.Button(new Rect(panel.x+10,panel.y+100,panel.width-20,28),"Очистить временные точки и покупки"))pending=()=>{EndEditor(false);if(ownMenu && menu!=null)menu.Hide(true);state.Clear();RefreshEffects();RedrawOpenGrave();status="Тест очищен. Можно снова открыть молельню.";Log("CLEANUP local_state=True");};
+                    if(GUI.Button(new Rect(panel.x+10,panel.y+100,panel.width-20,28),"Очистить точки и покупки"))pending=()=>{EndEditor(false);if(ownMenu && menu!=null)menu.Hide(true);state.Clear();SaveState("cleanup");RefreshEffects();RedrawOpenGrave();status="Тест очищен. Сохраните игру для закрепления очистки.";Log("CLEANUP saved_group=zeroed save_required=True");};
                     GUI.enabled=!editor && !ownMenu && !MainGame.me.gui_elements.IsAnyMassiveWindowOpened();
                     if(GUI.Button(new Rect(panel.x+10,panel.y+134,panel.width-20,28),"Запасной вход: ближайшая молельня"))pending=OpenNearest;
                     GUI.enabled=true;
@@ -498,9 +509,9 @@ namespace NikichMods.BPSMenuProbe
                 state.Clear();
                 foreach(var grave in graves)if(grave!=null && !grave.is_removed)RefreshBadge(grave);
                 RedrawOpenGrave();fieldGeometry.Clear();graves.Clear();previousEffects.Clear();badges.Clear();graveView=null;observeFrame=-1;auditRequested=false;
-                definitions.Clear();stations.Clear();ownMenu=false;session=null;source=null;support=0;lastSupport=-1;
+                definitions.Clear();stations.Clear();ownMenu=false;session=null;savedOwner=null;source=null;support=0;lastSupport=-1;
             }
-            if(ready)Log("RESET reason="+reason+" persistent=False");
+            if(ready)Log("RESET reason="+reason+" runtime_only=True saved_group_untouched=True");
         }
         void Fail(Exception ex)
         {
