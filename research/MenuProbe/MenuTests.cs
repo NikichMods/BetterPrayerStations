@@ -28,6 +28,7 @@ class MenuTests
         string hash;using(var sha=SHA256.Create())using(var file=File.OpenRead(Path.Combine(managed,"Assembly-CSharp.dll")))hash=BitConverter.ToString(sha.ComputeHash(file)).Replace("-","").ToLowerInvariant();
         Assert(hash=="e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8","Host identity");
         var probe=Assembly.LoadFrom(args[2]);var type=probe.GetType("NikichMods.BPSMenuProbe.BeamState",true);var state=Activator.CreateInstance(type,true);
+        EffectTests.Run(probe);
         var points=(IList)type.GetField("Points",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(state);
         Assert(Value(state,"Purchased")==0 && (int)Invoke(state,"Free",5)==0,"Initial zero paid capacity");
         int[] prices={1,2,3,4,6,9,12,15,18,21};
@@ -68,7 +69,8 @@ class MenuTests
         var card=(ObjectCraftDefinition)plugin.GetMethod("Card",BindingFlags.Static|BindingFlags.NonPublic).Invoke(null,new object[]{"test_action","test_icon"});
         Assert(card.build_type==ObjectCraftDefinition.BuildType.None && !card.needs_unlock,"Virtual card does not resolve a physical output object");
         Assert(card.output.Count==0 && card.needs.Count==0 && card.disable_multi_craft,"Virtual card has no products/materials/batching");
-        foreach(var method in plugin.GetMethods(BindingFlags.Instance|BindingFlags.Static|BindingFlags.Public|BindingFlags.NonPublic|BindingFlags.DeclaredOnly))
+        foreach(var ownerType in probe.GetTypes())
+        foreach(var method in ownerType.GetMethods(BindingFlags.Instance|BindingFlags.Static|BindingFlags.Public|BindingFlags.NonPublic|BindingFlags.DeclaredOnly))
         {
             if(method.GetMethodBody()==null)continue;
             foreach(var instruction in PatchProcessor.GetOriginalInstructions(method))

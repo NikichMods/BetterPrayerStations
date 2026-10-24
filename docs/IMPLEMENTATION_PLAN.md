@@ -1,6 +1,6 @@
 # Implementation plan
 
-Current product work follows the revised blessing-capacity concept in DESIGN.md. Session-only Menu Probe0.1.0 has bounded live ordinary-entry/three-card/free-buy/point-edit evidence. User authorized stage1 corrections only. Menu0.1.1 corrects the sampled grid's camera-follow movement, the clipped header and missing outer-list reposition after row redraw; source readiness is recorded in BUILD_MENU_RESEARCH. Installed grid/action behavior is now confirmed; remaining menu layout polish is explicitly deferred by the user. Exact artifact/install identity and runtime status: TEST_BUILD_LOG. Payment, persistence and grave effects remain outside this slice.
+Current product work follows the revised blessing-capacity concept in DESIGN.md. Session-only Menu Probe0.1.0 has bounded live ordinary-entry/three-card/free-buy/point-edit evidence. User authorized stage1 corrections only. Menu0.1.1 corrects the sampled grid's camera-follow movement, the clipped header and missing outer-list reposition after row redraw; source readiness is recorded in BUILD_MENU_RESEARCH. Installed grid/action behavior is now confirmed; remaining menu layout polish is explicitly deferred by the user. Exact artifact/install identity and runtime status: TEST_BUILD_LOG. User now adopts any occupied grave cell and authorizes session-only conversion as Menu0.2.0. Payment/persistence and visual polish remain outside this slice.
 
 ## Forward plan after the Menu0.1.0 return —2026-10-24
 
@@ -12,7 +12,7 @@ Deliver a new immutable session-only menu candidate once each correction has its
 
 ### 2. Complete session-only blessing mechanics
 
-Before binding the effect, agree the exact small-cell-to-grave ground-footprint membership rule using verified native geometry; retain free decorative placement and nonstacking behavior. Add all-red effective conversion through the earlier accepted grave input/UI seams, without physical anatomy mutation. Reuse accepted decay/body ownership evidence and the completed blind balance screen; do not repeat or reveal anatomy recipe research.
+Adopted: any native construction cell occupied by the grave qualifies. The user authorizes the joint session-only effect prototype; retain free decorative placement and nonstacking behavior. Add all-red effective conversion through the earlier accepted grave input/UI seams, without physical anatomy mutation. Reuse accepted decay/body ownership evidence and the completed blind balance screen; do not repeat or reveal anatomy recipe research.
 
 Check the minimal joint scenarios: active field on/off changes actual grave calculation/diagram and real zone total; multiple fields do not repeat conversion; empty/replacement bodies obey adopted spatial semantics; no body/organ export; lower/higher real station support changes activation in placement order; removing/replacing a point makes it newest. Keep free purchases/session data while proving this integration. Cover wooden and stone eligibility, not only the previously observed single wooden station. Do not inherit obsolete station radius/passive quality or per-grave paid upgrades.
 
@@ -36,7 +36,7 @@ Move the proven mechanism into a coherent production entry point after the above
 
 ## Immediate next step and remaining decisions
 
-Stage1 Menu0.1.1 has bounded installed/user acceptance for native entry/actions, stable grid under camera pan, point editing and ordinary construction-desk regression. Exact return is in TEST_BUILD_LOG. A repeat-redraw card-height defect remains, but the user explicitly defers station-menu visual/layout work until functional mechanics are implemented; the technical placeholder is sufficient to continue. Do not block stage2 on cosmetic/menu polish or issue another layout-only candidate. Next functional work is session-only blessing integration, first resolving exact cell-to-grave membership. Payment/persistence follow their separate readiness gates; this return does not itself authorize implementing all later stages.
+Stage1 Menu0.1.1 has bounded installed/user acceptance for native entry/actions, stable grid under camera pan, point editing and ordinary construction-desk regression. Exact return is in TEST_BUILD_LOG. A repeat-redraw card-height defect remains, but the user explicitly defers station-menu visual/layout work until functional mechanics are implemented; the technical placeholder is sufficient to continue. Do not block stage2 on cosmetic/menu polish or issue another layout-only candidate. The any-occupied-cell rule is now adopted; Menu0.2.0 connects session-only full effective conversion for installed testing. Payment/persistence follow their separate readiness gates; this return does not itself authorize implementing all later stages.
 
 Two concrete decisions remain to close at their owning stages: exact field/grave membership before stage2 and price continuation after purchase10 before unrestricted payment/shipping. Native presentation, save carrier, lifecycle compatibility and production packaging are engineering/acceptance tasks; return to the user only for actual product tradeoffs or real visual judgment.
 

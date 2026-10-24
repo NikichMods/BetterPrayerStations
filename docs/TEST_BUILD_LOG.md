@@ -1,5 +1,11 @@
 # Test-build log
 
+## Menu0.2.0 — session-only spatial skull-conversion candidate
+
+User explicitly adopts any occupied grave construction cell and authorizes connection of full effective red-to-white conversion, without payment, persistence or visual polish. Readiness: BLESSING_MEMBERSHIP_RESEARCH and research/MenuProbe/PLAN. Existing0.1.1 three-card editor and remaining known card-height defect retained; BeamState unchanged. Reuses current-part GridFootprint geometry (linked first-party source) and previously accepted native skull-input seams, with no decoration projection or physical body/organ mutation. Only getter/central-diagram skull reads are scoped; body panel and native decoration/decay caps remain native.
+
+Development SDK6.0.406 warning-as-error compile/version checks pass;40 actual native Item skull/decay oracle cases plus source snapshots/idempotence, guarded actual host getter/diagram IL/branch preservation and schematic cell fixtures pass.5334 structural/policy assertions across all compiled types check state/order/dispatch and no direct item/world/payment/save mutation call paths; this count is not a number of runtime scenarios. A bounded action-time physics oracle independently compares native cell occupancy with projected matches; change-only physical/getter/zone/badge and delayed GraveGUI observations will support the installed return. No fresh anatomy recipe research/disclosure. Exact source/artifact/install follows clean-source freeze; no installed acceptance or stable promotion yet. README owns the short cell/effect/duplicate/removal/cleanup scenario.
+
 ## Menu0.1.1 corrective candidate —2026-10-24
 
 ### Installed return — functional editor/grid accepted; menu polish deferred

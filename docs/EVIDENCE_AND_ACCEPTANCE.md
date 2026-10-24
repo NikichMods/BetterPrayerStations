@@ -2,6 +2,8 @@
 
 Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier combined-concept runtime plans below are historical research, not the next production step by default.
 
+Current candidate: user adopts any occupied native grave construction cell and authorizes Menu0.2.0 session-only full effective conversion. BLESSING_MEMBERSHIP_RESEARCH owns readiness; TEST_BUILD_LOG owns frozen artifact/install and pending acceptance. Menu0.1.1 grid/point-edit/native-desk regression has bounded live/user acceptance; remaining menu layout is explicitly deferred. No paid/save/visual extension is authorized in0.2.0. The earlier0.1.0 return below remains historical, not the current grid state.
+
 Current menu research: `BUILD_MENU_RESEARCH.md` records exact static CraftGUI/custom-interface dispatch, transient card input and unsafe ordinary removal/script-building assumptions. Native menu reuse is supported by direct IL/data; actual UI/editor/payment/persistence integration is not installed-accepted. The static study itself made no runtime change; the subsequent authorized candidate is recorded below.
 
 Current menu return: separate Menu Probe0.1.0 confirms ordinary station entry/three-card dispatch, free local purchases, repeated point placement/removal and explicit cleanup in game, with user positive button assessment. Exact source/hash/return in TEST_BUILD_LOG. Full acceptance remains open: native card/header overflow and left-offset drawn grid that shifts with camera panning are observed. Rendering causes and broader input/lifecycle cases are not proved. User requested evidence review, not immediate fixes; source/installed0.1.0 unchanged. No faith spending, save persistence or burial effect is part of this candidate.

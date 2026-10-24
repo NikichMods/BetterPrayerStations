@@ -1,6 +1,12 @@
 # Spatial blessing membership —2026-10-24
 
-Status: **static host evidence and product recommendation; not adopted membership or installed effect acceptance**. The user asks to inspect actual grave geometry and propose a simple rule before connecting conversion. Menu0.1.1 grid/actions are accepted within their recorded scope; menu polish remains deferred. No new probe, runtime edit or installation is necessary to make this proposal.
+Status: **any occupied grave cell adopted; session-only effect prototype authorized, installed effect acceptance pending**. Menu0.1.1 grid/actions are accepted within their recorded scope; menu polish remains deferred.
+
+## Menu0.2.0 readiness checkpoint
+
+READY for a research-only joint field/effect candidate. Observable: active occupied-cell fields convert all effective reds to whites, nonstacking, restoring native result when the last qualifying field deactivates. Owners/final consumers: current WGO.wop layer23 placement box -> native32-unit occupied-cell convention; WorldGameObject.get_quality skull inputs -> unchanged native floor/subtract/min; GraveGUI.RedrawGraveInventory skull inputs -> unchanged diagram loops. Reuse the previously tested GridFootprint shape projection and guarded native skull-call rewrite, without decoration projection, persisted upgrades or old radius/passive systems. Initialise optimized colliders only on current-part change, cache per owner/part, derive bounds from runtime transforms on use; no global recurring world scans or dependence on _cells readiness. The native box-overlap tolerance supplies the same discrete footprint policy as prior native occupancy evidence. Unsupported geometry fails the probe rather than guessing.
+
+Blast radius is owned grave calculations/central diagram only, current-save/cache guarded. Shared Item.GetBodySkulls and body-panel rendering are not patched. Raw items, decorations, currency and saves are preserved. Initial grave registry shares the existing game-ready world scan and native add/definition-change event; bounded cached refresh detects active-set/body/value changes and updates native badges/zone feedback. Reset clears activation before refresh/old-session release. Cheapest checks: compiled native rewrite guards/branch metadata, full-conversion native Item oracle across decay thresholds, geometry fixtures and existing state caps/order gates; installed boundary cells, effect on/off/duplicates, diagram/zone, cleanup and reload are the new acceptance envelope. One joint candidate is simpler than an extra geometry-only installation; no UI polish, payment or persistence.
 
 ## Proposed player rule
 
