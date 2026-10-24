@@ -32,6 +32,8 @@ The player uses **Place / Remove**, not a dedicated movement mechanic. Removing 
 
 Exhumation leaves the spatial field at its location; an empty grave receives no numerical benefit. A replacement body at the same blessed grave receives the selected conversion. The field does not travel with an exhumed body or a moved grave; applicability is spatial. Exact membership/footprint detection across native states still needs evidence.
 
+Current proposal, pending user agreement: any native construction cell occupied by the grave qualifies; no special central-cell requirement. Host evidence, alternatives and remaining runtime limits are recorded in `BLESSING_MEMBERSHIP_RESEARCH.md`. This is a recommendation, not an adopted replacement for the unresolved membership rule.
+
 ### Construction-style management direction
 
 Interact with any prayer station to open a shared construction-style management interface. It must offer: buy +1 capacity with the next faith price; place a field; remove a field. Show station ceiling, purchased capacity and remaining placement availability distinctly. Placement exposes the cemetery grid; removal exposes existing field positions. Field markers must remain clearly visible over graves in these management modes, including dormant fields, without requiring permanent ordinary-gameplay dormant markers. Exact native menu reuse/customization and grid feasibility are unverified. This is the agreed interaction direction, not a selected native implementation.
