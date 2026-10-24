@@ -18,7 +18,7 @@ There is **no station influence radius**. Completed prayer stations add to one c
 
 Faith buys **one more simultaneous beam slot**, not a particular positioned beam. Track permanent purchased capacity P, station-supplied ceiling C, and placed field locations separately. Usable simultaneous capacity is min(P,C); a new purchase increases P by1 and is available only while P<C. Placing/removing a field is free and does not advance/reduce P or the shared price progression. There is no individual paid-beam identity or reserve-entry selection to preserve.
 
-Demolishing stations does not erase P or saved field locations. With C=0, all beams go dark and their grave effects cease. Rebuilding sufficient station capacity restores support without payment or another purchase. P>C is a valid temporary state, not grounds for deleting investment. Dormant fields remain removable in management mode. The earlier purchase-order priority assumed individually purchased fields; the new fungible-capacity model reopens the precise order of partial activation. Earliest placement first is a proposal, not yet adopted; do not silently preserve fictional per-field purchase identities.
+Demolishing stations does not erase P or saved field locations. With C=0, all beams go dark and their grave effects cease. Rebuilding sufficient station capacity restores support without payment or another purchase. P>C is a valid temporary state, not grounds for deleting investment. Dormant fields remain removable in management mode. **Adopted priority: earliest placed fields stay active; latest placed fields go dormant first.** Increasing support restores fields in the same placement order. Removing and placing a field again makes it the newest/last field; placement order persists through save/load. Do not preserve fictional per-field purchase identities.
 
 Neither the old nearest-station rule nor the earlier per-station beam ownership proposal applies.
 
@@ -36,14 +36,18 @@ Exhumation leaves the spatial field at its location; an empty grave receives no 
 
 Interact with any prayer station to open a shared construction-style management interface. It must offer: buy +1 capacity with the next faith price; place a field; remove a field. Show station ceiling, purchased capacity and remaining placement availability distinctly. Placement exposes the cemetery grid; removal exposes existing field positions. Field markers must remain clearly visible over graves in these management modes, including dormant fields, without requiring permanent ordinary-gameplay dormant markers. Exact native menu reuse/customization and grid feasibility are unverified. This is the agreed interaction direction, not a selected native implementation.
 
-### Price exploration
+### Initial trial prices
 
-The user wants an inexpensive first trial rather than the former meaningful-first-sacrifice policy. A first price of1 faith is favored, but the exact sequence remains open. Latest candidate first-ten prices: **1,2,3,4,6,9,12,15,18,21**, totals16 for the first5 and91 for the first10. Continuation beyond10 is not selected. Earlier alternatives in conversation are not concurrent requirements. The user's approximate10–15 faith per weekly sermon at first station access is a scenario assumption, not established timing/income evidence. Exact decoration faith costs and marginal quality comparisons require canonical economy data before using them as balance evidence.
+The user wants an inexpensive first trial rather than the former meaningful-first-sacrifice policy. **Adopted first-ten trial prices: 1,2,3,4,6,9,12,15,18,21 faith**, totals16 for the first5 and91 for the first10. These are selected for in-game tuning, not accepted final balance. Continuation beyond10 is not selected. Earlier alternatives in conversation are not concurrent requirements. The user's approximate10–15 faith per weekly sermon at first station access is a scenario assumption, not established timing/income evidence. Exact decoration faith costs and marginal quality comparisons require canonical economy data before using them as balance evidence.
+
+### Audience and balance hypotheses to validate
+
+Intended overlapping motivations: less red-skull cleanup for burial, expressive cemetery lighting, and experimenting with anatomy under a new burial calculation. Broad usefulness to all players, sustained late-game demand and a new optimal late-game anatomy route are hypotheses, not established audience/runtime evidence. For a healthy blessed body, effective white capacity becomes the clamped native red-plus-white total, still limited by decoration. Adding reds alone can therefore be beneficial, but exchanging white for red at equal total is not an improvement; specific native procedures/availability/costs must be checked before promising progression or a new maximum. A permanent reusable purchase is a finite faith expenditure, not an ongoing upkeep or guaranteed endless resource sink. Check whether stronger early conversions become the obvious preferred route, rather than assuming a price per beam equals a price per quality point.
 
 ### Remaining balance, interaction and feasibility work
 
 - Balance/access: validate initial5/10 capacity in game; select faith price curve and whether existing station unlocks suffice.
-- Interaction: partial-capacity activation priority under the new model; exact placed/dormant count and placement availability display; placement/cancel/confirmation flow. The functional rule must remain visible during placement.
+- Interaction: exact placed/dormant count and placement availability display; placement/cancel/confirmation flow. The functional rule must remain visible during placement.
 - Presentation: permanent light intensity at single/many-field density, deferred while mechanics are settled.
 - Host feasibility and edge cases: precise spatial grave membership (one square is not yet a verified native cell/footprint), terrain/occupancy restrictions, native management/grid lifecycle, persistence/uninstall and supported compatibility. Native UI/visual proof remains an implementation acceptance task, not a missing gameplay system.
 
