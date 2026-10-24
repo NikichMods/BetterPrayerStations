@@ -1,6 +1,6 @@
 # Implementation plan
 
-Current product work follows the revised blessing-capacity concept in DESIGN.md. `BUILD_MENU_RESEARCH.md` establishes native CraftGUI/custom-interface feasibility and the limits of ordinary construction/removal. Recommended next evidence slice: session-only three-action native UI/grid prototype, without faith payment/save changes or final light art. Exact editor/input/lifecycle integration remains unverified; this recommendation does not claim a built/installed probe.
+Current product work follows the revised blessing-capacity concept in DESIGN.md. `BUILD_MENU_RESEARCH.md` establishes native CraftGUI/custom-interface feasibility and the limits of ordinary construction/removal. The user authorized the session-only three-action UI/grid prototype, now implemented in `research/MenuProbe`0.1.0 with local gates passing. No faith payment, save changes, rating conversion or final light art. Exact artifact/install status is in TEST_BUILD_LOG; live editor/input/lifecycle acceptance remains pending.
 
 The earlier combined-concept plan below is historical research, not mandatory current scope. Frozen Faith0.9.0 and historical0.8.0 identities/acceptance remain unchanged in TEST_BUILD_LOG.md; the passive-threshold candidate is not automatically the next test for the revised product.
 

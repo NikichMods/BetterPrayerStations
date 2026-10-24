@@ -1,5 +1,11 @@
 # Test-build log
 
+## Menu0.1.0 preparation —2026-10-24
+
+User authorizes an isolated session-only native three-card menu and point editor, no real faith debit or save writes. Source `research/MenuProbe`; version owner Plugin.cs, method/readiness PLAN.md, short scenario README.md. Actual CraftGUI/CraftInterface + transient ObjectCraftDefinition BuildType.None cards; scoped native remove-card suppression; temporary station Builder/zone definitions restored on reset/unload. Build-mode/camera/grid facilities reused with an exclusive local point controller, never DoPlace/DoRemove or a real floating WGO. Occupancy projection applies only synchronously during owned grid painting, preserving native zone availability. No rating/anatomy effect or final light art.
+
+Local SDK6.0.406 warning-as-error compile/version gate passes. Executable gates inspect compiled BeamState for prices, support/purchase caps, duplicate refusal, placement-order removal/replacement, dormancy/reactivation and cleanup; actual native CanCraft/OnCraft interface dispatch and compiled no-payment/item/world/save-write call boundaries are checked. These are headless policy/structure checks, not real UI/input/camera acceptance. Ten-purchase diagnostic bound uses exactly the adopted trial row; no price continuation invented. Live native station entry, three-card layout/counts, mouse/gamepad repeated Place/Remove/cancel and ordinary UI restoration remain pending. Source is frozen and artifact identity recorded below after clean build.
+
 ## Appearance Probe 0.1.0 — failed initialization; preserved
 
 Research-only plugin, not production Better Prayer Stations or a stable release. Compiled/installed on 2026-10-23; user launch reported the disabled-panel message. Current session log confirms INIT_FAILED before READY, so no rendering/save/preview scenario was exercised or accepted.

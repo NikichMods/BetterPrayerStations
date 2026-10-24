@@ -2,6 +2,8 @@
 
 Status: **bounded static feasibility established for native menu reuse; placement/removal integration and visual/runtime acceptance remain open**. This is research, not implemented product behavior. DESIGN.md owns gameplay; no new payment, persistence or installed artifact is introduced here.
 
+User-authorized next slice is now implemented as `research/MenuProbe`0.1.0, a separate session-only native-menu/editor diagnostic. `research/MenuProbe/PLAN.md` owns the bounded readiness/method, README the user scenario, and TEST_BUILD_LOG the exact frozen artifact/install identity. Local compile/compiled-policy/native-dispatch gates pass; live UI/input acceptance remains pending. The source adds a scoped suppression of the ordinary native removal card and uses BuildType.None for virtual action cards to avoid native physical-output description resolution. No faith debit, grave conversion or saved parameters are included.
+
 ## Question and method
 
 Can one native construction-style window offer Buy capacity / Place / Remove, while faith purchases permanent capacity and world points are free to edit? Reused shared crafting/building/payment evidence, then inspected exact local native metadata/IL and only the relevant object definitions. No new runtime probe was needed for the route question; static inspection answers dispatch/ownership, not visible fit or input acceptance.
