@@ -1,6 +1,22 @@
 # Evidence and acceptance
 
-Current next diagnostic: Faith0.9.0 joint paid faith/passive threshold. One explicit free existing-C/L preparation, then the existing real purchase route; actual native grave +1, station +1 and zone +2 are live assertions, not accepted results. No body/decor changes, final balance or passive preview. Method: docs/PASSIVE_QUALITY_RESEARCH.md; current steps: research/FaithProbe/README.md; immutable identity: docs/TEST_BUILD_LOG.md. Historical accepted0.8.0 remains unchanged.
+Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier combined-concept runtime plans below are historical research, not the next production step by default.
+
+## Blind balance screen — 2026-10-24
+
+Presentation boundary: report only whether a severe concept-breaking balance issue was found. Do not reveal anatomy recipes, organ combinations, route names, ingredient/cost breakdowns, attainable maxima or reproduction instructions unless the user explicitly requests spoiler disclosure. This applies to future summaries, links and automatic recovery as well as this review.
+
+Question: do actual GK1.407 anatomy/procedure recipes and their native application restrictions expose a severe interaction with full effective red-to-white blessing conversion? Method: read exact local game balance and selected native IL, inspect related recipe costs/unlock constraints and bounded modification/reapplication routes, reuse the accepted native burial-formula evidence, and enumerate derived capped-rating cases. No game process/save mutation, new installed diagnostic or production behavior change.
+
+Input identities: resources.assets SHA256 `215c7981901a4b72d5db717666ba47ad3cc032527c95f58dc39d8af1293a69ca`; Assembly-CSharp.dll SHA256 `e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8`. Bounded selection covers268 item definitions,217 related craft records,41 selected technology records and42 decoration records, with linked cost-source lookup. Derived formula enumeration passes502335 cases; these are mathematical cases, not native gameplay runs or independent recipe-route acceptances.
+
+Verdict: **no severe issue requiring immediate concept revision was identified in this bounded static screen**. This is a design judgment informed by direct inputs, not proof that blessings never dominate a particular strategy, an exhaustive optimal-cost frontier, final price balance, universal mod compatibility or installed-runtime acceptance. Keep the adopted concept and trial prices pending gameplay tuning; no new restriction is adopted merely from this screen.
+
+Detailed spoiler-bearing inputs, bounded IL notes and original local audit scripts are intentionally Git-ignored under `.local/evidence/blessing-balance-blind-2026-10-24/`; do not surface their contents during ordinary recovery. Local assessment SHA256 `80b597ced7a7fe92e90849e71817c74d410c4e653081d7ea88d113a9a71155d7`. Do not repeat the research merely to produce a user-visible explanation.
+
+## Earlier combined-concept diagnostic state
+
+Historical next diagnostic: Faith0.9.0 joint paid faith/passive threshold. One explicit free existing-C/L preparation, then the existing real purchase route; actual native grave +1, station +1 and zone +2 are live assertions, not accepted results. No body/decor changes, final balance or passive preview. Method: docs/PASSIVE_QUALITY_RESEARCH.md; steps: research/FaithProbe/README.md; immutable identity: docs/TEST_BUILD_LOG.md. Historical accepted0.8.0 remains unchanged.
 
 ## Current evidence boundary
 
