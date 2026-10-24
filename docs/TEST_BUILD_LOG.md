@@ -6,6 +6,10 @@ User authorizes stage1 only: fix native menu/grid geometry; retain session-only 
 
 Development warning-as-error compile/version/native gates pass (3049 structural/policy assertions, not3049 UI scenarios). Added checks cover actual native grid transform sampling/non-repainting movement, compiled editor no grid move/repaint, redraw-before-list-reposition and actual hide-to-header-restoration call. User visual/runtime acceptance pending: readable full header/three cards, grid registered to a fixed grave during left/right pan, point placement/removal and return/reopen/ordinary-workbench regression. README owns the short scenario. Frozen source/artifact/install identity follows the clean numbered build;0.1.0 historical evidence remains below.
 
+Frozen source `7b11d01d8550afda237f3942019c8c9838e34e75`, tag `probe/menu-0.1.1`; artifact `artifacts/MenuProbe-0.1.1/BetterPrayerStationsMenuProbe-0.1.1.dll`, SHA256 `42609901b36d3a65a8bbb1c2df5acbd0210c844acaccc49a8b7bd1aa7a7f0fb2`, assembly/file0.1.1.0. Clean-source SDK6.0.406 Roslyn numbered build and3049 gates pass, references in build-identity.json. An earlier abbreviated ExpectedSource invocation was rejected before compilation; only the full frozen SHA passed the numbered gate. No rebuild/replacement of0.1.0.
+
+Installed with game closed at canonical BetterPrayerStationsMenuProbe.dll, installed SHA verified identical; one active BetterPrayerStations payload. Prior Menu0.1.0 backed up/verified outside loader tree as ignored `.local/evidence/menu-probe-0.1.1/previous-installed-menu-0.1.0.dll` (SHA2f2d4404 above), prior host log preserved as pre-install-session.log. Faith0.9.0 remains backed up/inactive; unrelated plugins/configuration/saves untouched. No game restart or gameplay performed. Installation is not runtime/visual acceptance; next action is the short0.1.1 README check, no stable/main/Release promotion.
+
 ## Menu0.1.0 preparation —2026-10-24
 
 ### Installed return — bounded functional pass, visual defects open
