@@ -26,6 +26,7 @@ Current product revision is owned by `docs/DESIGN.md`, section "Current design r
 
 ## Engineering and evidence
 
+- Revised blessing scope also adopts free cemetery placement with a continuously visible placement rule, free relocation/reusable paid reserve preserving purchase order, and no faith refund/price reset on field removal. Passive station-quality aggregation is excluded. See the current design revision for empty/replacement-body semantics and remaining native feasibility questions.
 - Follow `ENGINEERING_RULES.md` before technical mechanism selection; apply `RUNTIME_INTEGRATION.md` to host integration and `RUNTIME_TEST_HARNESS.md` when supplying an installed probe.
 - Prefer verified host seams; preserve native anatomy and original body data. A grave modifier must not become exported organ/zombie power.
 - Never guess identifiers, serialization, installation/removal paths, rendering ownership or compatibility. Static plausibility and browser mockups are not installed-game proof.

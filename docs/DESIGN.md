@@ -2,13 +2,13 @@
 
 ## Current design revision — blessing field, 2026-10-24
 
-Status: **adopted core interaction; surrounding rules under discussion**. This section takes precedence over the earlier combined product concept below where they conflict. Earlier research and bounded runtime acceptance remain evidence for their original scenarios, not acceptance of this revised product.
+Status: **adopted core concept; balance, detailed presentation and native feasibility remain open**. This section takes precedence over the earlier combined product concept below where they conflict. Earlier research and bounded runtime acceptance remain evidence for their original scenarios, not acceptance of this revised product.
 
-The user agrees to simplify the former multi-system product. A passive-only station bonus was considered as a standalone direction; the current product centers on a visible blessing. Whether passive station quality accompanies this remains unresolved. Do not carry the former organ inspection, incremental paid skull conversion, repeatable grave-upgrade or appearance-commission services into the revised scope without a new decision.
+The user agrees to simplify the former multi-system product. The product centers on visible blessings. **Passive station-quality aggregation is excluded from this version.** Do not carry the former organ inspection, incremental paid skull conversion, repeatable grave-upgrade or appearance-commission services into the revised scope without a new decision.
 
 Adopted interaction: a prayer station acts conceptually as a construction station through which the player places a one-square blessing field. The field's position anchors the visual effect. An actively blessed grave **converts all its effective red skulls to white skulls for the burial calculation, with no separate +1 quality bonus**. This replaces the earlier +1 proposal. The effect is nonstacking: one active field is sufficient; additional fields cannot repeat conversion or add quality. Original body/organ data remain unchanged; this is not an exportable body/organ/zombie improvement. Native decoration and decay limits still matter; conversion does not repair durability. The purchased spatial field is the conceptual effect owner; this supersedes the assistant's suggestion of an intrinsically grave-owned blessing. This is a product model, not a verified native construction/save implementation.
 
-The proposal includes faith payment and a light beam. The precise placement/membership rule (one square is not yet a verified native BuildGrid cell or a full grave footprint), empty-ground eligibility, whether redundant field placement is allowed, relocation/removal, body replacement and supported persistence/uninstall behavior remain open. **Adopted: faith price progression is shared across the whole cemetery, not reset per station.** Exact curve and deletion/refund/counter behavior remain open. Do not infer that this field is the former station coverage square or inherits its radius/nearest-station ownership rules.
+The proposal includes faith payment and a light beam. **Adopted: faith price progression is shared across the whole cemetery, not reset per station.** Exact price curve remains open. Do not infer that this field is the former station coverage square or inherits its radius/nearest-station ownership rules.
 
 Full effective red-to-white conversion is now explicitly adopted. Merely ignoring red penalties is not the selected effect. This deliberately supersedes the earlier partial-conversion limit: blessing replaces red-skull cleanup for the burial result while preserving the physical body and native decoration/decay constraints. Adopted design is not installed-runtime acceptance.
 
@@ -20,15 +20,23 @@ Each new field is paid for separately. Purchasing additional fields is limited b
 
 **Adopted activation priority: purchase order.** When current capacity supports only some paid fields, the earliest purchased fields remain active and the latest purchased fields go dormant first. Increasing capacity automatically restores dormant fields in the same original purchase order, without repayment or advancing the price sequence. The original order must persist through station demolition/reconstruction and save/load. No manual activation-selection interface or assignment to a specific station is required by this rule.
 
-Exact capacity values, field relocation/deletion/refunds, activation feedback and price-counter behavior remain open. Neither the old nearest-station rule nor the earlier per-station beam ownership proposal applies.
+Neither the old nearest-station rule nor the earlier per-station beam ownership proposal applies.
 
-### Remaining concept decisions
+### Adopted free placement and reusable paid beams
 
-- Whether passive station-quality aggregation is retained alongside blessings or excluded from the simplified product.
-- Paid-field editing: relocation cost/access and preservation of original purchase priority; removal versus reusable paid entitlement, refunds and effect on the shared price sequence.
-- Placement domain and grave membership: empty ground/graves, replacement bodies, redundant fields on one grave and field behavior after grave removal/movement.
+The player may place fields freely on cemetery ground, including locations without graves; placement is not restricted to a grave-only target picker. This is product intent, not permission to bypass every native collision/terrain rule without host inspection. Multiple fields affecting the same grave do not stack their numerical effect; exact same-cell occupancy is not selected here.
+
+During placement the rule must remain visibly available throughout, rather than appearing only in a one-time explanation: **"When placed on a grave, converts all red skulls to white."** Russian working wording: **"При размещении на могиле превращает все красные черепа в белые."** The rule explains the functional use without removing decorative placement freedom. Exact text/layout/localization and active/dormant contextual feedback require native UI iteration.
+
+Already paid beams may be relocated freely without another payment or a new purchase position. Removing a field returns its beam to the reusable paid reserve; it does not refund faith or reset/reduce the shared price progression. Replacing it consumes the existing paid entitlement, not another purchase, and retains its original purchase priority. Paid entitlements must therefore be distinguishable from their optional current placement and current active/dormant state.
+
+Exhumation leaves the spatial field at its location; an empty grave receives no numerical benefit. A replacement body at the same blessed grave receives the selected conversion. The field does not travel with an exhumed body or a moved grave; applicability is spatial. Exact membership/footprint detection across native states still needs evidence.
+
+### Remaining balance, interaction and feasibility work
+
 - Balance/access: wooden/stone capacity, first faith price and growth curve; whether existing station unlocks suffice.
-- Presentation: placement/cancel/confirmation flow, active versus dormant field visibility and permanent light intensity at single/many-field density. Native UI/visual proof remains an implementation acceptance task, not a missing gameplay system.
+- Presentation: placement/cancel/confirmation and paid-reserve reuse flow, active versus dormant field visibility and permanent light intensity at single/many-field density. The functional rule must remain visible during placement.
+- Host feasibility and edge cases: precise spatial grave membership (one square is not yet a verified native cell/footprint), terrain/occupancy restrictions, reserve versus placed-field capacity selection details, native lifecycle/persistence/uninstall and supported compatibility. Native UI/visual proof remains an implementation acceptance task, not a missing gameplay system.
 
 ## Earlier combined concept — retained pending design reconciliation
 
