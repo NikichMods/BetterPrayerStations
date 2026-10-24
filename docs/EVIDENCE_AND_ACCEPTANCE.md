@@ -1,5 +1,7 @@
 # Evidence and acceptance
 
+Current2026-10-25: Menu0.3.0 real save/load recovered P=3 and all three positions in order, then failed its independent physics audit and disabled the session. Joint persistence is not accepted. Menu0.3.1 corrects the audit's unavailable-versus-zero distinction and offscreen placement discovery; live confirmation remains pending. TEST_BUILD_LOG owns exact identity; BLESSING_MEMBERSHIP_RESEARCH owns corrective readiness. No payment or visual-polish scope added.
+
 Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier combined-concept runtime plans below are historical research, not the next production step by default.
 
 Current work: Menu0.3.0 global P/coordinate/priority persistence is explicitly authorized without payment/visual work. GLOBAL_BEAM_PERSISTENCE owns carrier/schema and passing native binary fixtures; TEST_BUILD_LOG exact artifact/install and pending live acceptance. Bounded0.2.0 effect/grid acceptance remains unchanged and is not a save/load proof.

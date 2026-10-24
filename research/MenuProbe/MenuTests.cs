@@ -52,6 +52,28 @@ class MenuTests
         Assert(Calls(typeof(CraftItemGUI).GetMethod("CanCraft",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic),"CraftInterface","CanCraft"),"Actual native affordability dispatch");
         Assert(Calls(typeof(CraftItemGUI).GetMethod("OnCraftPressed",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic),"CraftInterface","OnCraft"),"Actual native click dispatch");
         var plugin=probe.GetType("NikichMods.BPSMenuProbe.Plugin",true);
+        var fieldGeometry=probe.GetType("NikichMods.BPSMenuProbe.FieldGeometry",true);
+        var nativeAudit=fieldGeometry.GetMethod("TryNativeMatches",BindingFlags.Instance|BindingFlags.NonPublic);
+        Assert(nativeAudit.ReturnType==typeof(bool),"Unavailable physics must differ from a tested zero match");
+        bool activeGuard=false,enabledGuard=false,boundsGuard=false;
+        foreach(var instruction in PatchProcessor.GetOriginalInstructions(nativeAudit))
+        {
+            var call=instruction.operand as MethodBase;if(call==null)continue;
+            if(call.Name=="get_activeInHierarchy")activeGuard=true;
+            if(call.Name=="get_enabled")enabledGuard=true;
+            if(call.Name=="get_bounds")boundsGuard=true;
+            if(call.DeclaringType==typeof(BuildGrid) && (call.Name=="SkipCollider" || call.Name=="IsCellBusy"))
+                Assert(activeGuard && enabledGuard && boundsGuard,"Physics/native active-only cache must not be used before readiness inspection");
+        }
+        Assert(activeGuard && enabledGuard && boundsGuard,"Audit checks hierarchy, collider and transformed physics bounds");
+        Assert(Calls(typeof(ChunkedGameObject).GetMethod("UpdateVisibility",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic),"GameObject","SetActive"),"Native visibility legitimately removes distant owners from physics");
+        var geometry=probe.GetType("NikichMods.BPSFaithProbe.GridFootprint",true);
+        var globalGeometry=Activator.CreateInstance(fieldGeometry,true);
+        var footprint=fieldGeometry.GetField("geometry",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(globalGeometry);
+        var inactiveOption=geometry.GetField("includeInactivePlacement",BindingFlags.Instance|BindingFlags.NonPublic);
+        Assert((bool)inactiveOption.GetValue(footprint),"Global field geometry must include hidden placement boxes");
+        Assert(!(bool)inactiveOption.GetValue(Activator.CreateInstance(geometry,new object[]{false})),"Historical Faith geometry retains its native-filter default");
+        Assert(!Calls(fieldGeometry.GetMethod("Matches",BindingFlags.Instance|BindingFlags.NonPublic),"FieldGeometry","TryNativeMatches"),"Functional field membership must not depend on physics visibility");
         var editorUpdate=plugin.GetMethod("EditorUpdate",BindingFlags.Instance|BindingFlags.NonPublic);
         Assert(!Calls(editorUpdate,"BuildGrid","MoveBuildGridTo") && !Calls(editorUpdate,"BuildGrid","RefreshGrid"),"Camera pan must not move or repaint the world-sampled grid");
         Assert(Calls(typeof(BuildGrid).GetMethod("RefreshGrid",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic),"Transform","get_position"),"Native grid painting samples its transform origin");

@@ -1,4 +1,6 @@
-# Menu Probe 0.3.0 — readiness and method
+# Menu Probe 0.3.1 — readiness and method
+
+Current correction:0.3.0 real save/load restores P/ordered positions, but the audit fails on projected1/native0. BLESSING_MEMBERSHIP_RESEARCH owns separate readiness/method/rejected alternatives and limits: inspect collider readiness before querying native physics; never treat unavailable as zero; global geometry bypasses active-only cache discovery. Preserve existing schema/payment/UI scope. No specific runtime inactive-state diagnosis is claimed until the new bounded reasons are observed. Existing save can be reused; README owns direct load/approach/editor/edit/save/load/restart actions.
 
 User authorizes global persistence only after bounded0.2.0 acceptance, without payment or visual polish. GLOBAL_BEAM_PERSISTENCE.md owns selected native player-root carrier/schema and readiness. SavedBeamState validates and writes only its exact23 numeric metadata keys; no station/grave ownership, new inventory entry, sidecar or forced save. The native GameSave._inventory/current live-player reference gate is retained and extended with the bound saved-owner ref. Recover before support/effect evaluation; local buys/Place/Remove/explicit cleanup persist after Current() guard. Session reset/load/unload/failure only release memory, never write/clear the old owner's metadata.
 

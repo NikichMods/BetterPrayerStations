@@ -11,6 +11,9 @@ namespace NikichMods.BPSFaithProbe
         public const float Cell=32f,HalfCheck=14.4f;
         sealed class Shape {public string Id;public WorldObjectPart Part;public Transform Transform;public Vector2 Offset,Size;}
         readonly Dictionary<WorldGameObject,Shape> shapes=new Dictionary<WorldGameObject,Shape>();
+        readonly bool includeInactivePlacement;
+        public GridFootprint():this(false){}
+        public GridFootprint(bool includeInactivePlacement){this.includeInactivePlacement=includeInactivePlacement;}
         static readonly FieldInfo Cells=typeof(WorldGameObject).GetField("_cells",BindingFlags.Instance|BindingFlags.NonPublic);
         public void Clear(){shapes.Clear();}
         public void Forget(WorldGameObject w){if(!ReferenceEquals(w,null))shapes.Remove(w);}
@@ -32,7 +35,9 @@ namespace NikichMods.BPSFaithProbe
                 BoxCollider2D found=null;
                 foreach(var c in part.GetComponentsInChildren<Collider2D>(true))
                 {
-                    if(c.gameObject.layer!=23 || BuildGrid.SkipCollider(c,w))continue;
+                    // Global effects also need hidden chunks. Native SkipCollider consults
+                    // an active-only, ID-cached discovery; do not seed that cache offscreen.
+                    if(c.gameObject.layer!=23 || (!includeInactivePlacement && BuildGrid.SkipCollider(c,w)))continue;
                     var box=c as BoxCollider2D;
                     if(box==null || found!=null)throw new InvalidOperationException("Expected one native layer23 placement box: "+w.obj_id);
                     found=box;

@@ -15,7 +15,7 @@ namespace NikichMods.BPSMenuProbe
     [BepInPlugin(Id,"Better Prayer Stations - Menu Probe",Version)]
     public sealed class Plugin:BaseUnityPlugin,CraftInterface
     {
-        public const string Id="nikichmods.bps.menuprobe",Version="0.3.0";
+        public const string Id="nikichmods.bps.menuprobe",Version="0.3.1";
         const string Host="e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const string BuyId="bps_menu_probe_buy",PlaceId="bps_menu_probe_place",RemoveId="bps_menu_probe_remove";
         static Plugin self;
@@ -274,6 +274,7 @@ namespace NikichMods.BPSMenuProbe
             Paint(()=>BuildGrid.ShowBuildGrid(true,true,""));
             gridOrigin=BuildGrid.me.transform.position;
             game.gui_elements.hud.Hide();game.gui_elements.build_mode_gui.Open();
+            auditRequested=true;
             var cameraTarget=cameraField.GetValue(game.build_mode_logics) as Transform;
             gamepadCursor=cameraTarget!=null?(Vector2)cameraTarget.position:(Vector2)game.player.transform.position;
             status=remove?"Выберите точку для удаления. Вера и оплаченная вместимость сохраняются.":"Любая клетка могилы подходит. Активная точка конвертирует все красные черепа.";
@@ -451,14 +452,17 @@ namespace NikichMods.BPSMenuProbe
             }
             if(auditRequested)
             {
-                auditRequested=false;int checkedGraves=0;
+                auditRequested=false;int checkedGraves=0,unavailableGraves=0;
                 foreach(var grave in graves)if(CemeteryGrave(grave))
                 {
-                    int projected=fieldGeometry.Matches(grave,state,support),native=state.Active(support)==0?0:fieldGeometry.NativeMatches(grave,state,support);
+                    if(state.Active(support)==0)continue;
+                    int projected=fieldGeometry.Matches(grave,state,support),native;string unavailable;
+                    if(!fieldGeometry.TryNativeMatches(grave,state,support,out native,out unavailable))
+                    {unavailableGraves++;Log("MEMBERSHIP_UNAVAILABLE target="+grave.unique_id+" projected="+projected+" reason="+unavailable);continue;}
                     if(projected!=native)throw new InvalidOperationException("Cell membership mismatch target="+grave.unique_id+" projected="+projected+" native="+native);
                     checkedGraves++;
                 }
-                Log("MEMBERSHIP_CHECK graves="+checkedGraves+" active_fields="+state.Active(support)+" native_physics_match=True");
+                Log("MEMBERSHIP_CHECK graves="+checkedGraves+" unavailable="+unavailableGraves+" active_fields="+state.Active(support)+" native_physics_match="+(checkedGraves>0?"True":"not-tested"));
             }
             if(changed)
             {

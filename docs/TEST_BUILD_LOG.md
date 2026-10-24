@@ -1,5 +1,11 @@
 # Test-build log
 
+## Menu0.3.1 — corrective physics-audit readiness candidate2026-10-25
+
+Menu0.3.0 return failed after real save/load. Verified installed SHA25628d48aa7217bd70307a9c4e8605a5c2abb81a8c09fbe8b51456ea2539f8f127a; preserved ignored runtime-return-failure-2026-10-25.log SHA2568ecd7c6e17c2f453c20ea4cd082a509905f0e942c0853083f71b55ef594054e9. Recovered=True P3/placed3/active3 and order1:68,-49;2:77,-49;3:68,-40 match last pre-load metadata write. Three grave effects recover with unchanged physical snapshots; then target1060 projected1/native0 triggers disabled-for-session. Native checks passed before load, but no hierarchy/enabled/bounds state was captured at the failing query. Do not call the joint load accepted or infer corrupt metadata. No automatic save cleanup was performed.
+
+Corrective readiness is in BLESSING_MEMBERSHIP_RESEARCH: native hidden chunks are absent from overlap queries; active-only cached collider discovery cannot own global geometry. Menu0.3.1 opts into explicit current-part placement-layer discovery and treats unqueryable physics as unavailable, with bounded reason logs and editor-entry recheck. Real ready disagreement remains fatal. Schema/backend, free buys, visual placeholder and skull projection unchanged. Default historical Faith geometry filter retained. Development warning-as-error build passes40 native skull oracle cases,216 native serialization/state checks and6172 structural assertions including readiness ordering/host visibility/configuration checks. These do not simulate Unity visibility or establish live acceptance. Exact clean source/artifact/install record follows freeze; no stable promotion.
+
 ## Menu0.3.0 — global purchased-capacity/field-order persistence candidate2026-10-25
 
 User authorizes persistence of P, positioned small-cell coordinates and activation order; no payment or visual changes. GLOBAL_BEAM_PERSISTENCE owns native carrier/schema/readiness and failure/cleanup policy. One player-root namespaced group in native GameSave._inventory; normal game save handles disk persistence. State recovers only after current save/live player/saved owner references agree and before support/effects. No automatic saved cleanup on session transition, no old diagnostic migration. Earlier0.2.0 conversion/editor and deferred layout defect retained.
