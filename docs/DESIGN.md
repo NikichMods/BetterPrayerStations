@@ -18,7 +18,9 @@ There is **no station influence radius**. Completed prayer stations add to one c
 
 Each new field is paid for separately. Purchasing additional fields is limited by current total capacity. Paid fields and their positions remain stored when stations are demolished; demolition does not erase the investment. With no supporting capacity, all beams go dark and their grave effects cease. Rebuilding stations restores support for already paid fields without another faith payment; it must not create another purchase or advance the price sequence. A larger paid-field count than current capacity is a valid dormant state after demolition, not a reason to delete fields. The system therefore tracks paid fields/positions separately from current active capacity, rather than treating capacity as a lifetime purchase count.
 
-Open: when capacity supports only some paid fields, which fields activate and how the player sees/changes that choice. No automatic purchase-order priority, manual activation interface, all-or-nothing activation or assignment to a specific station is adopted. Exact capacity values, field relocation/deletion/refunds and price-counter behavior remain open. Neither the old nearest-station rule nor the earlier per-station beam ownership proposal applies.
+**Adopted activation priority: purchase order.** When current capacity supports only some paid fields, the earliest purchased fields remain active and the latest purchased fields go dormant first. Increasing capacity automatically restores dormant fields in the same original purchase order, without repayment or advancing the price sequence. The original order must persist through station demolition/reconstruction and save/load. No manual activation-selection interface or assignment to a specific station is required by this rule.
+
+Exact capacity values, field relocation/deletion/refunds, activation feedback and price-counter behavior remain open. Neither the old nearest-station rule nor the earlier per-station beam ownership proposal applies.
 
 ## Earlier combined concept — retained pending design reconciliation
 
