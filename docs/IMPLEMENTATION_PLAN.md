@@ -1,8 +1,8 @@
 # Implementation plan
 
-Current blocker2026-10-25: Menu0.3.0 restored three ordered points but disabled on the physics audit after load. Corrective0.3.1 is the next functional test, with physics-readiness/hidden-owner geometry changes only; no payment/visual work. GLOBAL_BEAM_PERSISTENCE and BLESSING_MEMBERSHIP_RESEARCH own evidence and readiness. Joint persistence acceptance is still open.
+Current2026-10-25: Menu0.3.1 load/edit/save/reload and inactive-physics correction have bounded installed/user acceptance. P3/edited positions/relative order and three effects restore without shutdown. GLOBAL_BEAM_PERSISTENCE and TEST_BUILD_LOG own evidence/remaining limits. Next useful functional check: station-support loss/reactivation and placement priority in the live game; payment and visual work remain outside current authorization.
 
-Current product work follows the revised blessing-capacity concept in DESIGN.md. Menu0.1.1 editor/grid and Menu0.2.0 spatial conversion have bounded installed/user acceptance. User now authorizes Menu0.3.0 global P/coordinate/priority persistence; GLOBAL_BEAM_PERSISTENCE owns the native player-root carrier/schema and offline evidence, TEST_BUILD_LOG exact artifact/install and pending runtime acceptance. Payment and visual polish remain outside this slice.
+Current product work follows the revised blessing-capacity concept in DESIGN.md. Menu0.1.1 editor/grid, Menu0.2.0 spatial conversion and Menu0.3.1 bounded persistence have installed/user acceptance within TEST_BUILD_LOG limits. GLOBAL_BEAM_PERSISTENCE owns the native player-root carrier/schema. Payment and visual polish remain outside this slice.
 
 ## Forward plan after the Menu0.1.0 return —2026-10-24
 

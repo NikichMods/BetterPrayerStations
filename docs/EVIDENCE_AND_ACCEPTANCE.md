@@ -1,10 +1,10 @@
 # Evidence and acceptance
 
-Current2026-10-25: Menu0.3.0 real save/load recovered P=3 and all three positions in order, then failed its independent physics audit and disabled the session. Joint persistence is not accepted. Menu0.3.1 corrects the audit's unavailable-versus-zero distinction and offscreen placement discovery; live confirmation remains pending. TEST_BUILD_LOG owns exact identity; BLESSING_MEMBERSHIP_RESEARCH owns corrective readiness. No payment or visual-polish scope added.
+Current2026-10-25: Menu0.3.1 bounded load/edit/save/reload scenario passes with user confirmation: P3 and edited ordered coordinates recover, three spatial effects restore, no shutdown. Native physics is unavailable for inactive owners after load and agrees for all29 when editor makes them available. TEST_BUILD_LOG owns exact identity/limits; GLOBAL_BEAM_PERSISTENCE and BLESSING_MEMBERSHIP_RESEARCH own the accepted boundaries. Full restart, other-save isolation, saved cleanup and insufficient-support priority remain open. No payment or visual-polish scope added.
 
 Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier combined-concept runtime plans below are historical research, not the next production step by default.
 
-Current work: Menu0.3.0 global P/coordinate/priority persistence is explicitly authorized without payment/visual work. GLOBAL_BEAM_PERSISTENCE owns carrier/schema and passing native binary fixtures; TEST_BUILD_LOG exact artifact/install and pending live acceptance. Bounded0.2.0 effect/grid acceptance remains unchanged and is not a save/load proof.
+Current work: global P/coordinate/priority persistence has bounded Menu0.3.1 installed acceptance above; GLOBAL_BEAM_PERSISTENCE owns carrier/schema and native binary fixtures. Broader lifecycle acceptance remains open. Bounded0.2.0 effect/grid evidence is retained.
 
 Current candidate: user adopts any occupied native grave construction cell and authorizes Menu0.2.0 session-only full effective conversion. BLESSING_MEMBERSHIP_RESEARCH owns readiness; TEST_BUILD_LOG owns frozen artifact/install, bounded accepted return and remaining limits. Menu0.1.1 grid/point-edit/native-desk regression has bounded live/user acceptance; remaining menu layout is explicitly deferred. No paid/save/visual extension is authorized in0.2.0. The earlier0.1.0 return below remains historical, not the current grid state.
 

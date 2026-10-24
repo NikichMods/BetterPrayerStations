@@ -4,7 +4,7 @@ Status: user authorizes a persistence prototype after bounded Menu0.2.0 spatial-
 
 ## Mechanism and evidence
 
-Current return: Menu0.3.0 recovered P=3 and all three ordered positions after a real save/load, then disabled itself on the independent physics audit (target1060 projected1/native0). Persistence recovery is observed, but the joint scenario failed; no broad save/load acceptance. Corrective Menu0.3.1 leaves schema/backend unchanged and corrects physics-oracle readiness and hidden-placement discovery. See BLESSING_MEMBERSHIP_RESEARCH and TEST_BUILD_LOG; restart/cleanup and the corrected live load remain pending.
+Current accepted return: Menu0.3.1 recovers the prior P3/three-point save, removes one point and places another, then recovers the edited coordinates and relative order after native save/reload; three spatial effects restore without shutdown. Both post-load29-owner audits are correctly unavailable because their hierarchy is inactive; four editor/action audits compare all29 and agree. User confirms the scenario. TEST_BUILD_LOG owns exact evidence/limits; full restart, other-save isolation, saved cleanup and insufficient-support priority are still open. Historical0.3.0 recovered metadata but failed its audit; schema/backend remain unchanged.
 
 READY for the bounded Menu0.3.0 research candidate: persist purchased capacity P and the ordered list of positioned cell coordinates on the current player's root Item, using a separate namespaced numeric GameRes group. Do not persist derived station ceiling C or active flags. The ordinary native save owns disk writes; no sidecar or forced autosave is added. Changing stations does not write/erase investment or field positions.
 

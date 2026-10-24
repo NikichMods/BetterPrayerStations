@@ -6,6 +6,8 @@ Subsequent Menu0.2.0 installed result: bounded any-cell/full-conversion scenario
 
 ## Menu0.3.1 corrective readiness —2026-10-25
 
+Installed return now accepts the bounded correction: at both recovered starts all29 grave owners, including1060 with projected1, report inactive-chunk-or-part. Four later editor/action comparisons check all29 with no skips and native agreement. No shutdown; saved edited points/order and spatial effects restore. This corroborates the predicted visibility limitation in0.3.1; the0.3.0 log itself remains uninstrumented. Exact snapshot/hash and broader limits: TEST_BUILD_LOG. No delayed diagram observation, full restart or low-support priority checkpoint is added by this return.
+
 Observed0.3.0: saved P=3 and order1:(68,-49),2:(77,-49),3:(68,-40) recover exactly; three effect transitions retain physical data. The subsequent physics audit throws target1060 projected1/native0 and disables the session. Failure-log SHA2568ecd7c6e17c2f453c20ea4cd082a509905f0e942c0853083f71b55ef594054e9. This is a failed joint load, not lost metadata or corruption evidence.
 
 Static host evidence: ChunkedGameObject.UpdateVisibility invokes PreDisable and GameObject.SetActive(obj_visible); native BuildGrid.IsCellBusy uses global Physics2D.OverlapBoxAll. An inactive owner can retain readable transformed placement geometry while absent from that query. Separately WGOHasBuildCollider caches by unique_id after active-only GetComponentsInChildren; calling SkipCollider during hidden-owner discovery can seed a false native cache entry. The original log lacks hierarchy/enabled/bounds observations, so the specific first failure's inactive/synchronization state is not yet proven.
