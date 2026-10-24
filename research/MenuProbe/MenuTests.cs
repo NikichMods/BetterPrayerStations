@@ -50,6 +50,21 @@ class MenuTests
         Assert(Calls(typeof(CraftItemGUI).GetMethod("CanCraft",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic),"CraftInterface","CanCraft"),"Actual native affordability dispatch");
         Assert(Calls(typeof(CraftItemGUI).GetMethod("OnCraftPressed",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic),"CraftInterface","OnCraft"),"Actual native click dispatch");
         var plugin=probe.GetType("NikichMods.BPSMenuProbe.Plugin",true);
+        var editorUpdate=plugin.GetMethod("EditorUpdate",BindingFlags.Instance|BindingFlags.NonPublic);
+        Assert(!Calls(editorUpdate,"BuildGrid","MoveBuildGridTo") && !Calls(editorUpdate,"BuildGrid","RefreshGrid"),"Camera pan must not move or repaint the world-sampled grid");
+        Assert(Calls(typeof(BuildGrid).GetMethod("RefreshGrid",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic),"Transform","get_position"),"Native grid painting samples its transform origin");
+        Assert(!Calls(typeof(BuildGrid).GetMethod("MoveBuildGridTo"),"BuildGrid","RefreshGrid"),"Native grid movement does not repaint its texture");
+        var refresh=plugin.GetMethod("RefreshMenu",BindingFlags.Instance|BindingFlags.NonPublic);
+        bool redrawn=false,repositioned=false;
+        foreach(var instruction in PatchProcessor.GetOriginalInstructions(refresh))
+        {
+            var call=instruction.operand as MethodBase;if(call==null)continue;
+            if(call.DeclaringType==typeof(CraftItemGUI) && call.Name=="Redraw")redrawn=true;
+            if(redrawn && call.DeclaringType==typeof(UITable) && call.Name=="Reposition")repositioned=true;
+        }
+        Assert(repositioned,"Reposition the outer native list after row heights have been redrawn");
+        Assert(Calls(plugin.GetMethod("CaptureHeader",BindingFlags.Instance|BindingFlags.NonPublic),"UILabel","set_overflowMethod"),"Capture temporarily enables native text height growth");
+        Assert(Calls(plugin.GetMethod("MenuHidden",BindingFlags.Instance|BindingFlags.NonPublic),"Plugin","RestoreHeader"),"Shared header settings restored at actual menu-hide callback");
         var card=(ObjectCraftDefinition)plugin.GetMethod("Card",BindingFlags.Static|BindingFlags.NonPublic).Invoke(null,new object[]{"test_action","test_icon"});
         Assert(card.build_type==ObjectCraftDefinition.BuildType.None && !card.needs_unlock,"Virtual card does not resolve a physical output object");
         Assert(card.output.Count==0 && card.needs.Count==0 && card.disable_multi_craft,"Virtual card has no products/materials/batching");

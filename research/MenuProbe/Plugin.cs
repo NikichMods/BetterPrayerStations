@@ -15,7 +15,7 @@ namespace NikichMods.BPSMenuProbe
     [BepInPlugin(Id,"Better Prayer Stations - Menu Probe",Version)]
     public sealed class Plugin:BaseUnityPlugin,CraftInterface
     {
-        public const string Id="nikichmods.bps.menuprobe",Version="0.1.0";
+        public const string Id="nikichmods.bps.menuprobe",Version="0.1.1";
         const string Host="e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const string BuyId="bps_menu_probe_buy",PlaceId="bps_menu_probe_place",RemoveId="bps_menu_probe_remove";
         static Plugin self;
@@ -34,6 +34,10 @@ namespace NikichMods.BPSMenuProbe
         MethodInfo fitCamera,openMenu;
         bool ready,ownMenu,editor,removing,painting,showPanel=true,validCell,cursorSet,refreshRequested,recoveryPending;
         bool menuQueueWasActive;
+        UIWidget headerTableWidget;
+        UILabel.Overflow headerOverflow;
+        int headerHeight,headerDescriptionHeight,headerTop,headerBottom;
+        Vector3 gridOrigin;
         int support,cursorX,cursorY,lastSupport=-1,editorStartFrame;
         float nextRefresh,gamepadRepeat,recoveryUntil;
         Vector2 gamepadCursor;
@@ -144,6 +148,7 @@ namespace NikichMods.BPSMenuProbe
             openMenu.Invoke(menu,new object[]{station,inventory,null});
             menu.ON_CRAFT_GUI_HIDE=MenuHidden;
             if(menu.queue!=null){menuQueueWasActive=menu.queue.gameObject.activeSelf;menu.queue.gameObject.SetActive(false);}
+            CaptureHeader();
             RefreshMenu();Log("OPEN station="+station.unique_id+" shortcut="+shortcut+" cards="+menu.list_items.Count);
             if(menu.list_items.Count!=3)throw new InvalidOperationException("Expected exactly three native cards");
         }
@@ -152,6 +157,7 @@ namespace NikichMods.BPSMenuProbe
             ownMenu=false;
             if(menu!=null)
             {
+                RestoreHeader();
                 if(ReferenceEquals(menu.custom_craft_interface,this))menu.custom_craft_interface=previousController;
                 if(menu.queue!=null)menu.queue.gameObject.SetActive(menuQueueWasActive);
             }
@@ -160,17 +166,50 @@ namespace NikichMods.BPSMenuProbe
         }
         string Counts()
         {return "Оплачено: "+state.Purchased+" / поддержка молельнями: "+support+"\nТочек: "+state.Points.Count+" · работают: "+state.Active(support)+" · свободно: "+state.Free(support);}
+        void CaptureHeader()
+        {
+            var info=menu.object_info;
+            if(info==null || info.text_descr==null || info.table==null || menu.header_height_widget==null)throw new MissingMemberException("Native header layout");
+            headerTableWidget=info.table.GetComponent<UIWidget>();
+            if(headerTableWidget==null)throw new MissingMemberException("Native header table bounds");
+            headerOverflow=info.text_descr.overflowMethod;headerDescriptionHeight=info.text_descr.height;
+            headerHeight=menu.header_height_widget.height;
+            headerTop=headerTableWidget.topAnchor.absolute;headerBottom=headerTableWidget.bottomAnchor.absolute;
+            info.text_descr.overflowMethod=UILabel.Overflow.ResizeHeight;
+        }
+        void RestoreHeader()
+        {
+            if(headerTableWidget==null)return;
+            var info=menu.object_info;
+            info.text_descr.overflowMethod=headerOverflow;info.text_descr.height=headerDescriptionHeight;
+            headerTableWidget.topAnchor.absolute=headerTop;headerTableWidget.bottomAnchor.absolute=headerBottom;
+            menu.header_height_widget.height=headerHeight;headerTableWidget.UpdateAnchors();
+            info.table.Reposition();headerTableWidget=null;
+        }
         void RefreshMenu()
         {
             if(!ownMenu || menu==null || !menu.is_shown)return;
-            foreach(var row in menu.list_items)row.Redraw();
+            menu.UpdateAllAnchors();
             if(menu.object_info!=null)
             {
                 menu.object_info.text_header.text="Благословения — прототип";
                 menu.object_info.text_descr.gameObject.SetActive(true);
                 menu.object_info.text_descr.text=Counts()+"\nСледующая цена: "+(state.NextPrice==0?"предел теста":state.NextPrice+" веры")+". Сейчас бесплатно.\nТест ограничен 10 покупками. Сохранение и качество не меняются.";
+                var description=menu.object_info.text_descr;
+                description.UpdateAnchors();description.ProcessText(false,true);
+                int extra=Math.Max(0,description.height-headerDescriptionHeight);
+                // UITable is vertically centred: move its anchor range by half the growth to retain its top.
+                headerTableWidget.topAnchor.absolute=headerTop-(extra+1)/2;
+                headerTableWidget.bottomAnchor.absolute=headerBottom-(extra+1)/2;
+                menu.header_height_widget.height=headerHeight+extra;
+                headerTableWidget.UpdateAnchors();
                 menu.object_info.table.Reposition();
             }
+            menu.UpdateAllAnchors();
+            foreach(var row in menu.list_items)row.Redraw();
+            menu.craft_list_grid.Reposition();menu.craft_list_grid.repositionNow=true;
+            menu.UpdateAllAnchors();
+            Log("LAYOUT header_height="+menu.header_height_widget.height+" description_height="+menu.object_info.text_descr.height+" rows="+string.Join(",",menu.list_items.ConvertAll(row=>row.GetComponent<UIWidget>().height.ToString()).ToArray()));
             refreshRequested=false;
         }
         public bool CanCraft(CraftDefinition cd,List<string> multi,int amount,List<Item> needs)
@@ -206,11 +245,12 @@ namespace NikichMods.BPSMenuProbe
             if(game.build_mode_logics.cur_build_zone==null)throw new InvalidOperationException("Missing native cemetery build zone");
             game.EnterScriptBuilding();game.player.components.character.control_enabled=false;
             Paint(()=>BuildGrid.ShowBuildGrid(true,true,""));
+            gridOrigin=BuildGrid.me.transform.position;
             game.gui_elements.hud.Hide();game.gui_elements.build_mode_gui.Open();
             var cameraTarget=cameraField.GetValue(game.build_mode_logics) as Transform;
             gamepadCursor=cameraTarget!=null?(Vector2)cameraTarget.position:(Vector2)game.player.transform.position;
             status=remove?"Выберите точку для удаления. Вера и оплаченная вместимость сохраняются.":"Выберите клетку для света. Это только маркер без эффекта.";
-            Log("EDITOR mode="+(remove?"remove":"place")+" persistent=False");
+            Log("EDITOR mode="+(remove?"remove":"place")+" persistent=False grid_origin="+gridOrigin);
         }
         bool Allowed(Vector2 pos)
         {
@@ -251,7 +291,7 @@ namespace NikichMods.BPSMenuProbe
                     if(Input.mousePosition.y>Screen.height-18)position.y+=speed;
                 }
                 target.position=(Vector3)fitCamera.Invoke(b,new object[]{position});
-                Paint(()=>BuildGrid.me.MoveBuildGridTo(target.position));
+                // The texture was sampled at gridOrigin. Only the camera target moves during editing.
             }
             if(!removing && state.Free(support)==0)status="Свободных мест нет. Уберите точку или выйдите и увеличьте вместимость.";
             bool click=pad?LazyInput.GetKeyDown(GameKey.Interaction):Input.GetMouseButtonDown(0);
@@ -268,6 +308,7 @@ namespace NikichMods.BPSMenuProbe
         void EndEditor(bool reopen)
         {
             if(!editor)return;editor=false;painting=false;cursorSet=false;
+            if(BuildGrid.me!=null)Log("GRID_END origin_delta="+(BuildGrid.me.transform.position-gridOrigin));
             if(MainGame.me!=null)
             {
                 var game=MainGame.me;var zone=game.build_mode_logics.cur_build_zone;game.gui_elements.build_mode_gui.Hide(true);

@@ -1,6 +1,6 @@
 # Implementation plan
 
-Current product work follows the revised blessing-capacity concept in DESIGN.md. Session-only Menu Probe0.1.0 has bounded live ordinary-entry/three-card/free-buy/point-edit evidence. Card/header overflow and camera-dependent drawn-grid offset remain open; causes unproved. Exact identity and limits: TEST_BUILD_LOG. The user now requests a forward plan; this planning update does not change runtime code or the installed frozen candidate.
+Current product work follows the revised blessing-capacity concept in DESIGN.md. Session-only Menu Probe0.1.0 has bounded live ordinary-entry/three-card/free-buy/point-edit evidence. User authorized stage1 corrections only. Menu0.1.1 corrects the sampled grid's camera-follow movement, the clipped header and missing outer-list reposition after row redraw; source readiness is recorded in BUILD_MENU_RESEARCH. Exact artifact/install identity and runtime status: TEST_BUILD_LOG. Payment, persistence and grave effects remain outside this slice.
 
 ## Forward plan after the Menu0.1.0 return —2026-10-24
 
@@ -36,7 +36,7 @@ Move the proven mechanism into a coherent production entry point after the above
 
 ## Immediate next step and remaining decisions
 
-Recommended next implementation is stage1: narrow menu-layout/grid-ownership investigation followed by a corrected session-only candidate. This directly addresses observed failures without making paid/persistent effects depend on misleading placement feedback. The user has requested this plan, not an automatic implementation of all stages.
+Stage1 is now explicitly authorized and implemented as corrective Menu0.1.1, with static readiness in BUILD_MENU_RESEARCH and exact handoff status in TEST_BUILD_LOG. Next is its narrow installed visual check, before adding effects/payment/persistence. Later stages are still a plan, not automatic authorization to implement them.
 
 Two concrete decisions remain to close at their owning stages: exact field/grave membership before stage2 and price continuation after purchase10 before unrestricted payment/shipping. Native presentation, save carrier, lifecycle compatibility and production packaging are engineering/acceptance tasks; return to the user only for actual product tradeoffs or real visual judgment.
 

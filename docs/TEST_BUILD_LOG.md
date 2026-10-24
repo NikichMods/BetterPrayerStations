@@ -1,5 +1,11 @@
 # Test-build log
 
+## Menu0.1.1 corrective candidate —2026-10-24
+
+User authorizes stage1 only: fix native menu/grid geometry; retain session-only capacity and point editing, no new functions, faith debit, quality conversion or persistence. BUILD_MENU_RESEARCH section Menu0.1.1 records independently scoped static readiness. Grid mask stays at its original sampled world transform during camera panning. Header uses native text-height growth with measured height reservation and paired restoration on hide. Outer native card list is repositioned after final-anchor row redraw. BeamState unchanged. Bounded LAYOUT and GRID_END telemetry supports the next return; no recurring geometry logging/repainting.
+
+Development warning-as-error compile/version/native gates pass (3049 structural/policy assertions, not3049 UI scenarios). Added checks cover actual native grid transform sampling/non-repainting movement, compiled editor no grid move/repaint, redraw-before-list-reposition and actual hide-to-header-restoration call. User visual/runtime acceptance pending: readable full header/three cards, grid registered to a fixed grave during left/right pan, point placement/removal and return/reopen/ordinary-workbench regression. README owns the short scenario. Frozen source/artifact/install identity follows the clean numbered build;0.1.0 historical evidence remains below.
+
 ## Menu0.1.0 preparation —2026-10-24
 
 ### Installed return — bounded functional pass, visual defects open

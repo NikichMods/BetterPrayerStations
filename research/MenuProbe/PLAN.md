@@ -1,4 +1,6 @@
-# Menu Probe 0.1.0 — readiness and method
+# Menu Probe 0.1.1 — readiness and method
+
+Corrective scope: docs/BUILD_MENU_RESEARCH.md, section Menu0.1.1, records separate grid/header/card readiness. Keep BeamState and all three actions unchanged. Remove editor camera-follow grid movement; temporarily grow native header description/reservation with paired restoration; resolve anchors and reposition the outer list after row redraw. Added pinned native grid-origin/movement checks, compiled editor nonmovement, post-redraw reposition ordering and actual hide restoration-route assertions. Live typography, camera pan alignment and unrelated-workbench regression remain required. This does not imply acceptance of0.1.1. Original0.1.0 method follows.
 
 Research-only, user-authorized native three-card management/temporary point editor. Existing exact static evidence: docs/BUILD_MENU_RESEARCH.md. Real UI layout, interaction and camera/input cleanup require a live prototype; repeating a static scan or an older faith probe cannot prove them.
 
