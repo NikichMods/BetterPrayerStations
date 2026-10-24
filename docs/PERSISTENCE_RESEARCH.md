@@ -1,5 +1,7 @@
 # Persistence research — 2026-10-23
 
+Current global blessing-capacity/position/order persistence is owned by `GLOBAL_BEAM_PERSISTENCE.md` (Menu0.3.0 native player-root schema, offline gates and pending live acceptance). The grave-owned appearance/C-L carriers below remain historical/reusable evidence for their own ownership, not the global field format or a migration source.
+
 Status: **bounded static evidence plus passing offline native binary fixture**. Subsequent installed 0.1.1/0.1.2 probes confirm grave-owned appearance through menu-load, close-cancel, independent top/fence removal/reinstallation and distinguishable gravestone exchange on two occupied graves; their diagnostic fields were explicitly written and cleaned in the user save sessions. No production patch or full lifecycle acceptance exists. `DESIGN.md` owns product semantics; reusable host facts remain in [shared research](https://github.com/NikichMods/GraveyardKeeperResearch/blob/codex/graveyard-design-candidates/docs/GRAVEYARD_RUNTIME.md#grave-and-decoration-persistence--2026-10-23).
 
 ## Current question and result

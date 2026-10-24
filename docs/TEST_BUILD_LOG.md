@@ -8,6 +8,10 @@ Development SDK6.0.406 warning-as-error/version gate passes.216 bounded persiste
 
 With the host closed, preserved66 local native .dat/.backup/.info files (162904651 bytes) in ignored `.local/evidence/menu-probe-0.3.0/save-backup/`, each copy hash verified against its source; manifest.json records names/hashes/source/capture time. This backup is private local recovery evidence, not a committed/public payload or a newly modified save. No save file was rewritten by the agent.
 
+Frozen source `b14de7c24264ae2c0e4c355a50fc53a33d5cfd8c`, tag `probe/menu-0.3.0`; artifact `artifacts/MenuProbe-0.3.0/BetterPrayerStationsMenuProbe-0.3.0.dll`, SHA256 `28d48aa7217bd70307a9c4e8605a5c2abb81a8c09fbe8b51456ea2539f8f127a`, assembly/file0.3.0.0. Clean-source SDK6.0.406 Roslyn numbered build passes216 persistence checks,40 native skull oracle cases and5984 structural/policy assertions; reference hashes in build-identity.json. The development no-item-mutation gate initially rejected the newly authorized metadata setter as intended; final gate permits only the exact validated SavedBeamState.SetOwned and still prohibits physical item/world/currency mutation and forced saves. No older numbered artifact was rebuilt.
+
+Installed canonical BetterPrayerStationsMenuProbe.dll with game closed, installed SHA verified equal; exactly one active BPS payload, Faith0.9.0 remains inactive. Previous0.2.0 backed up/verified outside loader tree as ignored `.local/evidence/menu-probe-0.3.0/previous-installed-menu-0.2.0.dll` (SHA22eb89b7 above). Previous log preserved as pre-install-session.log SHA256 `dd5ac83161df7e40313344b5fb952ee932400769ae2c3a53839e3f6bb71900b3`, historical0.2.0 evidence only. Save backup manifest SHA256 `cfeae9b51b7dbcb5202f945ca3388065e1c296a25ba0e81af0ca3f256dd005ea`; all66 copies reverified before replacement. Unrelated plugins/configuration/saves untouched, no game restart/gameplay performed. Installed save/load/restart/cleanup acceptance remains pending; no stable/main/Release promotion.
+
 ## Menu0.2.0 — session-only spatial skull-conversion candidate
 
 ### Installed return — bounded field/conversion scenario accepted2026-10-24
