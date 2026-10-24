@@ -4,7 +4,7 @@ Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier co
 
 Current menu research: `BUILD_MENU_RESEARCH.md` records exact static CraftGUI/custom-interface dispatch, transient card input and unsafe ordinary removal/script-building assumptions. Native menu reuse is supported by direct IL/data; actual UI/editor/payment/persistence integration is not installed-accepted. The static study itself made no runtime change; the subsequent authorized candidate is recorded below.
 
-Current menu candidate: separate Menu Probe0.1.0 is now frozen, clean-built and installed host-closed; exact source/hash/previous-probe backup in TEST_BUILD_LOG. Local compiled policy/native-dispatch/no-payment-write gates pass. Native three-card layout, station interaction, grid/input/camera cleanup and visual marker usability still await the user's game return. No faith spending, save persistence or burial effect is part of this candidate.
+Current menu return: separate Menu Probe0.1.0 confirms ordinary station entry/three-card dispatch, free local purchases, repeated point placement/removal and explicit cleanup in game, with user positive button assessment. Exact source/hash/return in TEST_BUILD_LOG. Full acceptance remains open: native card/header overflow and left-offset drawn grid that shifts with camera panning are observed. Rendering causes and broader input/lifecycle cases are not proved. User requested evidence review, not immediate fixes; source/installed0.1.0 unchanged. No faith spending, save persistence or burial effect is part of this candidate.
 
 ## Blind balance screen — 2026-10-24
 
