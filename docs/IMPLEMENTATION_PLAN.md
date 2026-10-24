@@ -1,6 +1,46 @@
 # Implementation plan
 
-Current product work follows the revised blessing-capacity concept in DESIGN.md. `BUILD_MENU_RESEARCH.md` establishes native CraftGUI/custom-interface feasibility and the limits of ordinary construction/removal. Session-only Menu Probe0.1.0 now has bounded live ordinary-entry/three-card/free-buy/point-edit evidence. Menu layout overflow and camera-dependent drawn-grid offset remain open, without an established cause. Current user scope is review/recording, not immediate fixes. Any later correction should preserve accepted functional behavior and isolate layout/grid ownership before adding payment, persistence, conversion or final light art. Exact identity and limits: TEST_BUILD_LOG.
+Current product work follows the revised blessing-capacity concept in DESIGN.md. Session-only Menu Probe0.1.0 has bounded live ordinary-entry/three-card/free-buy/point-edit evidence. Card/header overflow and camera-dependent drawn-grid offset remain open; causes unproved. Exact identity and limits: TEST_BUILD_LOG. The user now requests a forward plan; this planning update does not change runtime code or the installed frozen candidate.
+
+## Forward plan after the Menu0.1.0 return —2026-10-24
+
+### 1. Correct the usable native editor surface
+
+First inspect native final layout writers (card height, description/anchors, table/scroll clipping and header sizing) and grid drawing/camera coordinate ownership. Hypothesis: the drawn grid and logical placement do not share a stable world reference; discriminate this from a placement-coordinate error using one fixed point while panning before applying offsets. Screenshots do not establish the cause. Preserve the native three-card/custom-interface route and free point editing already observed.
+
+Deliver a new immutable session-only menu candidate once each correction has its own evidence/readiness gate. Related READY corrections can share one build; do not bundle an unproved fix. Acceptance: no overlapping/clipped card text, readable paid/support/placed/free counts, drawn cells remain registered to the same world locations through left/right panning, selected cell and committed point agree over ground/graves. Check back/reopen/native ordinary workbench and mouse/gamepad on the changed surfaces. No payment, save writes, grave effect or final beam art yet; no need to repeat every successful0.1.0 action.
+
+### 2. Complete session-only blessing mechanics
+
+Before binding the effect, agree the exact small-cell-to-grave ground-footprint membership rule using verified native geometry; retain free decorative placement and nonstacking behavior. Add all-red effective conversion through the earlier accepted grave input/UI seams, without physical anatomy mutation. Reuse accepted decay/body ownership evidence and the completed blind balance screen; do not repeat or reveal anatomy recipe research.
+
+Check the minimal joint scenarios: active field on/off changes actual grave calculation/diagram and real zone total; multiple fields do not repeat conversion; empty/replacement bodies obey adopted spatial semantics; no body/organ export; lower/higher real station support changes activation in placement order; removing/replacing a point makes it newest. Keep free purchases/session data while proving this integration. Cover wooden and stone eligibility, not only the previously observed single wooden station. Do not inherit obsolete station radius/passive quality or per-grave paid upgrades.
+
+### 3. Add durable capacity/field state, then actual payment
+
+First choose the smallest verified save carrier for cemetery-wide purchased count plus point locations/order. Earlier per-grave serialization evidence is useful but does not prove a global-state schema. Establish recovery across same/cross-save loads, session separation, correct dormancy after station demolition, reactivation after rebuilding and harmless disabled/uninstalled behavior; no automatic migration of old diagnostic grave investments. Distinguish product decisions from carrier research.
+
+After durable state is proved, couple real faith debit to exactly one capacity increment and price progression. Reuse accepted counting/debit/current-player boundaries; verify insufficient funds, support ceiling, duplicate clicks, reopening/load and rollback/containment at the actual commit seam. Free Place/Remove never spends faith or resets price. Trials may be batched only when their independent readiness gates and coherent scenarios allow it; no ceremony of one build per rule is required.
+
+### 4. Develop the light as the visible reward
+
+Replace markers with a restrained visual after editor geometry and activation ownership are stable. Compare a single light, a few selected graves and a dense decorated area, including relevant lighting/background contrast. Use early visual comparison before polishing one assumed look; verify the selected result in native rendering. Decide how dormant fields appear in management mode; ordinary gameplay need not carry permanent diagnostic marks. This is art/readability tuning, not authorization for new gameplay services or mandatory cosmetic settings.
+
+### 5. Tune the adopted economy in ordinary play
+
+Start with wooden5/stone10 and first-ten faith prices1,2,3,4,6,9,12,15,18,21. Evaluate affordable first trial, early partial investment and larger cemetery spending alongside actual station/decor availability, without disclosing spoiler-bearing anatomy routes. Resolve price continuation after the tenth purchase before removing the diagnostic purchase bound or shipping unrestricted growth. Retain existing game progression as the baseline; any new unlock/gate requires an explicit product decision. Adjust capacity/prices only with user agreement, not automatically from an audit.
+
+### 6. Consolidate the production mod and acceptance
+
+Move the proven mechanism into a coherent production entry point after the above properties are established. Remove diagnostic panel, shortcut, synthetic purchases and temporary observation code; keep sparse support logging and localization. Verify native entry/exit, persistence/payment/effect/visuals together and one ordinary unrelated-building regression. Base-game operation is primary; verify optional Move Objects separately without a runtime dependency. Complete production version/build/distribution rules and explicit installed acceptance before stable promotion/release. Do not present an old probe as production.
+
+## Immediate next step and remaining decisions
+
+Recommended next implementation is stage1: narrow menu-layout/grid-ownership investigation followed by a corrected session-only candidate. This directly addresses observed failures without making paid/persistent effects depend on misleading placement feedback. The user has requested this plan, not an automatic implementation of all stages.
+
+Two concrete decisions remain to close at their owning stages: exact field/grave membership before stage2 and price continuation after purchase10 before unrestricted payment/shipping. Native presentation, save carrier, lifecycle compatibility and production packaging are engineering/acceptance tasks; return to the user only for actual product tradeoffs or real visual judgment.
+
+## Historical combined-concept implementation notes
 
 The earlier combined-concept plan below is historical research, not mandatory current scope. Frozen Faith0.9.0 and historical0.8.0 identities/acceptance remain unchanged in TEST_BUILD_LOG.md; the passive-threshold candidate is not automatically the next test for the revised product.
 
