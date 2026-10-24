@@ -20,6 +20,8 @@ This repository owns this mod's product behavior, architecture, balance and acce
 
 ## Product constraints
 
+Current product revision is owned by `docs/DESIGN.md`, section "Current design revision — blessing field, 2026-10-24", which supersedes conflicting earlier combined-concept constraints below. Adopted: no radius, additive cemetery-wide wooden/stone beam capacity, shared price progression, and paid spatial fields retained dormant after capacity loss and restored without repayment. Partial-capacity activation and the proposed replacement of +1 quality with full effective red-to-white conversion remain open. Earlier implementation plans/probes remain evidence for their original scopes, not acceptance or mandatory scope for this revision.
+
 `docs/DESIGN.md` owns the adopted mechanics. Appearance belongs to the grave; quality belongs to the physically installed item. No cosmetic item metadata or inventory-icon changes are required. Do not silently change ownership, shared price progression, coverage activation, partial anatomy bypass or appearance/stat separation. UI tabs, prices, radius and unlock details remain open. Do not promote illustrative preview values into requirements.
 
 ## Engineering and evidence

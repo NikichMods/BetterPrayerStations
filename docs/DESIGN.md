@@ -1,5 +1,27 @@
 # Design — Better Prayer Stations
 
+## Current design revision — blessing field, 2026-10-24
+
+Status: **adopted core interaction; surrounding rules under discussion**. This section takes precedence over the earlier combined product concept below where they conflict. Earlier research and bounded runtime acceptance remain evidence for their original scenarios, not acceptance of this revised product.
+
+The user agrees to simplify the former multi-system product. A passive-only station bonus was considered as a standalone direction; the current exploration instead centers on a visible blessing. Whether passive station quality accompanies this remains unresolved. Do not carry the former organ inspection, skull conversion, repeatable grave-upgrade or appearance-commission services into the revised scope without a new decision.
+
+Adopted interaction: a prayer station acts conceptually as a construction station through which the player places a one-square blessing field. The field's position anchors the visual effect. When the field is positioned at a grave, that grave receives **+1 to final grave quality**, rather than merely an extra decoration input subject to the native white-skull cap. The purchased spatial field is the conceptual effect owner; this supersedes the assistant's suggestion of an intrinsically grave-owned blessing. This is a product model, not a verified native construction/save implementation.
+
+The preceding proposal includes faith payment, a light beam and at most one blessing bonus per grave. The precise placement/membership rule (one square is not yet a verified native BuildGrid cell or a full grave footprint), empty-ground eligibility, field stacking prevention, relocation/removal, body replacement, station dependency after placement and supported persistence/uninstall behavior remain open. **Adopted: faith price progression is shared across the whole cemetery, not reset per station.** Exact curve and deletion/refund/counter behavior remain open. Do not infer that this field is the former station coverage square or inherits its radius/nearest-station ownership rules.
+
+Current effect exploration: the user is reconsidering +1 final quality in favor of a single nonstacking blessing that converts all effective red skulls to white, without the +1. Merely ignoring red penalties and converting red to white are different native-rating interventions; exact effect remains under discussion. The all-red conversion proposal reopens the former partial-anatomy-alternative boundary; do not silently inherit that old limit or treat the new alternative as already implemented/accepted.
+
+### Adopted cemetery-wide capacity and paid-field recovery
+
+There is **no station influence radius**. Completed prayer stations add to one cemetery-wide simultaneous beam capacity; wooden and stone stations have the same role with stone supplying greater capacity. Contributions of5/10 are illustrative, not final balance. Fields and purchases are not assigned to an individual station; any station provides access to the same paid-field pool and shared price progression.
+
+Each new field is paid for separately. Purchasing additional fields is limited by current total capacity. Paid fields and their positions remain stored when stations are demolished; demolition does not erase the investment. With no supporting capacity, all beams go dark and their grave effects cease. Rebuilding stations restores support for already paid fields without another faith payment; it must not create another purchase or advance the price sequence. A larger paid-field count than current capacity is a valid dormant state after demolition, not a reason to delete fields. The system therefore tracks paid fields/positions separately from current active capacity, rather than treating capacity as a lifetime purchase count.
+
+Open: when capacity supports only some paid fields, which fields activate and how the player sees/changes that choice. No automatic purchase-order priority, manual activation interface, all-or-nothing activation or assignment to a specific station is adopted. Exact capacity values, field relocation/deletion/refunds and price-counter behavior remain open. Neither the old nearest-station rule nor the earlier per-station beam ownership proposal applies.
+
+## Earlier combined concept — retained pending design reconciliation
+
 Status: **adopted product concept**, 2026-10-23. These requirements describe intended behavior, not implemented or runtime-verified features. This document is the product owner; the earlier research idea bank is background, not a second contract.
 
 ## Purpose and boundaries
