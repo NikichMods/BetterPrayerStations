@@ -2,7 +2,9 @@
 
 Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier combined-concept runtime plans below are historical research, not the next production step by default.
 
-Current candidate: user adopts any occupied native grave construction cell and authorizes Menu0.2.0 session-only full effective conversion. BLESSING_MEMBERSHIP_RESEARCH owns readiness; TEST_BUILD_LOG owns frozen artifact/install and pending acceptance. Menu0.1.1 grid/point-edit/native-desk regression has bounded live/user acceptance; remaining menu layout is explicitly deferred. No paid/save/visual extension is authorized in0.2.0. The earlier0.1.0 return below remains historical, not the current grid state.
+Current candidate: user adopts any occupied native grave construction cell and authorizes Menu0.2.0 session-only full effective conversion. BLESSING_MEMBERSHIP_RESEARCH owns readiness; TEST_BUILD_LOG owns frozen artifact/install, bounded accepted return and remaining limits. Menu0.1.1 grid/point-edit/native-desk regression has bounded live/user acceptance; remaining menu layout is explicitly deferred. No paid/save/visual extension is authorized in0.2.0. The earlier0.1.0 return below remains historical, not the current grid state.
+
+Menu0.2.0 return now accepts the bounded installed single-grave spatial conversion/nonstacking/removal-restoration scenario with native physics agreement, central diagram/raw body separation, unchanged measured physical parameters and native total feedback. TEST_BUILD_LOG owns exact evidence and remaining state/tier/lifecycle limits. Full persistence/payment/product acceptance remains open; no automatic stable promotion or new implementation follows from this result.
 
 Current menu research: `BUILD_MENU_RESEARCH.md` records exact static CraftGUI/custom-interface dispatch, transient card input and unsafe ordinary removal/script-building assumptions. Native menu reuse is supported by direct IL/data; actual UI/editor/payment/persistence integration is not installed-accepted. The static study itself made no runtime change; the subsequent authorized candidate is recorded below.
 

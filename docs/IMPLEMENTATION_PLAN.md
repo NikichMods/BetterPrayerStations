@@ -16,6 +16,8 @@ Adopted: any native construction cell occupied by the grave qualifies. The user 
 
 Check the minimal joint scenarios: active field on/off changes actual grave calculation/diagram and real zone total; multiple fields do not repeat conversion; empty/replacement bodies obey adopted spatial semantics; no body/organ export; lower/higher real station support changes activation in placement order; removing/replacing a point makes it newest. Keep free purchases/session data while proving this integration. Cover wooden and stone eligibility, not only the previously observed single wooden station. Do not inherit obsolete station radius/passive quality or per-grave paid upgrades.
 
+Menu0.2.0 now has bounded live/user acceptance for one-grave full conversion, tested native occupied/adjacent cell membership, duplicate nonstacking, last-point removal restoration, diagram/body separation and native total feedback. Exact evidence/limits: TEST_BUILD_LOG. Continue with global-state persistence readiness, carrying remaining empty/replacement/support-loss checks into the appropriate joint scenario rather than repeating this passed slice.
+
 ### 3. Add durable capacity/field state, then actual payment
 
 First choose the smallest verified save carrier for cemetery-wide purchased count plus point locations/order. Earlier per-grave serialization evidence is useful but does not prove a global-state schema. Establish recovery across same/cross-save loads, session separation, correct dormancy after station demolition, reactivation after rebuilding and harmless disabled/uninstalled behavior; no automatic migration of old diagnostic grave investments. Distinguish product decisions from carrier research.

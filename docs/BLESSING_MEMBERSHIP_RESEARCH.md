@@ -1,6 +1,8 @@
 # Spatial blessing membership —2026-10-24
 
-Status: **any occupied grave cell adopted; session-only effect prototype authorized, installed effect acceptance pending**. Menu0.1.1 grid/actions are accepted within their recorded scope; menu polish remains deferred.
+Status: **any occupied grave cell adopted; bounded Menu0.2.0 installed spatial conversion accepted**. Menu0.1.1 grid/actions are accepted within their recorded scope; menu polish remains deferred.
+
+Subsequent Menu0.2.0 installed result: bounded any-cell/full-conversion scenario accepted with user confirmation. Native physics agrees for two occupied opposite-edge-row cells of one actual96×96 grave footprint and two adjacent outside cells; seven checkpoints enumerate29 candidates, including initial zero-field control. Matches1->2->1 retain one conversion; matches0 restores native quality/body inputs. Diagram/raw-panel/physical snapshots and native zone getter agree. Exact identity/log and limits are in TEST_BUILD_LOG. This is not every-cell/all-state/all-mod geometry acceptance; live empty/replacement/decay/support-loss transitions remain for later joint checks.
 
 ## Menu0.2.0 readiness checkpoint
 
