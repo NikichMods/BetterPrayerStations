@@ -2,6 +2,8 @@
 
 Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier combined-concept runtime plans below are historical research, not the next production step by default.
 
+Current menu research: `BUILD_MENU_RESEARCH.md` records exact static CraftGUI/custom-interface dispatch, transient card input and unsafe ordinary removal/script-building assumptions. Native menu reuse is supported by direct IL/data; actual UI/editor/payment/persistence integration is not installed-accepted. No new probe or runtime change was made.
+
 ## Blind balance screen — 2026-10-24
 
 Presentation boundary: report only whether a severe concept-breaking balance issue was found. Do not reveal anatomy recipes, organ combinations, route names, ingredient/cost breakdowns, attainable maxima or reproduction instructions unless the user explicitly requests spoiler disclosure. This applies to future summaries, links and automatic recovery as well as this review.

@@ -1,6 +1,8 @@
 # Implementation plan
 
-Current next diagnostic: Faith0.9.0 joint paid faith/passive threshold. One explicit free existing-C/L preparation, then the existing real purchase route; actual native grave +1, station +1 and zone +2 are live assertions, not accepted results. No body/decor changes, final balance or passive preview. Method: docs/PASSIVE_QUALITY_RESEARCH.md; current steps: research/FaithProbe/README.md; immutable identity: docs/TEST_BUILD_LOG.md. Historical accepted0.8.0 remains unchanged.
+Current product work follows the revised blessing-capacity concept in DESIGN.md. `BUILD_MENU_RESEARCH.md` establishes native CraftGUI/custom-interface feasibility and the limits of ordinary construction/removal. Recommended next evidence slice: session-only three-action native UI/grid prototype, without faith payment/save changes or final light art. Exact editor/input/lifecycle integration remains unverified; this recommendation does not claim a built/installed probe.
+
+The earlier combined-concept plan below is historical research, not mandatory current scope. Frozen Faith0.9.0 and historical0.8.0 identities/acceptance remain unchanged in TEST_BUILD_LOG.md; the passive-threshold candidate is not automatically the next test for the revised product.
 
 Status: technical research started at the user's request, 2026-10-23. [Persistence research](PERSISTENCE_RESEARCH.md) establishes native carriers. The accepted grave-owned appearance model removes the former need to transfer cosmetic metadata at decoration removal. Production implementation remains absent. The authorized narrow diagnostic probe source is in `research/AppearanceProbe`; see `docs/TEST_BUILD_LOG.md` for exact artifact/install/runtime-return status.
 
