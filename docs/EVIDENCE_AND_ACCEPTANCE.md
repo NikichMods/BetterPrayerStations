@@ -1,6 +1,6 @@
 # Evidence and acceptance
 
-Current2026-10-25: Menu0.3.1 bounded load/edit/save/reload scenario passes with user confirmation: P3 and edited ordered coordinates recover, three spatial effects restore, no shutdown. Native physics is unavailable for inactive owners after load and agrees for all29 when editor makes them available. TEST_BUILD_LOG owns exact identity/limits; GLOBAL_BEAM_PERSISTENCE and BLESSING_MEMBERSHIP_RESEARCH own the accepted boundaries. Full restart, other-save isolation, saved cleanup and insufficient-support priority remain open. No payment or visual-polish scope added.
+Current2026-10-26: Menu0.3.1 bounded load/edit/save/reload plus six-point support/priority scenarios pass with user confirmation. At10->5 the last point deactivates; removal/reinsertion changes that last owner. P6/all six positions/new order survive support0 save/reload, then the oldest five reactivate at support5. An earlier5->10 reactivation of all six is captured; final post-zero5->10 is not. TEST_BUILD_LOG owns exact identity/limits. Full restart, other-save isolation, saved cleanup, stone tier and broader body states remain open. No payment or visual-polish scope added.
 
 Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier combined-concept runtime plans below are historical research, not the next production step by default.
 

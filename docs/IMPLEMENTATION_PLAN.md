@@ -1,6 +1,6 @@
 # Implementation plan
 
-Current2026-10-25: Menu0.3.1 load/edit/save/reload and inactive-physics correction have bounded installed/user acceptance. P3/edited positions/relative order and three effects restore without shutdown. GLOBAL_BEAM_PERSISTENCE and TEST_BUILD_LOG own evidence/remaining limits. Next useful functional check: station-support loss/reactivation and placement priority in the live game; payment and visual work remain outside current authorization.
+Current2026-10-26: Menu0.3.1 additionally passes bounded six-point support loss/reactivation, remove/reinsert priority and save/reload with no station support. P6/positions/new order survive support0, then the oldest five reactivate at support5. TEST_BUILD_LOG owns exact captures/limits. Shared paid capacity is the next recommended functional slice, reusing payment research after separate authorization/readiness; payment and visual work remain outside current authorization. Other-save isolation/saved cleanup remain lifecycle checks before final acceptance.
 
 Current product work follows the revised blessing-capacity concept in DESIGN.md. Menu0.1.1 editor/grid, Menu0.2.0 spatial conversion and Menu0.3.1 bounded persistence have installed/user acceptance within TEST_BUILD_LOG limits. GLOBAL_BEAM_PERSISTENCE owns the native player-root carrier/schema. Payment and visual polish remain outside this slice.
 
