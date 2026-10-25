@@ -1,5 +1,13 @@
 # Test-build log
 
+## Menu0.4.0 — shared paid capacity and explicit diagnostic resources2026-10-26
+
+User authorizes actual faith payment on shared1,2,3,4,6,9,12,15,18,21 and technical F8 wood/stone station materials/faith. GLOBAL_CAPACITY_PAYMENT records separate pre-implementation READY gates and preserved invariants. Same schema1; old P6 retained, next12; trial cap10 unchanged, cleanup no refund. CapacityPurchase uses actual native RemoveItem/GetTotalCount adapter with exact delta, saved/local quote matching and bounded root/bag list/metadata/runtime rollback. Proposed P+1 commits only after debit; UI observation is outside payment commit. Linked StationMaterials unchanged; TestResources grants50 faith via guarded native capacity/add. Setup queued out of OnGUI, no automatic construction/unlock. Known menu visuals retained.
+
+Development warning-as-error SDK6.0.406 build passes40 native skull-oracle cases,216 native serializer/state checks,77 global payment checks and7320 structural assertions. Payment tests use simulated debit with actual native counting and actual GameSave roundtrip after each of the ten prices; include exact bag funds, zero/insufficient, stale count/cost/saved-local mismatch, support/ten-price limits, reentry and eight injected rollback phases/classes. Compiled IL asserts native payment adapter, native menu affordability/paid dispatch, capacity-before-add for both setup owners, exact recipe IDs and faith amount; narrow mutation exceptions exclude all other Item/world/currency/forced-save paths. No new installed payment/setup acceptance yet. README owns short existing-P6 purchase12/other-station15/save-load/shortage/native-resource tests. Exact clean source/artifact/install record follows freeze.
+
+Before paid install, game closed: preserved and hash-verified all66 selected native .dat/.dat.backup.N/.info files (162909727 bytes) in ignored `.local/evidence/menu-probe-0.4.0/save-backup/`; full-manifest.json SHA256 `f14b2e200bf9f040900bded33422906a749f39940ef862ef0d9a603bede80af7`. The initial manifest contains only27 primary/info entries; full-manifest adds the39 numbered backup entries and verifies all originals/copies. No save was rewritten/restored. Pre-install log SHAa69fa89e13db74a7cd573e59279214295fbdccaa5370a171423050a1a8079eff matches the accepted support return. These are private ignored snapshots, not public game payloads.
+
 ## Menu0.3.1 — corrective physics-audit readiness candidate2026-10-25
 
 ### Installed support-loss/priority return — accepted within captured scope2026-10-26

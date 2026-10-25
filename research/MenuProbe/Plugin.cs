@@ -15,11 +15,13 @@ namespace NikichMods.BPSMenuProbe
     [BepInPlugin(Id,"Better Prayer Stations - Menu Probe",Version)]
     public sealed class Plugin:BaseUnityPlugin,CraftInterface
     {
-        public const string Id="nikichmods.bps.menuprobe",Version="0.3.1";
+        public const string Id="nikichmods.bps.menuprobe",Version="0.4.0";
         const string Host="e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const string BuyId="bps_menu_probe_buy",PlaceId="bps_menu_probe_place",RemoveId="bps_menu_probe_remove";
         static Plugin self;
         readonly BeamState state=new BeamState();
+        readonly CapacityPurchase purchase=new CapacityPurchase();
+        bool setupFailed;
         readonly List<WorldGameObject> stations=new List<WorldGameObject>();
         readonly List<WorldGameObject> graves=new List<WorldGameObject>();
         readonly FieldGeometry fieldGeometry=new FieldGeometry();
@@ -54,7 +56,7 @@ namespace NikichMods.BPSMenuProbe
         Vector2 gamepadCursor;
         Action pending;
         string status="Загрузите игру. Все изменения только в памяти.";
-        Rect panel=new Rect(12,70,345,190);
+        Rect panel=new Rect(12,70,345,292);
         GUIStyle label;
         static bool Station(string id){return id=="pray_stand_wd" || id=="pray_stand_stn";}
         static bool StationCandidate(string id){return Station(id) || id=="pray_stand_wd_place" || id=="pray_stand_stn_place";}
@@ -89,7 +91,7 @@ namespace NikichMods.BPSMenuProbe
                 Patch(typeof(GJL),"L",nameof(Localize),null,new[]{typeof(string)});
                 SkullProjection.Install(harmony);
                 Patch(typeof(GraveGUI),"Redraw",null,nameof(GraveRedrawn),Type.EmptyTypes);
-                ready=true;Log("READY version="+Version+" persistent=True faith_debit=False quality_effect=True");
+                ready=true;Log("READY version="+Version+" persistent=True faith_debit=True quality_effect=True test_resources=True");
             }
             catch(Exception ex){Fail(ex);}
         }
@@ -98,10 +100,10 @@ namespace NikichMods.BPSMenuProbe
         static bool Localize(string __0,ref string __result)
         {
             var p=self;if(p==null || !p.ready)return true;
-            if(__0==BuyId)__result="Купить +1 вместимость (тест: бесплатно)";
+            if(__0==BuyId)__result="Купить +1 вместимость";
             else if(__0==PlaceId)__result="Поставить свет";
             else if(__0==RemoveId)__result="Убрать свет";
-            else if(__0==BuyId+"_d")__result="Цена для будущей игры: "+(p.state.NextPrice==0?"предел теста":p.state.NextPrice+" веры")+". В этом тесте вера не списывается.";
+            else if(__0==BuyId+"_d")__result="Цена: "+(p.state.NextPrice==0?"предел теста":p.state.NextPrice+" веры")+". Вера списывается из инвентаря и сумок. Вместимость общая для кладбища.";
             else if(__0==PlaceId+"_d")__result="При размещении на любой клетке могилы превращает все красные черепа в белые. Тело остаётся без изменений.";
             else if(__0==RemoveId+"_d")__result="Убирает точку бесплатно. Оплаченная вместимость сохраняется.";
             else return true;
@@ -136,7 +138,7 @@ namespace NikichMods.BPSMenuProbe
                 d.interaction_type=ObjectDefinition.InteractionType.Builder;d.zone_id="graveyard";
             }
             RefreshSupport();status="Подойдите к молельне и взаимодействуйте. F8 — панель теста.";
-            Log("SESSION station_candidates="+stations.Count+" support="+support+" recovered=True purchased="+state.Purchased+" placed="+state.Points.Count+" active="+state.Active(support)+" order="+PointOrder());
+            Log("SESSION station_candidates="+stations.Count+" support="+support+" recovered=True purchased="+state.Purchased+" placed="+state.Points.Count+" active="+state.Active(support)+" faith="+CapacityPurchase.Count(savedOwner)+" next_price="+state.NextPrice+" order="+PointOrder());
         }
         string PointOrder()
         {var cells=new List<string>();for(int i=0;i<state.Points.Count;i++){var p=state.Points[i];cells.Add((i+1)+":"+p.X+","+p.Y);}return string.Join(";",cells.ToArray());}
@@ -221,7 +223,7 @@ namespace NikichMods.BPSMenuProbe
             {
                 menu.object_info.text_header.text="Благословения — прототип";
                 menu.object_info.text_descr.gameObject.SetActive(true);
-                menu.object_info.text_descr.text=Counts()+"\nСледующая цена: "+(state.NextPrice==0?"предел теста":state.NextPrice+" веры")+". Сейчас бесплатно.\nТочки и вместимость записываются обычным сохранением игры.";
+                menu.object_info.text_descr.text=Counts()+"\nСледующая цена: "+(state.NextPrice==0?"предел теста":state.NextPrice+" веры")+". При себе: "+CapacityPurchase.Count(savedOwner)+" веры.\nТочки и вместимость записываются обычным сохранением игры.";
                 var description=menu.object_info.text_descr;
                 description.UpdateAnchors();description.ProcessText(false,true);
                 int extra=Math.Max(0,description.height-headerDescriptionHeight);
@@ -242,7 +244,7 @@ namespace NikichMods.BPSMenuProbe
         public bool CanCraft(CraftDefinition cd,List<string> multi,int amount,List<Item> needs)
         {
             if(!Current() || !ownMenu || editor || pending!=null || amount!=1)return false;
-            if(cd.id==BuyId)return state.CanBuy(support);
+            if(cd.id==BuyId)return state.CanBuy(support) && CapacityPurchase.Count(savedOwner)>=state.NextPrice;
             if(cd.id==PlaceId)return state.Free(support)>0;
             if(cd.id==RemoveId)return state.Points.Count>0;
             return false;
@@ -253,7 +255,14 @@ namespace NikichMods.BPSMenuProbe
             {
                 RefreshSupport();if(!CanCraft(cd,multi,amount,needs))return false;
                 var player=MainGame.me.player.data;int faith=player.GetTotalCount("faith",true);float money=player.money;
-                if(cd.id==BuyId){int quote=state.NextPrice;if(!state.Buy(support))return false;SaveState("buy");status="Вместимость +1. Вера не списана.";Log("BUY simulated=True quote="+quote+" purchased="+state.Purchased);refreshRequested=true;}
+                if(cd.id==BuyId)
+                {
+                    var result=purchase.Buy(player,state,support,state.Purchased,state.NextPrice);
+                    Log("PURCHASE result="+result.Status+" cost="+result.Cost+" faith_before="+result.Before+" faith_after="+result.After+" purchased="+result.Purchased+" money_unchanged="+(money==player.money)+" order="+PointOrder());
+                    if(result.Status!="committed")return false;
+                    status="Вместимость +1. Потрачено "+result.Cost+" веры.";refreshRequested=true;
+                    return true;
+                }
                 else if(cd.id==PlaceId)pending=()=>BeginEditor(false);
                 else if(cd.id==RemoveId)pending=()=>BeginEditor(true);
                 else return false;
@@ -389,6 +398,10 @@ namespace NikichMods.BPSMenuProbe
                     if(GUI.Button(new Rect(panel.x+10,panel.y+100,panel.width-20,28),"Очистить точки и покупки"))pending=()=>{EndEditor(false);if(ownMenu && menu!=null)menu.Hide(true);state.Clear();SaveState("cleanup");RefreshEffects();RedrawOpenGrave();status="Тест очищен. Сохраните игру для закрепления очистки.";Log("CLEANUP saved_group=zeroed save_required=True");};
                     GUI.enabled=!editor && !ownMenu && !MainGame.me.gui_elements.IsAnyMassiveWindowOpened();
                     if(GUI.Button(new Rect(panel.x+10,panel.y+134,panel.width-20,28),"Запасной вход: ближайшая молельня"))pending=OpenNearest;
+                    GUI.enabled=!editor && !ownMenu && pending==null && !setupFailed && !MainGame.me.gui_elements.IsAnyMassiveWindowOpened();
+                    if(GUI.Button(new Rect(panel.x+10,panel.y+168,panel.width-20,28),"Материалы: деревянная молельня"))pending=()=>GrantResources(0);
+                    if(GUI.Button(new Rect(panel.x+10,panel.y+202,panel.width-20,28),"Материалы: каменная молельня"))pending=()=>GrantResources(1);
+                    if(GUI.Button(new Rect(panel.x+10,panel.y+236,panel.width-20,28),"Добавить +50 веры (тест)"))pending=()=>GrantResources(2);
                     GUI.enabled=true;
                 }
             }
@@ -409,6 +422,16 @@ namespace NikichMods.BPSMenuProbe
             WorldGameObject best=null;float distance=float.PositiveInfinity;
             foreach(var w in stations)if(w!=null && !w.is_removed && Station(w.obj_id)){float d=(w.transform.position-MainGame.me.player.transform.position).sqrMagnitude;if(d<distance){distance=d;best=w;}}
             if(best==null){status="Нужна готовая молельня на кладбище.";return;}Open(best,true);
+        }
+        void GrantResources(int kind)
+        {
+            if(!Current() || setupFailed || editor || ownMenu || MainGame.me.gui_elements.IsAnyMassiveWindowOpened())return;
+            try
+            {
+                bool granted=kind==2?TestResources.GrantFaith(savedOwner,Log):NikichMods.BPSFaithProbe.StationMaterials.Grant(savedOwner,kind==1,Log);
+                status=granted?"Тестовые ресурсы добавлены. Они сохраняются вместе с игрой.":"Не хватает места в инвентаре. Освободите место.";
+            }
+            catch(Exception ex){setupFailed=true;status="Выдача ресурсов отключена после ошибки. Смотрите журнал.";Logger.LogError("BPS_MENU SETUP_FAILED setup_disabled=True "+ex);}
         }
         bool CemeteryGrave(WorldGameObject grave)
         {

@@ -1,8 +1,8 @@
 # Implementation plan
 
-Current2026-10-26: Menu0.3.1 additionally passes bounded six-point support loss/reactivation, remove/reinsert priority and save/reload with no station support. P6/positions/new order survive support0, then the oldest five reactivate at support5. TEST_BUILD_LOG owns exact captures/limits. Shared paid capacity is the next recommended functional slice, reusing payment research after separate authorization/readiness; payment and visual work remain outside current authorization. Other-save isolation/saved cleanup remain lifecycle checks before final acceptance.
+Current2026-10-26: user authorizes Menu0.4.0 shared paid capacity and diagnostic F8 materials for wood/stone stations/+50 faith. GLOBAL_CAPACITY_PAYMENT owns separate READY gates and transaction/setup limits; TEST_BUILD_LOG owns candidate identity/acceptance. Menu0.3.1 support/order/zero-support persistence acceptance is retained; no visual polish. Next live check is exact spend/shared station price/load/shortage and native recipe grants. Other-save isolation/saved cleanup remain lifecycle checks before final acceptance.
 
-Current product work follows the revised blessing-capacity concept in DESIGN.md. Menu0.1.1 editor/grid, Menu0.2.0 spatial conversion and Menu0.3.1 bounded persistence have installed/user acceptance within TEST_BUILD_LOG limits. GLOBAL_BEAM_PERSISTENCE owns the native player-root carrier/schema. Payment and visual polish remain outside this slice.
+Current product work follows the revised blessing-capacity concept in DESIGN.md. Menu0.1.1 editor/grid, Menu0.2.0 spatial conversion and Menu0.3.1 bounded persistence have installed/user acceptance within TEST_BUILD_LOG limits. GLOBAL_BEAM_PERSISTENCE owns the native player-root carrier/schema. Payment is the current authorized0.4.0 slice; visual polish remains deferred.
 
 ## Forward plan after the Menu0.1.0 return —2026-10-24
 

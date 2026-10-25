@@ -1,5 +1,7 @@
 # Evidence and acceptance
 
+Current candidate2026-10-26: user authorizes Menu0.4.0 real faith for shared capacity and diagnostic F8 wood/stone station resources/+50 faith. GLOBAL_CAPACITY_PAYMENT owns readiness/limits and retained old P without retroactive charge; no schema migration/visual work. Offline native counting/GameSave tests with simulated debit pass; live new global payment and resource-grant acceptance pending. Bounded0.3.1 acceptance below is retained.
+
 Current2026-10-26: Menu0.3.1 bounded load/edit/save/reload plus six-point support/priority scenarios pass with user confirmation. At10->5 the last point deactivates; removal/reinsertion changes that last owner. P6/all six positions/new order survive support0 save/reload, then the oldest five reactivate at support5. An earlier5->10 reactivation of all six is captured; final post-zero5->10 is not. TEST_BUILD_LOG owns exact identity/limits. Full restart, other-save isolation, saved cleanup, stone tier and broader body states remain open. No payment or visual-polish scope added.
 
 Current product: the revised blessing-capacity design in `DESIGN.md`. Earlier combined-concept runtime plans below are historical research, not the next production step by default.

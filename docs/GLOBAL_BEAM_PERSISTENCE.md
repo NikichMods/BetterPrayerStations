@@ -1,5 +1,7 @@
 # Global blessing-state persistence —2026-10-25
 
+Current payment consumer: Menu0.4.0 authorizes real faith purchase, owned by GLOBAL_CAPACITY_PAYMENT. Schema1/P/positions/order and ordinary-save ownership are unchanged; old diagnostic P is retained without back-charge. The paid transaction adds exact debit plus ledger/runtime rollback around the existing backend; earlier no-payment scope below is history for0.3.x.
+
 Status: user authorizes a persistence prototype after bounded Menu0.2.0 spatial-conversion acceptance. No payment or visual polish. This document owns the global carrier/schema/readiness; earlier grave-owned C/L/appearance probes are not a migration source.
 
 ## Mechanism and evidence

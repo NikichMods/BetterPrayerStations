@@ -30,6 +30,7 @@ class MenuTests
         var probe=Assembly.LoadFrom(args[2]);var type=probe.GetType("NikichMods.BPSMenuProbe.BeamState",true);var state=Activator.CreateInstance(type,true);
         EffectTests.Run(probe);
         SavedBeamTests.Run(probe);
+        CapacityPurchaseTests.Run(probe);
         var points=(IList)type.GetField("Points",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(state);
         Assert(Value(state,"Purchased")==0 && (int)Invoke(state,"Free",5)==0,"Initial zero paid capacity");
         int[] prices={1,2,3,4,6,9,12,15,18,21};
@@ -74,6 +75,23 @@ class MenuTests
         Assert((bool)inactiveOption.GetValue(footprint),"Global field geometry must include hidden placement boxes");
         Assert(!(bool)inactiveOption.GetValue(Activator.CreateInstance(geometry,new object[]{false})),"Historical Faith geometry retains its native-filter default");
         Assert(!Calls(fieldGeometry.GetMethod("Matches",BindingFlags.Instance|BindingFlags.NonPublic),"FieldGeometry","TryNativeMatches"),"Functional field membership must not depend on physics visibility");
+        foreach(var entry in new[]{new[]{"NikichMods.BPSMenuProbe.TestResources","GrantFaith"},new[]{"NikichMods.BPSFaithProbe.StationMaterials","Grant"}})
+        {
+            var setupType=probe.GetType(entry[0],true);var grant=setupType.GetMethod(entry[1],BindingFlags.Static|BindingFlags.Public|BindingFlags.NonPublic);
+            bool capacity=false,added=false;
+            foreach(var instruction in PatchProcessor.GetOriginalInstructions(grant))
+            {
+                var call=instruction.operand as MethodBase;if(call==null || call.DeclaringType!=typeof(Item))continue;
+                if(call.Name=="CanAddItems")capacity=true;
+                if(call.Name=="AddItems"){Assert(capacity,"Setup native grant must follow capacity inspection");added=true;}
+            }
+            Assert(capacity && added,"Setup must use actual native capacity/add path");
+        }
+        var materials=probe.GetType("NikichMods.BPSFaithProbe.StationMaterials",true);
+        Assert((string)materials.GetMethod("Recipe").Invoke(null,new object[]{false})=="graveyard_builddesk:p:pray_stand_wd_place" && (string)materials.GetMethod("Recipe").Invoke(null,new object[]{true})=="graveyard_builddesk:p:pray_stand_stn_place","Both native station recipe identities");
+        Assert((int)probe.GetType("NikichMods.BPSMenuProbe.TestResources").GetField("FaithAmount",BindingFlags.Static|BindingFlags.NonPublic).GetRawConstantValue()==50,"Diagnostic faith button amount");
+        Assert(Calls(plugin.GetMethod("CanCraft"),"CapacityPurchase","Count"),"Native menu affordability must inspect actual carried faith");
+        Assert(Calls(plugin.GetMethod("OnCraft"),"CapacityPurchase","Buy") && !Calls(plugin.GetMethod("OnCraft"),"BeamState","Buy"),"Native menu purchase must use paid transaction rather than free state increment");
         var editorUpdate=plugin.GetMethod("EditorUpdate",BindingFlags.Instance|BindingFlags.NonPublic);
         Assert(!Calls(editorUpdate,"BuildGrid","MoveBuildGridTo") && !Calls(editorUpdate,"BuildGrid","RefreshGrid"),"Camera pan must not move or repaint the world-sampled grid");
         Assert(Calls(typeof(BuildGrid).GetMethod("RefreshGrid",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic),"Transform","get_position"),"Native grid painting samples its transform origin");
@@ -101,13 +119,15 @@ class MenuTests
                 var call=instruction.operand as MethodBase;if(call==null)continue;
                 string owner=call.DeclaringType.Name,name=call.Name;
                 bool ownedMetadata=ownerType.FullName=="NikichMods.BPSMenuProbe.SavedBeamState" && method.Name=="SetOwned" && name=="SetParam";
-                Assert(!(owner=="Item" && (name.StartsWith("RemoveItem") || name.StartsWith("AddItem") || (name=="SetParam" && !ownedMetadata) || name=="SetParamAdd")),"Only saved-backend metadata mutation allowed: "+method.Name);
+                bool paidDebit=ownerType.FullName=="NikichMods.BPSMenuProbe.CapacityPurchase" && method.Name=="NativeDebit" && name=="RemoveItem";
+                bool setupGrant=(ownerType.FullName=="NikichMods.BPSMenuProbe.TestResources" && method.Name=="GrantFaith" || ownerType.FullName=="NikichMods.BPSFaithProbe.StationMaterials" && method.Name=="Grant") && name=="AddItems";
+                Assert(!(owner=="Item" && ((name.StartsWith("RemoveItem") && !paidDebit) || (name.StartsWith("AddItem") && !setupGrant) || (name=="SetParam" && !ownedMetadata) || name=="SetParamAdd")),"Only owned metadata, native faith adapter and explicit setup grants allowed: "+method.Name);
                 Assert(!(owner=="WorldGameObject" && (name=="SetParam" || name=="MarkForRemoval" || name=="SetObject")),"No world-data mutation: "+method.Name);
                 Assert(!(owner=="FloatingWorldGameObject" && (name.StartsWith("Create") || name.StartsWith("Stop"))),"No floating object or commit: "+method.Name);
                 Assert(!(owner=="BuildModeLogics" && (name=="DoPlace" || name=="DoRemove" || name=="CraftBuilding")),"No native physical edit: "+method.Name);
                 Assert(!(owner=="GameSave" && name.StartsWith("Save")),"No save request");
             }
         }
-        Console.WriteLine("PASS "+assertions+" assertions: compiled state policy, native dispatch, only owned metadata setter; no payment/forced-save/world-write paths. Live UI/input remains pending.");
+        Console.WriteLine("PASS "+assertions+" assertions: state policy, native dispatch, narrow owned metadata/payment/setup adapters; no forced-save/world-write paths. Live UI/input/payment remains pending.");
     }
 }

@@ -18,11 +18,11 @@ $dll=Join-Path $out $(if($CheckOnly){'compile-check.dll'}else{'BetterPrayerStati
 if(!$CheckOnly -and (Test-Path -LiteralPath $dll)){throw 'Immutable artifact already exists'}
 $common=@('/nologo','/nostdlib+','/noconfig','/langversion:7.3','/optimize+','/deterministic+','/warnaserror+')
 $common+=@($refs | ForEach-Object {if(!(Test-Path -LiteralPath $_)){throw ('Missing reference '+$_)};'/reference:'+$_})
-& (Join-Path $DotnetRoot 'dotnet.exe') $compiler @common '/target:library' ('/out:'+$dll) (Join-Path $PSScriptRoot 'Plugin.cs') (Join-Path $PSScriptRoot 'BeamState.cs') (Join-Path $PSScriptRoot 'SavedBeamState.cs') (Join-Path $PSScriptRoot 'SkullProjection.cs') (Join-Path $PSScriptRoot 'FieldGeometry.cs') (Join-Path $PSScriptRoot 'PhysicalSnapshot.cs') (Join-Path $PSScriptRoot '../FaithProbe/GridFootprint.cs')
+& (Join-Path $DotnetRoot 'dotnet.exe') $compiler @common '/target:library' ('/out:'+$dll) (Join-Path $PSScriptRoot 'Plugin.cs') (Join-Path $PSScriptRoot 'BeamState.cs') (Join-Path $PSScriptRoot 'SavedBeamState.cs') (Join-Path $PSScriptRoot 'CapacityPurchase.cs') (Join-Path $PSScriptRoot 'TestResources.cs') (Join-Path $PSScriptRoot 'SkullProjection.cs') (Join-Path $PSScriptRoot 'FieldGeometry.cs') (Join-Path $PSScriptRoot 'PhysicalSnapshot.cs') (Join-Path $PSScriptRoot '../FaithProbe/GridFootprint.cs') (Join-Path $PSScriptRoot '../FaithProbe/StationMaterials.cs')
 if($LASTEXITCODE -ne 0){throw 'Probe compilation failed'}
 if([Reflection.AssemblyName]::GetAssemblyName($dll).Version.ToString() -ne ($version+'.0') -or [Diagnostics.FileVersionInfo]::GetVersionInfo($dll).FileVersion -ne ($version+'.0')){throw 'Version mismatch'}
 $test=Join-Path $out 'MenuTests.exe'
-& (Join-Path $DotnetRoot 'dotnet.exe') $compiler @common '/target:exe' ('/out:'+$test) (Join-Path $PSScriptRoot 'MenuTests.cs') (Join-Path $PSScriptRoot 'EffectTests.cs') (Join-Path $PSScriptRoot 'SavedBeamTests.cs')
+& (Join-Path $DotnetRoot 'dotnet.exe') $compiler @common '/target:exe' ('/out:'+$test) (Join-Path $PSScriptRoot 'MenuTests.cs') (Join-Path $PSScriptRoot 'EffectTests.cs') (Join-Path $PSScriptRoot 'SavedBeamTests.cs') (Join-Path $PSScriptRoot 'CapacityPurchaseTests.cs')
 if($LASTEXITCODE -ne 0){throw 'Test compilation failed'}
 & $test $managed $core $dll
 if($LASTEXITCODE -ne 0){throw 'Menu tests failed'}

@@ -1,5 +1,7 @@
 # Faith payment research — 2026-10-23
 
+Current global-capacity adaptation: Menu0.4.0/GLOBAL_CAPACITY_PAYMENT reuses the verified native single-resource debit/count and bounded root/bag snapshot inputs. The old grave-owned N+1 progression below is historical diagnostic policy, not the adopted global price row. New global paid capacity/native recipe resource buttons are authorized; their joint acceptance remains pending separately in TEST_BUILD_LOG.
+
 Status: research-only0.4.0 bounded installed native debit/shared-sequence/player-save recovery PASS with user visual confirmation. Offline rollback tests remain separate; no production acceptance. DESIGN.md owns product mechanics; test price N+1 and carried-player scope are bounded diagnostic choices.
 
 ## Owners and narrow mechanism
