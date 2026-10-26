@@ -1,6 +1,6 @@
 # Implementation plan
 
-Current presentation work2026-10-26: user requests a concise vanilla-style station-menu proposal only; beam art remains deferred. STATION_MENU_PROPOSAL owns unadopted list/placement-emphasis alternatives, counters/pricing/conditional reasons and preview-versus-native limits. Runtime/DLL0.4.0 remains unchanged. Await user design feedback before native layout implementation.
+Current presentation work2026-10-26: user selects **Родной список** layout; DESIGN owns adoption. Next resolve in-world prayer/blessing copy/icons, replacing the rejected technical support label. STATION_MENU_PROPOSAL owns pending wording/counters/icons/density and preview limits. Runtime/DLL0.4.0 unchanged; beam art deferred. Native implementation still needs readiness and visual acceptance.
 
 Current2026-10-26: Menu0.4.0 normal shared payment, paid-state save recovery, resource grants and requested negative-affordability/other-save/saved-cleanup/full-restart checks pass within GLOBAL_CAPACITY_PAYMENT/TEST_BUILD_LOG bounds. Existing support/order/zero-support/full reactivation evidence retained. Core functional chain is evidenced; do not repeat completed checks by default. Next recommended step is a user-reviewed interactive menu/light presentation proposal before implementation; final balance, ten-price continuation and production cleanup/compatibility scope still need decisions. No visual/runtime expansion or stable promotion is authorized by this test return alone.
 

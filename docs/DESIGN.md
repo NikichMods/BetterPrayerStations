@@ -1,5 +1,9 @@
 # Design — Better Prayer Stations
 
+### Station menu layout decision —2026-10-26
+
+Adopted: preview variant **Родной список**, a compact ledger and the native three-action list, with price on the purchase row. User requests in-world prayer/blessing wording/icons; "Поддержка молелен" is rejected as insufficiently immediate. STATION_MENU_PROPOSAL owns pending copy/icons/density and preview limits. Preserve free ground placement/global permanent capacity/station ceiling; wording must not introduce grave-only targeting, a new power resource or upkeep. Beam art stays deferred. Native rendering/implementation remains unaccepted.
+
 ## Current design revision — blessing field, 2026-10-24
 
 Status: **adopted core concept; balance, detailed presentation and native feasibility remain open**. This section takes precedence over the earlier combined product concept below where they conflict. Earlier research and bounded runtime acceptance remain evidence for their original scenarios, not acceptance of this revised product.
