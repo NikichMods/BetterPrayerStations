@@ -28,6 +28,8 @@ These three original images are embedded in the updated private native-list prev
 
 ## Preview and next boundary
 
+Latest prayer choice: user selects local `artifacts/IconConcepts/icon-pray-bubble-large-transparent.png` for “Помолиться”, superseding the generated hands-only draft. Preview updated from that supplied file; place remains holy_grave_narrow_small, remove remains common_grave_small. Browser checks pass. This updates only the mockup and chosen image source, not the installed menu/DLL.
+
 Latest preview trial: user requests `pictures/common_grave_small.png` for “Снять благословение”, replacing the previous common_grave_cancel_narrow trial, explicitly in the mockup only. Replaced only that displayed icon; place remains holy_grave_narrow_small, prayer remains hands without bubble. Prior layout/copy acceptance retained, new removal image awaits comparison rather than implied final adoption. Browser image/interaction/fit checks pass; no runtime changes.
 
 User acceptance2026-10-26: “в целом как макет работает” accepts the current native-list mockup as the working design basis: adopted lore text, prayer-hands icon and user's two `_small` grave icons. Latest preview state uses ordinary density and72px icon display; this is a preview setting, not a mandated native pixel size. Acceptance is scoped to the mockup, not the actual NGUI rendering or runtime artifact. Next implementation boundary: port this design to the owned station menu, verify native layout/redraw and icon readability in game while preserving accepted mechanics/payment/persistence. No implementation or new DLL follows this feedback alone.
