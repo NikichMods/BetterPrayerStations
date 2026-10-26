@@ -28,6 +28,8 @@ These three original images are embedded in the updated private native-list prev
 
 ## Preview and next boundary
 
+37px trial requested next: same two721×792 source PNGs resized directly by nearest neighbor to34×37, centered on transparent37×37 canvases, not upscaled from32px. Ignored `artifacts/IconConcepts/bless-place-nearest37-v1.png` and `remove-blessing-nearest37-v1.png`, plus `-preview8x.png`296×296 views. Same method as32 trial; no palette/cross cleanup. Original files,32px candidates and current menu preview retained. User comparison pending; no final size selection or runtime changes.
+
 User review of32px mockup: grave pair is a workable direction; cross needs a symmetric pixel correction before final use. Current prayer hands are unsatisfactory relative to the graves, especially radiating marks and hand expression. Reopen prayer artwork; do not treat earlier mockup acceptance as final approval of this icon. No new prayer composition or cross edit is implemented/adopted by this discussion. Native icon dimensions vary (inspected prayer17×20, prayer-family37×37);32×32 here is our trial raster choice, not a universal game requirement.
 
 Current preview source override after32px trial: user requests a mockup with both nearest-neighbor32 assets. Place now uses `bless-place-nearest32-v1.png`, remove `remove-blessing-nearest32-v1.png` from ignored artifacts/IconConcepts; generated prayer hands retained. Embedded grave PNGs remain32×32, CSS image-rendering:pixelated; size/scenario/density controls retained. Browser image/interaction/fit checks pass and screenshot inspected. Trial only, awaiting visual preference; no native/runtime changes.
