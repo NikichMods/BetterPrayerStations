@@ -1,6 +1,14 @@
 # Station menu presentation —2026-10-26
 
-Status: **Родной список layout and lore copy adopted; icon choices proposed**. User approved the native list, then explicitly asked to take the prayer/blessing wording and update its preview. Beam art remains deferred. Native rendering/runtime implementation has not been accepted or changed.
+Status: **Native-list layout and exact icon trio adopted; wording review reopened**. User finds the station-ceiling label too compressed, the removal reassurance contradictory and the permanent shared-price footer unhelpful; price presentation needs native-UI review. Earlier copy below is the previous adopted baseline, not acceptance of the proposals in the review section. Beam art remains deferred. Native rendering/runtime implementation has not been accepted or changed.
+
+## Wording review — proposals pending user approval
+
+Consulted DetailedTechnologyTooltips `docs/TOOLTIP_LANGUAGE_RESEARCH.md` (accepted mixed voice) and `docs/BLUEPRINT_PURPOSE_CATALOGUE.md` (reading/evidence): lead with player capability/main benefit, natural concise sentences rather than a forced prefix/template, retain useful distinctions, avoid secondary exceptions and duplicated context, use sparse meaningful emphasis. Do not transfer tooltip-specific tier grammar mechanically into action labels.
+
+Proposed station-ceiling sentence: «Молельни позволяют использовать до C благословений одновременно.» This distinguishes the current simultaneous ceiling from permanent purchased P without a fraction or an ambiguous maximum-paid limit. Keep «Благословения», «Даровано благословений: P», action names and existing prayer/grave-effect descriptions. Proposed removal description: «Снятое благословение можно использовать в другом месте.» It explains reuse rather than opposing “remove” with “preserved”; no faith refund or automatic point transfer is promised. Drop the permanent “blessings and price shared across cemetery” footer; retain short context-specific guidance when a limit prevents an action. Shared purchase/price mechanics remain unchanged.
+
+Price: existing native-menu research identifies ingredient/faith display as a reusable surface; current Menu0.4.0 instead includes quote/carried count in technical header text. Thus the mockup's right-side “12 веры / Есть23” is not verified native rendering. Prefer inspecting/reusing native cost/available-resource presentation during menu integration; if custom text is needed, «Нужно:12 веры» / «При себе:23» is a wording fallback, not selected layout. This review changes documentation only; mockup, assets and DLL unchanged.
 
 ## Adopted presentation
 
