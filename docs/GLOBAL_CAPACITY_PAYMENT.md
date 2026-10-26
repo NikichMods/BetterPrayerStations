@@ -1,3 +1,5 @@
+> Current consumer/status: [PROJECT_STATE](PROJECT_STATE.md). Earlier dated “current/pending/next” paragraphs below are historical evidence milestones; the newest accepted scope and TEST_BUILD_LOG take precedence. Menu0.5.0 changes presentation only; global mechanics/payment/save format are retained.
+
 # Global capacity payment — Menu0.4.0,2026-10-26
 
 User authorizes real faith payment on the adopted global sequence and diagnostic buttons for wooden/stone station materials and faith. No visual polish. Existing trial investment is retained without retrospective debit; schema1 remains unchanged. P6 means next cost12, independent of station used. The current ten-price research bound remains1,2,3,4,6,9,12,15,18,21; do not invent later balance. Removing points/stations does not refund or reset P/price. Explicit diagnostic cleanup clears investment without refund and must be saved.

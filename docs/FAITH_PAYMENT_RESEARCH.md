@@ -1,3 +1,5 @@
+> Historical combined-concept research. Its evidence remains reusable, but its services and old “current/next” statements are not the current product or work queue. See [PROJECT_STATE](PROJECT_STATE.md) and [history map](history/README.md).
+
 # Faith payment research — 2026-10-23
 
 Current global-capacity adaptation: Menu0.4.0/GLOBAL_CAPACITY_PAYMENT reuses the verified native single-resource debit/count and bounded root/bag snapshot inputs. The old grave-owned N+1 progression below is historical diagnostic policy, not the adopted global price row. Its bounded normal global payment/save/setup now passes with user confirmation: costs12/15 across two stations, recovered paid P8/faith23/next18, then cost18; exact wood/stone/+50 grants. Exact return/limits remain in TEST_BUILD_LOG; negative/fault/bag-only live paths are not newly proved.

@@ -1,5 +1,11 @@
 # Test-build log
 
+## Documentation handoff and live0.5.0 snapshot —2026-10-26
+
+Documentation consolidated under PROJECT_STATE/current DESIGN/IMPLEMENTATION_PLAN/EVIDENCE/STATION_MENU; earlier full planning/copy files from sourcedc88053 preserved under docs/history/2026-10-26. No runtime source, frozen tag, candidate bytes or installed DLL changed. Local selected-input recovery bundle and machine paths are ignored; not a Release or off-machine backup. Old probes remain historical and inactive by default.
+
+Game was running at handoff, not stopped/restarted. Preserved ignored `.local/evidence/menu-probe-0.5.0/handoff-session-20261026-165655.log`, SHA256 `54ded2427118ac30178eac0da916e5151411ae9461940306c1dfed28da141903`. Installed SHA256f624ed052f681ad57b26558c2a9a38d5988cee7422f3611dcacdc83bba9b5b55 rechecked. Snapshot shows READY0.5.0/native_presentation True, support10/P0/points0/faith50/next1 recovery, repeated native station opens on228343/229390 and paired controller-restored closes. Recorded layout header98/description64/rows44,44,44 repeats; no BPS_MENU FAILED/INIT_FAILED marker in this snapshot, and no purchase observed. This is partial runtime loading/opening evidence, not user visual acceptance, proof of no clipping, a paid-refresh test or an ordinary-desk visual regression. Native menu acceptance remains pending in the new chat.
+
 ## Menu0.5.0 — accepted menu copy/icons native preview, preparation2026-10-26
 
 User accepts the revised wording and requests native in-game preview. Per-change READY gates recorded in STATION_MENU_PROPOSAL before runtime source mutation; existing0.4.0 state/payment/effect/setup owners retained. New scoped CraftItemGUI.Redraw prefix resets own row geometry/ResizeHeight, postfix assigns accepted embedded sprites and corrects native faith available/required counter to actual carried payer funds. Exact own-card/controller/current-save guards; pooled snapshot restore on hide and reset/unload. Three PNG inputs remain local/ignored and are hash-pinned in build/runtime; no game asset dump enters Git. Native OnCraftPressed custom dispatch unconditionally skips ordinary craft path, so faith needs are display-only with existing custom debit. F8 setup panel starts hidden. Native rendering/readability, repeated row stability and ordinary-desk regression remain pending.

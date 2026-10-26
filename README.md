@@ -1,18 +1,21 @@
 # Better Prayer Stations
 
-A planned Graveyard Keeper mod that gives prayer stations an active role in caring for individual graves.
+A Graveyard Keeper mod in development that lets prayer stations bless places in the cemetery.
 
-Spend faith on grave improvements, inspect buried contents without exhumation, and commission a different appearance for a gravestone or fence without sacrificing its quality.
+Spend faith to unlock additional reusable blessings. Place or remove them freely; an active blessing on a grave converts its effective red skulls to white without changing the buried body. Prayer stations provide the cemetery-wide limit of simultaneous blessings.
 
-**Status: design agreed; implementation has not started. No production build is available. An isolated research-only appearance probe is tracked in the test-build log.** Initial target: Graveyard Keeper 1.407 on PC with BepInEx. Exact loader/toolchain requirements will be verified before implementation.
+**Current phase:** local research prototype. Core mechanics have bounded in-game acceptance; native menu preview0.5.0 is installed and awaiting visual feedback. Permanent light effects, final balance and production packaging are unfinished. No stable production release is available.
 
-- [Design and scope](docs/DESIGN.md)
-- [Implementation questions and next steps](docs/IMPLEMENTATION_PLAN.md)
-- [Evidence and acceptance](docs/EVIDENCE_AND_ACCEPTANCE.md)
-- [Persistence research](docs/PERSISTENCE_RESEARCH.md)
-- [Grave-owned appearance rendering](docs/APPEARANCE_RENDERING_RESEARCH.md)
-- [Diagnostic builds and runtime returns](docs/TEST_BUILD_LOG.md)
+Initial verified target: Graveyard Keeper1.407, Windows PC, BepInEx5.
+
+- [Start here: current state and next action](docs/PROJECT_STATE.md)
+- [Current design](docs/DESIGN.md)
+- [Development plan](docs/IMPLEMENTATION_PLAN.md)
+- [Menu text and selected icons](docs/STATION_MENU_PROPOSAL.md)
+- [Evidence and acceptance boundaries](docs/EVIDENCE_AND_ACCEPTANCE.md)
+- [Exact test builds and runtime evidence](docs/TEST_BUILD_LOG.md)
 - [Working contract](AGENTS.md)
+- [Historical research map](docs/history/README.md)
 - [Licensing](LICENSING.md)
 
-Original project source and software-supporting documentation use MPL-2.0. Game content retains its original rights.
+Original project source and software-supporting documentation use MPL-2.0. Game content and reference materials retain their original rights.

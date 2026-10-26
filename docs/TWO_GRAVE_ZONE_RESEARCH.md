@@ -1,3 +1,5 @@
+> Historical combined-concept research. Its evidence remains reusable, but its services and old “current/next” statements are not the current product or work queue. See [PROJECT_STATE](PROJECT_STATE.md) and [history map](history/README.md).
+
 # Two-grave and native zone integration research — 2026-10-23
 
 Status: installed0.5.1 confirms actual A/B addressing/independent prices and simultaneous closed-window native sum/event with selective grave coverage. Pair mixed-state live load is not captured; transient station count/preview classification remains defective. Exact evidence and limits: TEST_BUILD_LOG.md installed0.5.1 return. DESIGN.md owns mechanics. No final prices/radius/caps or product visual work is selected here.

@@ -1,3 +1,5 @@
+> Historical experiment, not the current installed prototype. Start at [PROJECT_STATE](../../docs/PROJECT_STATE.md); do not install/resume this probe by default.
+
 # Better Prayer Stations — Faith Probe0.9.0
 
 Research-only integration candidate, not a production release. Exact immutable source/hash/install: docs/TEST_BUILD_LOG.md. Keeps accepted0.8.0 committed passive calculation and prior payment/input/geometry backend. New helper prepares one real grave just before a threshold; a separate real purchase must raise grave quality and station bonus. Installed acceptance pending.

@@ -1,3 +1,5 @@
+> Current consumer/status: [PROJECT_STATE](PROJECT_STATE.md). Earlier dated “current/pending/next” paragraphs below are historical evidence milestones; the newest accepted scope and TEST_BUILD_LOG take precedence. Menu0.5.0 changes presentation only; global mechanics/payment/save format are retained.
+
 # Global blessing-state persistence —2026-10-25
 
 Current accepted boundary2026-10-26: Menu0.4.0 additionally confirms A->B->A isolation and explicit cleanup saved through a full process restart. Recovered cleaned state support10/P0/count0/active0/faith50/next1/empty order matches paired pre/post logs in TEST_BUILD_LOG; no refund/old fields. Thus historical open cross-save/cleanup/restart gaps below are closed for this bounded scenario. No new schema or runtime change.

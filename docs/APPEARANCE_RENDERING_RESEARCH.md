@@ -1,3 +1,5 @@
+> Historical combined-concept research. Its evidence remains reusable, but its services and old “current/next” statements are not the current product or work queue. See [PROJECT_STATE](PROJECT_STATE.md) and [history map](history/README.md).
+
 # Grave-owned appearance rendering — 2026-10-23
 
 Status: **bounded static source/IL and asset metadata plus passing bounded installed 0.1.1/0.1.2 scenarios**. One grave passed gravestone projection/close-cancel; two graves subsequently passed independent slots, removal/reinstallation, distinguishable gravestone exchange, menu-load and cleanup with preserved measured cosmetic-redraw state. No production patch or full appearance acceptance exists. Product ownership is accepted in `DESIGN.md`; native persistence carrier/fixture are documented in `PERSISTENCE_RESEARCH.md`.

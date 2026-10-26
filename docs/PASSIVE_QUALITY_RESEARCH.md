@@ -1,3 +1,5 @@
+> Historical combined-concept research. Its evidence remains reusable, but its services and old “current/next” statements are not the current product or work queue. See [PROJECT_STATE](PROJECT_STATE.md) and [history map](history/README.md).
+
 # Passive station quality — diagnostic preparation
 
 Scope: agreed positive current grave quality, unique nearest-covering-station allocation with persistent-ID tie, bonus floor(sum/10) added to native station quality. Current candidate is committed-state only. Existing0.7.1 faith/coverage preview remains; passive allocation does not migrate to a floating station until confirmed. This intentionally separates actual native zone contribution from prospective passive totals, which are not yet implemented. No save fields, quality resource, final UI or balance added.

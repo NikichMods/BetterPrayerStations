@@ -1,3 +1,5 @@
+> Historical combined-concept research. Its evidence remains reusable, but its services and old “current/next” statements are not the current product or work queue. See [PROJECT_STATE](PROJECT_STATE.md) and [history map](history/README.md).
+
 # Persistence research — 2026-10-23
 
 Current global blessing-capacity/position/order persistence is owned by `GLOBAL_BEAM_PERSISTENCE.md` (Menu0.3.0 native player-root schema, offline gates and pending live acceptance). The grave-owned appearance/C-L carriers below remain historical/reusable evidence for their own ownership, not the global field format or a migration source.

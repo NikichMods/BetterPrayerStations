@@ -1,3 +1,5 @@
+> Historical combined-concept research. Its evidence remains reusable, but its services and old “current/next” statements are not the current product or work queue. See [PROJECT_STATE](PROJECT_STATE.md) and [history map](history/README.md).
+
 # Coverage research — 2026-10-23
 
 Status: bounded installed numeric activation/load slice passes; preview/construction classification and world-badge refresh remain open. Product coverage semantics remain owned by DESIGN.md; no final radius or purchase cap chosen.

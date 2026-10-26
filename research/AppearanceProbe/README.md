@@ -1,3 +1,5 @@
+> Historical experiment, not the current installed prototype. Start at [PROJECT_STATE](../../docs/PROJECT_STATE.md); do not install/resume this probe by default.
+
 # Better Prayer Stations — Appearance Probe 0.1.2
 
 Research-only, not a production mod/release. This slice tests **two occupied graves, each with independent gravestone and fence appearance choices**, through actual native decoration removal/reinstallation and exchange. Previous 0.1.1 redraw/menu-load/preview-close result remains preserved under its immutable source/artifact; fitting is deliberately absent from this lifecycle probe. No faith, fees, prayer coverage or final UI is implemented.

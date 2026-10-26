@@ -1,3 +1,5 @@
+> Current consumer/status: [PROJECT_STATE](PROJECT_STATE.md). Earlier dated “current/pending/next” paragraphs below are historical evidence milestones; the newest accepted scope and TEST_BUILD_LOG take precedence. Menu0.5.0 changes presentation only; global mechanics/payment/save format are retained.
+
 # Prayer-station management through native UI — 2026-10-24
 
 Status: **native three-card interaction and session point editing observed in game; menu/grid visual acceptance remains open**. This is research, not implemented production behavior. DESIGN.md owns gameplay; no production payment or persistence is introduced.
