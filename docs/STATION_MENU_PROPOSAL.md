@@ -26,6 +26,18 @@ Verified installed GK1.407 resources.assets SHA256215c7981901a4b72d5db717666ba47
 
 These three original images are embedded in the updated private native-list preview, with pixelated scaling. No suitable disappearing-light symbol was found in the inspected candidate set; this is not proof of absence from every game asset. i_b_remove exists32×32 but visually depicts explosive demolition; prefer icon_stop to avoid implying grave destruction. i_b_holy_cross/02/03 are construction blueprints for crosses, not blessing glyphs. icon_faith_ol is another available faith-orb variant. The faith ItemDefinition has icon="" in the inspected data: do not assume that raw field is a usable sprite name in future menu code; selected explicit IDs are evidenced. Exact native icon consumption/rendering still needs the narrow implementation check.
 
+## Accepted icon set — 2026-10-26
+
+User explicitly accepts the currently displayed trio: prayer book is somewhat more detailed than vanilla but does not stand out enough to require further iteration. Accept the images as displayed; no additional retouch is implied. This supersedes the earlier pending icon choices and alternative prayer trials below.
+
+| Action | Exact local source under ignored artifacts/IconConcepts | Raster | SHA256 |
+| --- | --- | --- | --- |
+| Помолиться | prayer-open-rosary-large-cross-nearest100-v1.png |100×100|0f9324e6b6c40607856e922b750963675723f0551ad9337a2706f37a106e06c7|
+| Благословить место | bless-place-nearest37-v1.png |37×37|cdb90b9719f3efce7656b1b8403c4033eb407cf76dafa509b7a23919ff0adfbb|
+| Снять благословение | remove-blessing-nearest37-v1.png |37×37|38c0dd4ec6a76170460e48227a60bb6a39631f6fd7db43b4276ba6401b46be4d|
+
+Acceptance covers the artwork in the mockup, alongside previously adopted copy/list structure. Preview display-size controls are not a native size specification. Actual NGUI menu layout/redraw, native displayed size/filtering/readability and packaging remain to implement/verify under their own readiness and runtime acceptance; no DLL is updated here. Next useful step: integrate this fixed trio and adopted copy into the owned station menu while correcting its known row-layout issue, then test repeated redraw/opening and purchase feedback in game. Heavenly grave-world visual effect remains separately deferred.
+
 ## Preview and next boundary
 
 Current prayer preview override: user requests `artifacts/IconConcepts/prayer-open-rosary-large-cross-nearest100-v1.png` (100×100 RGBA), replacing the prior user manual296×296 source.100px version was directly nearest-resized from the user's supplied large-cross image with proportional fit on transparent canvas; embedded byte-for-byte in preview without further raster reduction. Grave37 pair, copy and controls unchanged. Browser image/interaction/fit checks pass and screenshot inspected. User visual review pending; no native/runtime change. Prior manual and large sources retained.
