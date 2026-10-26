@@ -28,6 +28,8 @@ These three original images are embedded in the updated private native-list prev
 
 ## Preview and next boundary
 
+40px comparison requested for the same large-cross book: direct nearest-neighbor source1274×1235 fit40×39 on transparent40×40 canvas, ignored `artifacts/IconConcepts/prayer-open-rosary-large-cross-nearest40-v1.png` and320×320 `-preview8x.png`. Read-back and visual check pass;37 version retained, no manual cleanup or preview/runtime update. Size preference pending.
+
 User approves the large-cross book variant as the next trial source and requests the same37px reduction. Source1274×1235 fitted directly by nearest neighbor to37×36 on transparent37×37 RGBA canvas. Ignored outputs `artifacts/IconConcepts/prayer-open-rosary-large-cross-nearest37-v1.png` and296×296 `-preview8x.png`; dimensions/read-back and visual preview checked. No manual pixel correction or mockup update; reduced version awaits review.
 
 Large-cross variant requested: user asks to proportionally enlarge the gold cross over the rosary to nearly the full top-to-bottom extent of the cream page area, preserving book/beads and diagonal pose. Built-in image_gen minimal-object edit prompts uniform enlargement, same gold/pixel treatment and transparent exterior, no new objects. Local ignored output `artifacts/IconConcepts/prayer-open-rosary-large-cross-v1.png` (exec-34474dac-2133-4748-8ae4-5c21aa696a12). Cross is visibly dominant/larger; endpoints retain page margins and exact object/pixel preservation is not guaranteed. No37px reduction or mockup change requested/performed; variant pending review, prior source retained.
