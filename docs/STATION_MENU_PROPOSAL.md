@@ -28,7 +28,7 @@ These three original images are embedded in the updated private native-list prev
 
 ## Preview and next boundary
 
-Latest prayer choice: user selects local `artifacts/IconConcepts/icon-pray-bubble-large-transparent.png` for “Помолиться”, superseding the generated hands-only draft. Preview updated from that supplied file; place remains holy_grave_narrow_small, remove remains common_grave_small. Browser checks pass. This updates only the mockup and chosen image source, not the installed menu/DLL.
+Latest prayer choice: user prefers the previous generated hands-only prayer icon over the transparent native edit. Preview restored to `artifacts/IconConcepts/prayer-hands-no-bubble-v1.png`; place remains holy_grave_narrow_small, remove remains common_grave_small. User raises excessive HD detail in the grave images for discussion; no new simplification treatment is adopted yet. Previous browser checks cover this restored trio. No installed menu/DLL change.
 
 Latest preview trial: user requests `pictures/common_grave_small.png` for “Снять благословение”, replacing the previous common_grave_cancel_narrow trial, explicitly in the mockup only. Replaced only that displayed icon; place remains holy_grave_narrow_small, prayer remains hands without bubble. Prior layout/copy acceptance retained, new removal image awaits comparison rather than implied final adoption. Browser image/interaction/fit checks pass; no runtime changes.
 
