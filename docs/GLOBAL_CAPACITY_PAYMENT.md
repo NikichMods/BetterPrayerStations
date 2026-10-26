@@ -4,6 +4,8 @@ User authorizes real faith payment on the adopted global sequence and diagnostic
 
 ## Current installed acceptance
 
+Subsequent2026-10-26 pre-restart return: user confirms insufficient-faith refusal and restored affordability; log records no purchase and synthetic carried0->50. Two-save A->B->A restores clean B P0 and A P8/five ordered points/faith50/next18. Explicit cleanup in A writes P0/count0 and is followed by native save and runtime-only unload. Fresh-process cleaned recovery remains pending; TEST_BUILD_LOG owns preserved pre-restart hash and exact bounds. Negative affordability and this bounded cross-save isolation are now accepted; the earlier paragraph's unobserved statuses describe the first payment return only.
+
 Menu0.4.0 bounded normal payment/save/setup scenario now passes with user confirmation; TEST_BUILD_LOG owns source/DLL/return hash. Actual native spends12/15 across different stations give P6->8 and faith50->23; native save/reload retains P8/five ordered points/faith23/next18. A post-load cost18 commits P9/faith5 (no subsequent captured save/reload). +50 faith and both native recipe bundles report exact grants with invariant money, material setup also preserves faith. No probe failure. Negative affordability, inventory-full setup, exact/bag-only live debit and injected live rollback are not observed; offline policy/fault evidence remains distinct. No stable/production acceptance follows. Original readiness below is the implementation rationale, not a pending repeat of the successful normal loop.
 
 ## Readiness before implementation

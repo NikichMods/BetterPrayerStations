@@ -2,6 +2,14 @@
 
 ## Menu0.4.0 — shared paid capacity and explicit diagnostic resources2026-10-26
 
+### Negative affordability/cross-save/cleanup before process restart —2026-10-26
+
+Preserved the session before the user restarts the game: ignored `.local/evidence/menu-probe-0.4.0/pre-restart-cleanup-20261026-000944.log`, SHA256 `5d81223afd2604507bfde0a54bb9954a92566135528c5ef3798cafc19bf07400`. Installed SHA8db2e505 above unchanged, READY0.4.0. User explicitly confirms insufficient-faith grey/refusal and affordability restored after granting faith; no purchase is logged in this session. TEST_FAITH logs carried0->50/exactTrue, then native save/reload A recovers P8/count5/faith50/next18/exact prior ordered points. Native menu refusal observation is the user's evidence, not an invented logged transaction failure.
+
+Cross-save A->B->A is captured: B recovers support0/P0/count0/faith0/next1; returning A restores support10/P8/count5/faith50/next18 and identical five-point order. Native save markers distinguish the two slots; user confirms isolation. No edits/purchases from A are imported into B. This is bounded two-save isolation, not a universal multiplayer/slot-migration claim.
+
+In A, explicit cleanup writes P0/count0/empty order, logs saved_group=zeroed/save_requiredTrue and restores native zone total146. Subsequent native SaveGame for A and final runtime-only unload marker are captured, with no BPS failure/setup/cleanup error or false physical invariant. This proves cleanup action plus a subsequent native save request/completion path and normal plugin unload; persistent cleanup across a fresh process is still pending. User is currently at restart/load-A step. Next required observation: recovered P0/count0/next1/no effects after full restart. Do not ask to repeat the already confirmed refusal/isolation or call the pending restart checkpoint accepted. No source/DLL/version/stable change.
+
 ### Installed return — bounded global payment/save/resources accepted2026-10-26
 
 User confirms real debit, shared station price, save/reload and all three setup buttons. Installed SHA2568db2e5057ec0a1230b83d87759bae34e34fb6b8cb7493870f19366ca2c1a55ab reverified; loader/READY0.4.0 match. Preserved ignored `.local/evidence/menu-probe-0.4.0/runtime-return-2026-10-26.log`, SHA256 `2ab1defbb77e2cd7aa1575c739efcacb098fc2a63a4d4ed4f2a45c815b607d76`. Snapshot ends after native build-grid cleanup, with no final plugin unload marker; make no shutdown/full-restart claim. No source/DLL/version change or stable promotion.
