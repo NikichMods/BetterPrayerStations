@@ -28,6 +28,8 @@ These three original images are embedded in the updated private native-list prev
 
 ## Preview and next boundary
 
+Current prayer preview override: user requests `pictures/prayer-open-rosary-large-cross-v1_37_manual.png`. Actual supplied PNG is296×296 RGBA despite37 in its name; embedded byte-for-byte without resizing/editing. Grave37 pair, copy and controls unchanged. Browser image/interaction/fit checks pass and screenshot inspected. This supersedes the full-source rosary prayer trial below. User manual image review/adoption pending; no native/runtime change.
+
 Cross-silhouette comparison extended at user request: directly nearest-resize the same large-cross original to45×44 and50×48, centered on45×45 and50×50 transparent RGBA respectively. Ignored `artifacts/IconConcepts/prayer-open-rosary-large-cross-nearest45-v1.png` / `nearest50-v1.png` and matching `-preview8x.png`360/400px views. No manual pixel editing; size/read-back and visual inspection performed. User's “кристалла” interpreted contextually as the cross silhouette.50px visually preserves crossbar better than lower-resolution trials, but visual choice pending; no menu/runtime changes.
 
 40px comparison requested for the same large-cross book: direct nearest-neighbor source1274×1235 fit40×39 on transparent40×40 canvas, ignored `artifacts/IconConcepts/prayer-open-rosary-large-cross-nearest40-v1.png` and320×320 `-preview8x.png`. Read-back and visual check pass;37 version retained, no manual cleanup or preview/runtime update. Size preference pending.
