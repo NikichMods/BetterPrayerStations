@@ -2,6 +2,12 @@
 
 ## Menu0.4.0 — shared paid capacity and explicit diagnostic resources2026-10-26
 
+### Fresh-process cleaned recovery — accepted2026-10-26
+
+User confirms the third scenario completed successfully. Preserved ignored `.local/evidence/menu-probe-0.4.0/post-restart-cleanup-20261026-001058.log`, SHA256 `296ec62aba1475e1e343fc810160143cd78e3ef3e92cd93beed326e98fc62b8f`; installed SHA8db2e505 unchanged. New log has fresh BepInEx loader/READY0.4.0, recovered support10/P0/count0/active0/faith50/next1/empty order, ordinary station open/close and final runtime-only unload. No probe failure. Combined with preserved pre-restart5d81223a (A faith50 before cleanup, owned group zeroing, subsequent native A save/unload), this confirms saved cleanup through full process restart, unchanged carried faith/no refund and retained native station support; old field state does not reappear. User confirms no residual field effect.
+
+All three requested checks are now accepted within observed scope: user-observed insufficient-faith refusal/restored affordability, two-save A->B->A isolation and saved cleanup after restart. Retain the negative-path evidence distinctions: refusal is UI testimony plus no logged purchase, not an injected failed transaction; rollback faults remain offline; inventory-full grant/bag-only live payment/stone-tier effect/broader body/mod compatibility remain unproved. Core paid-capacity/placement/conversion/support/persistence path now has bounded installed acceptance; next recommended product step is an interactive menu/beam presentation proposal under separate user authorization, keeping final balance/production cleanup/support scope explicit. Do not repeat this completed three-part test or promote to stable automatically. No runtime source/DLL/version change.
+
 ### Negative affordability/cross-save/cleanup before process restart —2026-10-26
 
 Preserved the session before the user restarts the game: ignored `.local/evidence/menu-probe-0.4.0/pre-restart-cleanup-20261026-000944.log`, SHA256 `5d81223afd2604507bfde0a54bb9954a92566135528c5ef3798cafc19bf07400`. Installed SHA8db2e505 above unchanged, READY0.4.0. User explicitly confirms insufficient-faith grey/refusal and affordability restored after granting faith; no purchase is logged in this session. TEST_FAITH logs carried0->50/exactTrue, then native save/reload A recovers P8/count5/faith50/next18/exact prior ordered points. Native menu refusal observation is the user's evidence, not an invented logged transaction failure.
