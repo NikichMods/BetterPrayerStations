@@ -31,6 +31,7 @@ class MenuTests
         EffectTests.Run(probe);
         SavedBeamTests.Run(probe);
         CapacityPurchaseTests.Run(probe);
+        PresentationTests.Run(probe);
         var points=(IList)type.GetField("Points",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(state);
         Assert(Value(state,"Purchased")==0 && (int)Invoke(state,"Free",5)==0,"Initial zero paid capacity");
         int[] prices={1,2,3,4,6,9,12,15,18,21};

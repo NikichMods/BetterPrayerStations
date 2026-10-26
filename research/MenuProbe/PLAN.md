@@ -1,4 +1,14 @@
-# Menu Probe 0.4.0 — readiness and method
+# Menu Probe 0.5.0 — native presentation preview
+
+User accepts revised copy and the exact100/37/37 icon trio, and authorizes an installed native preview. `docs/STATION_MENU_PROPOSAL.md`, Menu0.5.0 READY gates, owns scoped header/copy/icon/row-geometry/native-price readiness before implementation. Native final writers verified in pinned GK1.407 CraftItemGUI.Redraw, BaseItemCellGUI.DrawIcon/DrawIngredient and custom click dispatch; ignored presentation/inventory IL reports are bounded local evidence, not shipped source.
+
+Extend accepted0.4.0 probe; preserve real payment, schema1/global points/order/effect/setup. Only owned card references get geometry reset before Redraw and Sprite assignment afterwards; pooled values restore on hide. Three accepted local PNGs embedded with build/runtime hash checks, loaded once, destroyed on unload; no recurring resource searches. Native faith need is presentation only; custom action skips ordinary crafting branch. Counter available/required and native shortage colors corrected to actual payer inventory+bags. Main header uses accepted P/C/active/free text, no shared-price footer. F8 diagnostic panel remains available but starts hidden.
+
+Development checks pass40 native effect cases,216 persistence checks,77 simulated-debit/native-count payment checks,54 new embedded PNG/quote/dispatch/restore checks and structural mutation guards. Headless tests cannot instantiate actual NGUI layout: the quote fixture pre-seeds its native Item to avoid Unity balance loading, then executes real repeated quote updates through all ten prices. No live visual acceptance yet; numbered source/hash/install identity belongs to TEST_BUILD_LOG.
+
+Short installed test: approach either station; inspect all three cards/header/icons/native faith available/required; repeat prayer with enough faith/support and observe stable rows/updated quote; close/reopen and return from place/remove; then open ordinary cemetery construction desk. If purchase unavailable because of existing test limits, report that state and test reopen/editor separately; no diagnostic cleanup required. No game restart/termination by the agent, no stable promotion.
+
+## Historical Menu0.4.0 readiness
 
 Installed normal loop accepted2026-10-26: native costs12/15 across stations, paid P8/faith23/next18/five-point order recover on load, post-load cost18, exact +50 and both native material grants, no failure. TEST_BUILD_LOG owns exact identity/return/limits. Subsequent user-confirmed shortage, A/B/A isolation and saved cleanup/full restart now pass in TEST_BUILD_LOG. Setup capacity and fault-path live acceptance remain distinct. Read the original readiness below as historical candidate rationale.
 

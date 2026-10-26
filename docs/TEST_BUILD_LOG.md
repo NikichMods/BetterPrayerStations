@@ -1,5 +1,11 @@
 # Test-build log
 
+## Menu0.5.0 — accepted menu copy/icons native preview, preparation2026-10-26
+
+User accepts the revised wording and requests native in-game preview. Per-change READY gates recorded in STATION_MENU_PROPOSAL before runtime source mutation; existing0.4.0 state/payment/effect/setup owners retained. New scoped CraftItemGUI.Redraw prefix resets own row geometry/ResizeHeight, postfix assigns accepted embedded sprites and corrects native faith available/required counter to actual carried payer funds. Exact own-card/controller/current-save guards; pooled snapshot restore on hide and reset/unload. Three PNG inputs remain local/ignored and are hash-pinned in build/runtime; no game asset dump enters Git. Native OnCraftPressed custom dispatch unconditionally skips ordinary craft path, so faith needs are display-only with existing custom debit. F8 setup panel starts hidden. Native rendering/readability, repeated row stability and ordinary-desk regression remain pending.
+
+Development SDK6.0.406 warning-as-error gate passes40 native effect-oracle cases,219 persistence checks,77 payment cases (debit simulated, native counts/serializer/IL checked),54 new presentation checks (actual embedded PNG bytes/dimensions, actual repeated quote slot/reference updates, scoped final-writer/restore and native custom dispatch), plus structural mutation guards. The initial new quote test tried a real Item constructor outside Unity and encountered ECall balance initialization; corrected test explicitly seeds its UI ingredient fixture then invokes real repeated UpdateQuote, not a pretend native engine. Compiler optimizes ReferenceEquals to reference branches, so the guard test inspects actual branches rather than expecting a method call. Neither test-harness correction changes runtime semantics. Headless success is not NGUI visual acceptance. Freeze/build/install identities follow below; old numbered binaries remain immutable.
+
 ## Menu0.4.0 — shared paid capacity and explicit diagnostic resources2026-10-26
 
 ### Fresh-process cleaned recovery — accepted2026-10-26

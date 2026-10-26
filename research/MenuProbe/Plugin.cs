@@ -15,12 +15,13 @@ namespace NikichMods.BPSMenuProbe
     [BepInPlugin(Id,"Better Prayer Stations - Menu Probe",Version)]
     public sealed class Plugin:BaseUnityPlugin,CraftInterface
     {
-        public const string Id="nikichmods.bps.menuprobe",Version="0.4.0";
+        public const string Id="nikichmods.bps.menuprobe",Version="0.5.0";
         const string Host="e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const string BuyId="bps_menu_probe_buy",PlaceId="bps_menu_probe_place",RemoveId="bps_menu_probe_remove";
         static Plugin self;
         readonly BeamState state=new BeamState();
         readonly CapacityPurchase purchase=new CapacityPurchase();
+        readonly StationMenuView presentation=new StationMenuView();
         bool setupFailed;
         readonly List<WorldGameObject> stations=new List<WorldGameObject>();
         readonly List<WorldGameObject> graves=new List<WorldGameObject>();
@@ -42,10 +43,10 @@ namespace NikichMods.BPSMenuProbe
         WorldGameObject previousDesk;
         CraftInterface previousController;
         CraftGUI menu;
-        ObjectCraftDefinition buyCard;
+        ObjectCraftDefinition buyCard,placeCard,removeCard;
         FieldInfo saveInventory,modeField,cameraField,hideBuildField;
         MethodInfo fitCamera,openMenu,graveRedraw;
-        bool ready,ownMenu,editor,removing,painting,showPanel=true,validCell,cursorSet,refreshRequested,recoveryPending;
+        bool ready,ownMenu,editor,removing,painting,showPanel,validCell,cursorSet,refreshRequested,recoveryPending;
         bool menuQueueWasActive;
         UIWidget headerTableWidget;
         UILabel.Overflow headerOverflow;
@@ -80,6 +81,7 @@ namespace NikichMods.BPSMenuProbe
                 zoneField=AccessTools.Field(typeof(WorldGameObject),"_zone");
                 if(zoneField==null || zoneField.FieldType!=typeof(WorldZone))throw new MissingFieldException("Native grave zone");
                 if(saveInventory==null || modeField==null || cameraField==null || fitCamera==null || openMenu==null || hideBuildField==null)throw new MissingMemberException("Native session/editor members");
+                presentation.Load();
                 harmony=new Harmony(Id);
                 Patch(typeof(MainGame),"OpenBuildObjectGUI",nameof(OpenPrefix),null,new[]{typeof(WorldGameObject)});
                 Patch(typeof(MainGame),"OnGameLoaded",nameof(Loading),null,new[]{typeof(GameSave)});
@@ -89,9 +91,10 @@ namespace NikichMods.BPSMenuProbe
                 Patch(typeof(BuildGrid),"IsCellBusy",nameof(CellBusy),null,new[]{typeof(Vector2),typeof(List<Collider2D>)});
                 Patch(typeof(CraftGUI),"AddRemoveBuildingItem",nameof(NativeRemoveCard),null,Type.EmptyTypes);
                 Patch(typeof(GJL),"L",nameof(Localize),null,new[]{typeof(string)});
+                Patch(typeof(CraftItemGUI),"Redraw",nameof(RowBefore),nameof(RowAfter),Type.EmptyTypes);
                 SkullProjection.Install(harmony);
                 Patch(typeof(GraveGUI),"Redraw",null,nameof(GraveRedrawn),Type.EmptyTypes);
-                ready=true;Log("READY version="+Version+" persistent=True faith_debit=True quality_effect=True test_resources=True");
+                ready=true;Log("READY version="+Version+" persistent=True faith_debit=True quality_effect=True test_resources=True native_presentation=True icons=100,37,37");
             }
             catch(Exception ex){Fail(ex);}
         }
@@ -100,14 +103,44 @@ namespace NikichMods.BPSMenuProbe
         static bool Localize(string __0,ref string __result)
         {
             var p=self;if(p==null || !p.ready)return true;
-            if(__0==BuyId)__result="Купить +1 вместимость";
-            else if(__0==PlaceId)__result="Поставить свет";
-            else if(__0==RemoveId)__result="Убрать свет";
-            else if(__0==BuyId+"_d")__result="Цена: "+(p.state.NextPrice==0?"предел теста":p.state.NextPrice+" веры")+". Вера списывается из инвентаря и сумок. Вместимость общая для кладбища.";
-            else if(__0==PlaceId+"_d")__result="При размещении на любой клетке могилы превращает все красные черепа в белые. Тело остаётся без изменений.";
-            else if(__0==RemoveId+"_d")__result="Убирает точку бесплатно. Оплаченная вместимость сохраняется.";
+            if(__0==BuyId)__result="Помолиться";
+            else if(__0==PlaceId)__result="Благословить место";
+            else if(__0==RemoveId)__result="Снять благословение";
+            else if(__0==BuyId+"_d")__result=p.PrayerDescription();
+            else if(__0==PlaceId+"_d")__result="На могиле превращает все красные черепа в белые.";
+            else if(__0==RemoveId+"_d")__result="Снятое благословение можно использовать в другом месте.";
             else return true;
             return false;
+        }
+        string PrayerDescription()
+        {
+            if(state.NextPrice==0)return "Пробный ряд цен закончился.";
+            if(state.Purchased>=support)return "Постройте или улучшите молельню.";
+            int missing=state.NextPrice-CapacityPurchase.Count(savedOwner);
+            return missing>0?"Не хватает "+missing+" веры.":"Дарует ещё одно благословение.";
+        }
+        void UpdateQuote()
+        {
+            if(buyCard==null)return;
+            if(buyCard.needs.Count==0)buyCard.needs.Add(new Item("faith",state.NextPrice));
+            else buyCard.needs[0].value=state.NextPrice;
+        }
+        int OwnedRow(CraftItemGUI row)
+        {
+            if(!Current() || !ownMenu || menu==null || !ReferenceEquals(menu.custom_craft_interface,this) || row==null)return -1;
+            var craft=row.craft_definition;
+            return ReferenceEquals(craft,buyCard)?0:ReferenceEquals(craft,placeCard)?1:ReferenceEquals(craft,removeCard)?2:-1;
+        }
+        static void RowBefore(CraftItemGUI __instance)
+        {
+            var p=self;if(p==null || p.OwnedRow(__instance)<0)return;
+            try{p.UpdateQuote();p.presentation.BeforeRedraw(__instance);}catch(Exception ex){p.Fail(ex);}
+        }
+        static void RowAfter(CraftItemGUI __instance)
+        {
+            var p=self;if(p==null)return;int icon=p.OwnedRow(__instance);if(icon<0)return;
+            try{p.presentation.AfterRedraw(__instance,icon,p.state.NextPrice,CapacityPurchase.Count(p.savedOwner));}
+            catch(Exception ex){p.Fail(ex);}
         }
         static bool OpenPrefix(WorldGameObject __0)
         {
@@ -168,9 +201,9 @@ namespace NikichMods.BPSMenuProbe
             if(MainGame.me.gui_elements.IsAnyMassiveWindowOpened())return;
             RefreshSupport();source=station;menu=MainGame.me.gui_elements.craft;
             var inventory=new CraftsInventory();
-            string faithIcon=GameBalance.me.GetData<ItemDefinition>("faith").icon;
-            buyCard=Card(BuyId,faithIcon);
-            inventory.additional_crafts=new List<ObjectCraftDefinition>{buyCard,Card(PlaceId,faithIcon),Card(RemoveId,"i_b_remove")};
+            buyCard=Card(BuyId,"icon_faith");placeCard=Card(PlaceId,"icon_faith");removeCard=Card(RemoveId,"icon_faith");
+            UpdateQuote();
+            inventory.additional_crafts=new List<ObjectCraftDefinition>{buyCard,placeCard,removeCard};
             previousController=menu.custom_craft_interface;previousDesk=BuildModeLogics.last_build_desk;
             menu.custom_craft_interface=this;menu.has_amount_buttons=false;hideBuildField.SetValue(menu,true);
             BuildModeLogics.last_build_desk=station;ownMenu=true;MainGame.paused=true;
@@ -183,6 +216,7 @@ namespace NikichMods.BPSMenuProbe
         }
         void MenuHidden()
         {
+            presentation.Restore();
             ownMenu=false;
             if(menu!=null)
             {
@@ -194,7 +228,10 @@ namespace NikichMods.BPSMenuProbe
             Log("MENU_CLOSED controller_restored=True");
         }
         string Counts()
-        {return "Оплачено: "+state.Purchased+" / поддержка молельнями: "+support+"\nТочек: "+state.Points.Count+" · работают: "+state.Active(support)+" · свободно: "+state.Free(support);}
+        {
+            int active=state.Active(support),dark=state.Points.Count-active;
+            return "Даровано благословений: "+state.Purchased+"\nМолельни позволяют использовать до "+support+" благословений одновременно.\nДействуют: "+active+" · Доступно: "+state.Free(support)+(dark>0?" · Угасло: "+dark:"");
+        }
         void CaptureHeader()
         {
             var info=menu.object_info;
@@ -218,12 +255,13 @@ namespace NikichMods.BPSMenuProbe
         void RefreshMenu()
         {
             if(!ownMenu || menu==null || !menu.is_shown)return;
+            UpdateQuote();
             menu.UpdateAllAnchors();
             if(menu.object_info!=null)
             {
-                menu.object_info.text_header.text="Благословения — прототип";
+                menu.object_info.text_header.text="Благословения";
                 menu.object_info.text_descr.gameObject.SetActive(true);
-                menu.object_info.text_descr.text=Counts()+"\nСледующая цена: "+(state.NextPrice==0?"предел теста":state.NextPrice+" веры")+". При себе: "+CapacityPurchase.Count(savedOwner)+" веры.\nТочки и вместимость записываются обычным сохранением игры.";
+                menu.object_info.text_descr.text=Counts();
                 var description=menu.object_info.text_descr;
                 description.UpdateAnchors();description.ProcessText(false,true);
                 int extra=Math.Max(0,description.height-headerDescriptionHeight);
@@ -530,6 +568,7 @@ namespace NikichMods.BPSMenuProbe
             pending=null;recoveryPending=false;
             try{EndEditor(false);if(ownMenu && menu!=null)menu.Hide(true);}finally
             {
+                presentation.Restore();
                 if(menu!=null && ReferenceEquals(menu.custom_craft_interface,this))menu.custom_craft_interface=previousController;
                 if(ReferenceEquals(BuildModeLogics.last_build_desk,source))BuildModeLogics.last_build_desk=previousDesk;
                 foreach(var pair in definitions){pair.Key.interaction_type=pair.Value.Interaction;pair.Key.zone_id=pair.Value.Zone;}
@@ -545,6 +584,6 @@ namespace NikichMods.BPSMenuProbe
             ready=false;try{ResetSession("failure");}catch(Exception cleanup){Logger.LogError("BPS_MENU cleanup_failed "+cleanup);}
             Logger.LogError("BPS_MENU FAILED action=disabled-for-session "+ex);
         }
-        void OnDestroy(){try{ResetSession("unload");}finally{if(harmony!=null)harmony.UnpatchSelf();if(ReferenceEquals(self,this))self=null;}}
+        void OnDestroy(){try{ResetSession("unload");}finally{if(harmony!=null)harmony.UnpatchSelf();presentation.Dispose();if(ReferenceEquals(self,this))self=null;}}
     }
 }
