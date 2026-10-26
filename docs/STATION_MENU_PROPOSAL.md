@@ -2,6 +2,8 @@
 
 Status: **Native-list layout, exact icon trio and revised wording adopted; native preview authorized**. User accepts the wording review below and requests an installed preview. Beam art remains deferred. Native rendering acceptance is pending.
 
+Installed preview: Menu0.5.0 implements these gates on accepted0.4.0 mechanics; exact source/artifact/install identity is in TEST_BUILD_LOG, short user check in research/MenuProbe/README.md. Native price cell shows carried/required with standard faith icon/colors; pooled row snapshots reset/restore geometry and custom sprites after native final writers. Compilation/headless checks pass; actual NGUI visual acceptance pending. Historical browser sketches/source trials below are not the current installed artifact.
+
 ## Menu0.5.0 presentation readiness — READY before implementation
 
 Question: implement the accepted presentation in the existing paid/persisted probe, not a new production mod. Existing accepted Menu0.4.0 functionality and native static IL answer the data/dispatch question; only actual NGUI fitting/readability needs a new installed candidate. Extend that exact baseline, no alternate menu framework or independent scene. Accepted wording: title/ledger/prayer/place descriptions retained, ceiling sentence and removal-reuse description from the review adopted, permanent shared-price footer removed. Use contextual refusal guidance only.
