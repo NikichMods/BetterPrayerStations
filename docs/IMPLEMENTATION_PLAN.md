@@ -1,5 +1,7 @@
 # Implementation plan
 
+Current presentation work2026-10-26: user requests a concise vanilla-style station-menu proposal only; beam art remains deferred. STATION_MENU_PROPOSAL owns unadopted list/placement-emphasis alternatives, counters/pricing/conditional reasons and preview-versus-native limits. Runtime/DLL0.4.0 remains unchanged. Await user design feedback before native layout implementation.
+
 Current2026-10-26: Menu0.4.0 normal shared payment, paid-state save recovery, resource grants and requested negative-affordability/other-save/saved-cleanup/full-restart checks pass within GLOBAL_CAPACITY_PAYMENT/TEST_BUILD_LOG bounds. Existing support/order/zero-support/full reactivation evidence retained. Core functional chain is evidenced; do not repeat completed checks by default. Next recommended step is a user-reviewed interactive menu/light presentation proposal before implementation; final balance, ten-price continuation and production cleanup/compatibility scope still need decisions. No visual/runtime expansion or stable promotion is authorized by this test return alone.
 
 Current product work follows the revised blessing-capacity concept in DESIGN.md. Menu0.1.1 editor/grid, Menu0.2.0 spatial conversion and Menu0.3.1 bounded persistence have installed/user acceptance within TEST_BUILD_LOG limits. GLOBAL_BEAM_PERSISTENCE owns the native player-root carrier/schema. Payment is the current authorized0.4.0 slice; visual polish remains deferred.
