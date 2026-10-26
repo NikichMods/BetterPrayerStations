@@ -2,7 +2,7 @@
 
 ### Station menu layout decision —2026-10-26
 
-Adopted: preview variant **Родной список**, a compact ledger and the native three-action list, with price on the purchase row. User requests in-world prayer/blessing wording/icons; "Поддержка молелен" is rejected as insufficiently immediate. STATION_MENU_PROPOSAL owns pending copy/icons/density and preview limits. Preserve free ground placement/global permanent capacity/station ceiling; wording must not introduce grave-only targeting, a new power resource or upkeep. Beam art stays deferred. Native rendering/implementation remains unaccepted.
+Adopted: preview variant **Родной список**, compact global ledger and native three-action list. User adopts lore copy: «Помолиться» / «Благословить место» / «Снять благословение», with granted blessings retained on removal. Ledger «Даровано благословений: P» / «Молельни: до C благословений» / active/available counts and conditional «Угасло». Price is on the prayer row. STATION_MENU_PROPOSAL owns full copy and proposed native icon candidates, density and preview limits. Preserve free ground placement/global permanent capacity/station ceiling; no new power resource or upkeep. Beam art stays deferred. Native rendering/implementation remains unaccepted.
 
 ## Current design revision — blessing field, 2026-10-24
 
