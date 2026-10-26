@@ -4,7 +4,7 @@ Current state is [PROJECT_STATE](PROJECT_STATE.md). This plan lists the forward 
 
 ## 1. Finish native station-menu acceptance — current
 
-Menu0.5.0 is frozen, installed and not visually accepted yet. Adopted copy/icons are implemented on existing0.4.0 mechanics. Use the short [MenuProbe test](../research/MenuProbe/README.md): three native cards/header, real faith available/required/shortage, repeated paid update if possible, close/reopen, editor return and ordinary cemetery-desk regression. Confirm relevant mouse/gamepad use without requiring an input method the user does not normally use.
+Menu0.5.0 is frozen and installed; user visual return failed because rows shift left/down in station and several ordinary construction menus, although actions work. Investigate this regression first; PROJECT_STATE and TEST_BUILD_LOG own the return and next evidence. Adopted copy/icons remain selected on existing0.4.0 mechanics. After a proved correction, use the short [MenuProbe test](../research/MenuProbe/README.md), including ordinary-menu alignment before/after station use. Confirm relevant mouse/gamepad use without requiring an input method the user does not normally use.
 
 Read/preserve the actual log, distinguish source/loading/numeric evidence from user visual judgment, and compare exact installed identity. If there is a defect, inspect the relevant native final writer and prepare a new version; do not overwrite0.5.0. Do not repeat full accepted save/payment tests merely because a new chat starts.
 

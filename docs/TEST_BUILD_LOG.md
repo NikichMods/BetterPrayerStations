@@ -1,5 +1,13 @@
 # Test-build log
 
+## Menu0.5.0 returned layout regression —2026-10-26
+
+User reports action/recipe/building rows shifted left and down in the station menu and three or four other construction menus across the game; actions remain usable. This fails native visual/ordinary-menu acceptance. It does not establish the causal writer, exact displacement or whether ordinary menus were already affected before the first station opening. Whole-window station and ordinary-menu screenshots are the next useful evidence, to distinguish list displacement from row-content displacement. Prior mechanics/payment/save acceptance remains bounded and retained.
+
+Current native log copied to ignored `.local/evidence/menu-probe-0.5.0/regression-return-20261026-214729.log`,177143 bytes, SHA256 `2ff682680beee27a5c7c9b3c24081fa474d146645071b1049d3f040d87381d79`. READY identifies0.5.0; installed DLL hash independently rechecked this chat matches frozen `f624ed052f681ad57b26558c2a9a38d5988cee7422f3611dcacdc83bba9b5b55`. Session ends with RESET reason=unload; no matching Graveyard process observed during return inspection. No agent restart/install/build occurred. Openings include graveyard_builddesk, keeper_room_builddesk and mf_wood_builddesk, alongside stations228343/229390. No BPS_MENU FAILED/INIT_FAILED; other host errors exist and are not diagnosed as this regression. Seven PURCHASE result=committed entries record costs1,2,3,4,6,9,12 and faith50->49->47->44->40->34->25->13, P1..7, money_unchanged=True. Layout entries record heights, not positions; no geometric acceptance follows from them.
+
+Read-only source/host inspection: owned row hooks require current save, own menu/controller and exact card references. Native pinned1.407 CraftGUI.ProceedOpen copies craft_item_prefab into fresh rows; Hide calls ClearList before ON_CRAFT_GUI_HIDE; ClearList deactivates/destroys old rows and repositions the list. Thus earlier wording about pooled row reuse is not a demonstrated cross-menu mechanism for this host path. Shared header/list/scroll geometry and cross-mod interaction remain hypotheses, not diagnoses. No runtime source correction is READY yet;0.5.0 bytes remain frozen.
+
 ## Documentation handoff and live0.5.0 snapshot —2026-10-26
 
 Documentation consolidated under PROJECT_STATE/current DESIGN/IMPLEMENTATION_PLAN/EVIDENCE/STATION_MENU; earlier full planning/copy files from sourcedc88053 preserved under docs/history/2026-10-26. No runtime source, frozen tag, candidate bytes or installed DLL changed. Local selected-input recovery bundle and machine paths are ignored; not a Release or off-machine backup. Old probes remain historical and inactive by default.

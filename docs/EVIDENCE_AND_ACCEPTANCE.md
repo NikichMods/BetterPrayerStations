@@ -20,7 +20,7 @@ These are bounded scenarios, not proof of every body/tier/mod/save combination. 
 
 Menu0.5.0 preserves the accepted mechanics and adds the chosen text/icons/native price cell plus scoped row-layout changes. Frozen source and installed DLL match; compiler, native/managed policy checks and embedded PNG identity checks pass. Handoff log snapshot shows the new loader and repeated station opens without own failure markers.
 
-Actual row fit, readability, repeated price redraw and ordinary-desk visual regression still require the user's confirmation. Logs alone do not accept these visual properties. Existing game state stays owned by normal native save operations; no forced save or game termination was performed during handoff.
+Actual0.5.0 visual return failed: user reports rows shifted left/down in station and several ordinary construction menus, with actions still working. Exact cause is unresolved; screenshots and shared layout ownership investigation are next. Returned log corroborates ordinary desk openings and seven exact paid transactions, not screen positions or visual acceptance; see TEST_BUILD_LOG. Existing game state stays owned by normal native save operations; no forced save or game termination was performed by the agent.
 
 Remaining broader scope includes relevant empty/replacement/decay/moved-grave cases, production lifetime/disable/removal and selected input/mod compatibility. Some fault/payment-grant cases are offline-only; do not label simulated debit as real native payment. Production/world-light/final balance acceptance is absent.
 

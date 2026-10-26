@@ -1,6 +1,6 @@
 # Station menu — accepted presentation and native preview
 
-Updated2026-10-26. Native-list structure, the following wording and exact icon trio are accepted. Current native preview is Menu0.5.0; actual visual acceptance remains pending. Historical drafts/reference searches are [archived](history/2026-10-26/STATION_MENU_PROPOSAL.md).
+Updated2026-10-26. Native-list structure, the following wording and exact icon trio are accepted. Current native preview is Menu0.5.0; visual return failed with rows shifted left/down in station and several ordinary construction menus. PROJECT_STATE/TEST_BUILD_LOG own the investigation; selected copy/artwork is unchanged. Historical drafts/reference searches are [archived](history/2026-10-26/STATION_MENU_PROPOSAL.md).
 
 ## Accepted text
 
@@ -52,4 +52,4 @@ Question/method: extend exact accepted0.4.0 probe, not a new framework. Existing
 - **Geometry READY:** native Redraw IL0559–0638 reads description.height-20 after anchor/text update, then mutates parent bottomAnchor and hgt_widget. Prefix resets captured own-row geometry/description sizing; native final collider/anchors and outer UITable consume it. No fixed absolute card offsets. Acceptance: repeated purchases/reopen show stable rows without overlap. Static evidence alone does not prove visual correction.
 - **Faith display READY:** one transient faith need for native rendering, refreshed before Redraw. Scoped final counter uses actual payer funds; custom action is still the only debit. Place/remove have no needs. Acceptance: actual price/remaining count/shortage and exact transaction; earlier payment/save tests retained.
 
-Compiler/headless checks and installed identity are in TEST_BUILD_LOG. User native visual acceptance remains the immediate next step. World heavenly-light rendering is separately deferred.
+Compiler/headless checks, installed identity and the failed visual return are in TEST_BUILD_LOG. Diagnose shared menu displacement before another candidate. The preparation references above to pooled rows describe the original assumption: returned host inspection establishes fresh row creation/destruction on this CraftGUI path, so that assumption does not explain cross-menu displacement. World heavenly-light rendering is separately deferred.

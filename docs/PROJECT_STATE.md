@@ -21,7 +21,7 @@ Updated2026-10-26. This is the current entry point, not a chronological chat log
 | SHA256 | `f624ed052f681ad57b26558c2a9a38d5988cee7422f3611dcacdc83bba9b5b55` |
 | Installed identity | Same hash; canonical BetterPrayerStationsMenuProbe.dll |
 | Previous payload |0.4.0 backed up outside loader tree; see TEST_BUILD_LOG/local WORKSPACE |
-| Readiness | Builds/headless checks pass; installed native visual acceptance pending |
+| Readiness | Builds/headless checks pass; installed visual check failed: user reports rows shifted left/down in station and several ordinary construction menus |
 
 0.5.0 adds only native menu presentation to the accepted0.4.0 payment/persistence/effect. Real faith spending remains enabled. F8 diagnostic panel starts hidden; its existing grants/cleanup still exist. No final heavenly world-light effect is implemented.
 
@@ -34,14 +34,14 @@ Updated2026-10-26. This is the current entry point, not a chronological chat log
 | Shared P/points/order persistence, support loss/recovery | Bounded installed Menu0.3.1/0.4.0 acceptance |
 | Real shared faith price/debit, shortage, A/B/A isolation, saved cleanup/full restart | Requested Menu0.4.0 checks accepted; exact limits in TEST_BUILD_LOG |
 | New text and icon selection | Accepted by user in design/mockup |
-| Actual0.5.0 native layout/readability/ordinary-desk regression | Awaiting user feedback; do not mark accepted from logs alone |
+| Actual0.5.0 native layout/readability/ordinary-desk regression | Failed user return: rows shifted left/down in station and several ordinary construction menus; actions remain usable; cause under investigation |
 | Final balance/world rays/production release | Not complete |
 
 Handoff live-log snapshot shows READY0.5.0, recovered C10/P0/points0/faith50/next1, repeated station opens/closes and no own FAILED/INIT_FAILED markers in that snapshot. It is a snapshot of a still-running session, not a final visual result. Exact snapshot identity is in TEST_BUILD_LOG; no purchase is observed in this snapshot. Game was running during handoff, and was not stopped or modified.
 
 ## Immediate next action
 
-Continue with the user's impressions/screenshots of0.5.0, then preserve/read the current native log and verify its installed identity. The short scenario is [MenuProbe/README](../research/MenuProbe/README.md): inspect three cards/counters/native faith cost, repeat a prayer if available, close/reopen, enter/leave placement/removal, inspect ordinary cemetery desk. Do not repeat already accepted entire payment/save/support scenarios by default. If a correction is needed, identify the actual writer and issue a new immutable candidate; do not rebuild0.5.0.
+Investigate the returned0.5.0 layout regression before further features. User reports actions/recipe rows shifted left/down in station and three or four other construction menus, while actions work. Preserved session and numeric return are in TEST_BUILD_LOG. Obtain whole-window station/ordinary-menu screenshots to distinguish list displacement from row-content displacement; actual final writer/cause is not established. Static host inspection shows Hide destroys the old rows before its close callback and subsequent openings create fresh rows, so direct reuse of modified row instances is not an established explanation. Inspect shared window/header/list geometry and relevant mod interactions without assuming a culprit. If a correction is needed, establish readiness and issue a new immutable candidate; do not rebuild0.5.0 or repeat the accepted entire payment/save/support scenarios.
 
 After menu acceptance, proceed by IMPLEMENTATION_PLAN: world-light visual trial, remaining targeted functional/compatibility checks, explicit balance decisions and production consolidation. The handoff itself authorizes none of those as already accepted.
 
