@@ -1,4 +1,10 @@
-# Menu Probe 0.5.1 — read-only layout regression trace
+# Menu Probe 0.5.2 — owned vertical confinement correction
+
+User authorizes only the horizontal correction; header background remains deferred. BUILD_MENU_RESEARCH owns the READY gate and0.5.1 return/source evidence. Replace exactly one RestrictWithinBounds(bool) call in native CraftGUI.LateUpdate with an identical-stack wrapper: exact current save/main CraftGUI/visible own-menu/controller/scroll references select RestrictWithinBounds(instant,false,true); all other cases call the original overload. Native return handling/tween cancellation stays byte-for-byte in the transformed instruction stream. No fixed displacement, scroll reset or global UIScrollView hook. Existing header, cards, real payment/save/effect and0.5.1 read-only coordinate traces remain unchanged.
+
+Verification uses the actual pinned native instruction stream: exactly one call replacement, preservation of all other opcodes/operands/labels/exception regions, refusal on missing/duplicate calls, compiled Y-only arguments and original fallback. Existing build gates also remain required. Runtime acceptance is the fresh-session ordinary desk -> station -> same desk sequence plus station reopen, checking X/clipOffsetX stay at baseline. Compilation cannot establish rendered correctness. Frozen build/install identity belongs to TEST_BUILD_LOG.
+
+## Historical0.5.1 read-only trace preparation
 
 Question2026-10-27: why does the common construction list shift left after the station menu? User screenshots establish ordinary desk aligned -> station list displaced -> ordinary desk displaced; header text also exceeds its background. Existing0.5.0 log reports heights, not positions. Static pinned host inspection establishes fresh row creation/destruction and shared table/scroll/header ownership, but not the runtime writer. Corrective geometry gate remains BLOCKED; no guessed coordinate correction is included.
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Security.Cryptography;
 using System.IO;
 using BepInEx;
@@ -16,7 +17,7 @@ namespace NikichMods.BPSMenuProbe
     [BepInPlugin(Id,"Better Prayer Stations - Menu Probe",Version)]
     public sealed class Plugin:BaseUnityPlugin,CraftInterface
     {
-        public const string Id="nikichmods.bps.menuprobe",Version="0.5.1";
+        public const string Id="nikichmods.bps.menuprobe",Version="0.5.2";
         const string Host="e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const string BuyId="bps_menu_probe_buy",PlaceId="bps_menu_probe_place",RemoveId="bps_menu_probe_remove";
         static Plugin self;
@@ -96,6 +97,7 @@ namespace NikichMods.BPSMenuProbe
                 Patch(typeof(GJL),"L",nameof(Localize),null,new[]{typeof(string)});
                 Patch(typeof(CraftItemGUI),"Redraw",nameof(RowBefore),nameof(RowAfter),Type.EmptyTypes);
                 Patch(typeof(CraftGUI),"ProceedOpen",nameof(LayoutOpening),nameof(LayoutOpened),new[]{typeof(WorldGameObject),typeof(CraftsInventory),typeof(string)});
+                harmony.Patch(AccessTools.Method(typeof(CraftGUI),"LateUpdate",Type.EmptyTypes),transpiler:new HarmonyMethod(typeof(Plugin),nameof(ConfinementAxis)));
                 SkullProjection.Install(harmony);
                 Patch(typeof(GraveGUI),"Redraw",null,nameof(GraveRedrawn),Type.EmptyTypes);
                 ready=true;Log("READY version="+Version+" persistent=True faith_debit=True quality_effect=True test_resources=True native_presentation=True icons=100,37,37");
@@ -153,6 +155,31 @@ namespace NikichMods.BPSMenuProbe
         }
         bool ObservedLayout(CraftGUI view)
         {return Current() && view!=null && ReferenceEquals(view,MainGame.me.gui_elements.craft);}
+        static bool RestrictStationScroll(UIScrollView scroll,bool instant)
+        {
+            var p=self;
+            if(p!=null && p.Current() && p.ownMenu && p.menu!=null && p.menu.is_shown &&
+                ReferenceEquals(p.menu,MainGame.me.gui_elements.craft) &&
+                ReferenceEquals(p.menu.custom_craft_interface,p) && ReferenceEquals(scroll,p.menu.scroll_view))
+                return scroll.RestrictWithinBounds(instant,false,true);
+            return scroll.RestrictWithinBounds(instant);
+        }
+        static IEnumerable<CodeInstruction> ConfinementAxis(IEnumerable<CodeInstruction> instructions)
+        {
+            var original=AccessTools.Method(typeof(UIScrollView),"RestrictWithinBounds",new[]{typeof(bool)});
+            var replacement=AccessTools.Method(typeof(Plugin),nameof(RestrictStationScroll));
+            var result=new List<CodeInstruction>();int count=0,index=-1;
+            foreach(var instruction in instructions)
+            {
+                result.Add(new CodeInstruction(instruction));
+                if((instruction.opcode==OpCodes.Call || instruction.opcode==OpCodes.Callvirt) && Equals(instruction.operand,original))
+                {count++;index=result.Count-1;}
+            }
+            if(original==null || replacement==null || count!=1)throw new InvalidOperationException("Native CraftGUI confinement call changed");
+            // Identical stack shape and return value; keep the native branch/tween handling.
+            result[index].opcode=OpCodes.Call;result[index].operand=replacement;
+            return result;
+        }
         void TraceLayout(CraftGUI view,string phase)
         {
             if(layoutTraceFailed || !ObservedLayout(view))return;

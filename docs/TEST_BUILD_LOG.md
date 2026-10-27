@@ -1,5 +1,11 @@
 # Test-build log
 
+## Menu0.5.2 correction preparation —2026-10-27
+
+User explicitly requests the horizontal fix and0.5.2, deferring header background. BUILD_MENU_RESEARCH READY gate precedes mutation. Plugin.Version0.5.2 adds one guarded transpiler at CraftGUI.LateUpdate: replace its single original confinement call with an identical-stack static dispatch to vertical-only confinement when the exact current visible station menu/controller/scroll belongs to this plugin; preserve original overload for every other case. Native branch/tween handling remains intact. No other layout/mechanics change; existing0.5.1 read-only traces retained. No fixed32 compensation or global scroll patch. Frozen0.5.0/0.5.1 artifacts/tags unchanged.
+
+Development SDK6.0.406 warning-as-error build passes. New tests rewrite the actual pinned native instructions and verify one-call-only replacement, unchanged surrounding instructions/labels/regions, explicit refusal for missing/ambiguous seams, compiled false/true axis arguments, original fallback, current-save/visible-window guard and native original both-axis behavior. Existing effect/persistence/payment/presentation/mutation gates pass. No installed visual acceptance from these offline checks. README requests fresh-session desk->station->same desk and station reopen without payment/save setup. Source/hash/install identity follows after clean-source build.
+
 ## Menu0.5.1 returned trace — shared scroll displacement localized2026-10-27
 
 User reports completing the ordinary desk->station->desk sequence and retained displacement. Exact installed SHA256 rechecked `9d62888681b57d7b2b03a15f19e5a41f578982131c45b8a2f08411e1993cfa9d`; loader READY0.5.1. Current native log preserved to ignored `.local/evidence/menu-probe-0.5.1/runtime-return-20261027-172852.log`, SHA256 `23ff157e4c5d10960754e0573f90bbbb009a9f998a51b7f17ed14b5ce648c651`. Final RESET reason=unload; no host process observed at inspection. No BPS_MENU FAILED/INIT_FAILED/LAYOUT_TRACE_FAILED in this return; unrelated host errors exist. No new build/install/gameplay by agent.

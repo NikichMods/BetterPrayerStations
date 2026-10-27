@@ -4,6 +4,8 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 using HarmonyLib;
 
 static class PresentationTests
@@ -41,6 +43,7 @@ static class PresentationTests
         var plugin=probe.GetType("NikichMods.BPSMenuProbe.Plugin",true);
         var view=probe.GetType("NikichMods.BPSMenuProbe.StationMenuView",true);
         var trace=probe.GetType("NikichMods.BPSMenuProbe.MenuLayoutTrace",true);
+        CheckConfinement(plugin);
         foreach(var method in trace.GetMethods(BindingFlags.Public|BindingFlags.NonPublic|BindingFlags.Static|BindingFlags.DeclaredOnly))
         foreach(var instruction in PatchProcessor.GetOriginalInstructions(method))
         {
@@ -87,5 +90,47 @@ static class PresentationTests
         }
         Assert(checkedDispatch,"Native custom action skips ordinary crafting branch; no second resource debit");
         Console.WriteLine("PASS "+checks+" presentation checks: selected embedded PNG bytes/dimensions, quote slot stability, scoped native final writers, payer count and restore routes. NGUI layout/readability require live acceptance.");
+    }
+    static void CheckConfinement(Type plugin)
+    {
+        var original=typeof(UIScrollView).GetMethod("RestrictWithinBounds",new[]{typeof(bool)});
+        var axis=typeof(UIScrollView).GetMethod("RestrictWithinBounds",new[]{typeof(bool),typeof(bool),typeof(bool)});
+        var native=PatchProcessor.GetOriginalInstructions(Method(typeof(CraftGUI),"LateUpdate"));
+        var rewrite=Method(plugin,"ConfinementAxis");
+        var wrapper=Method(plugin,"RestrictStationScroll");
+        var rewritten=new List<CodeInstruction>((IEnumerable<CodeInstruction>)rewrite.Invoke(null,new object[]{native}));
+        Assert(native.Count==rewritten.Count,"Confinement patch changes one call, not native control flow");
+        int replacements=0;
+        for(int i=0;i<native.Count;i++)
+        {
+            bool replaced=Equals(native[i].operand,original);
+            if(replaced)replacements++;
+            Assert(rewritten[i].opcode==(replaced?OpCodes.Call:native[i].opcode) && Equals(rewritten[i].operand,replaced?wrapper:native[i].operand),"Actual native instructions preserved outside one confinement dispatch");
+            Assert(native[i].labels.Count==rewritten[i].labels.Count && native[i].blocks.Count==rewritten[i].blocks.Count,"Native control-flow labels and exception regions retained");
+        }
+        Assert(replacements==1,"Exact native confinement seam found once");
+        var missing=new List<CodeInstruction>();
+        foreach(var instruction in native)if(!Equals(instruction.operand,original))missing.Add(instruction);
+        var duplicate=new List<CodeInstruction>(native);duplicate.Add(new CodeInstruction(OpCodes.Callvirt,original));
+        foreach(var changed in new[]{missing,duplicate})
+        {
+            bool refused=false;
+            try{rewrite.Invoke(null,new object[]{changed});}
+            catch(TargetInvocationException ex){refused=ex.InnerException is InvalidOperationException;}
+            Assert(refused,"Missing/ambiguous confinement seam must refuse patching");
+        }
+        var wrapperIL=PatchProcessor.GetOriginalInstructions(wrapper);
+        bool verticalOnly=false,originalFallback=false;
+        for(int i=0;i<wrapperIL.Count;i++)
+        {
+            if(Equals(wrapperIL[i].operand,axis))verticalOnly=i>=4 && wrapperIL[i-4].opcode==OpCodes.Ldarg_0 && wrapperIL[i-3].opcode==OpCodes.Ldarg_1 && wrapperIL[i-2].opcode==OpCodes.Ldc_I4_0 && wrapperIL[i-1].opcode==OpCodes.Ldc_I4_1;
+            if(Equals(wrapperIL[i].operand,original))originalFallback=true;
+        }
+        Assert(verticalOnly && originalFallback,"Owned path restricts Y only; ordinary path retains original native overload");
+        Assert(Calls(wrapper,"Plugin","Current") && Calls(wrapper,"BaseGUI","get_is_shown"),"Correction requires live current save and visible owned menu");
+        var overload=PatchProcessor.GetOriginalInstructions(original);
+        bool nativeBoth=false;
+        for(int i=2;i<overload.Count;i++)if(Equals(overload[i].operand,axis))nativeBoth=overload[i-2].opcode==OpCodes.Ldc_I4_1 && overload[i-1].opcode==OpCodes.Ldc_I4_1;
+        Assert(nativeBoth,"Pinned native single-argument overload really enables both axes");
     }
 }
