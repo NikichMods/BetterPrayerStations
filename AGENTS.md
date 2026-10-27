@@ -13,8 +13,8 @@ Project: NikichMods/BetterPrayerStations, initial target Graveyard Keeper1.407 W
 
 ## Current work
 
-- Active source is `research/MenuProbe`, not a released production plugin. Current installed0.5.2 limits late confinement to the vertical axis only for the owned station session, retaining0.5.1 traces. Loading/alignment acceptance is pending; PROJECT_STATE and TEST_BUILD_LOG own exact status.
-- Next action is0.5.2 desk/station/same-desk plus station-reopen return. Header-background fitting is explicitly deferred; do not include it in this candidate. Do not start a new feature, rebuild a frozen version or assume compilation/installation means visual acceptance.
+- Active source is `research/MenuProbe`, not a released production plugin. Current installed0.5.2 horizontal correction has bounded user visual/runtime acceptance: all80 trace samples retain baseline scroll X/clipOffsetX. PROJECT_STATE and TEST_BUILD_LOG own exact scope/status.
+- Horizontal drift is closed for the returned scenario. Remaining immediate menu issue is header-background fitting, deliberately excluded from frozen0.5.2. No full-menu/stable acceptance. Do not start a new feature, rebuild a frozen version or request repeats of the accepted horizontal scenario without a new relevant change.
 - `research/AppearanceProbe` and `research/FaithProbe` are historical experiments for the former combined concept. Preserve them as evidence; do not install them or resume their old “next” scenarios by default.
 - Use the current checkout/branch documented in PROJECT_STATE; do not switch to main just because a new chat starts. One active writer per checkout; use a separate worktree only when actual concurrent writing requires it.
 

@@ -2,6 +2,8 @@
 
 # Shared scroll horizontal drift —2026-10-27
 
+Bounded installed corroboration: Menu0.5.2 user visually confirms horizontal drift gone. All80 recorded snapshots preserve scroll X6/clipOffsetX0 through three station opens, deferred frame samples, closes and subsequent native desks. This accepts the scoped horizontal correction in the returned scenario, not header fitting or universal input/compatibility. Exact source/log/binary identity is in TEST_BUILD_LOG.
+
 Returned Menu0.5.1 trace localizes cross-menu drift to the shared main CraftGUI.scroll_view: X6->-26, clipOffsetX0->32 on the frame after synchronous station refresh. Table/template/first-row local positions stay unchanged; subsequent ordinary desk opening restores vertical position but retains the horizontal pair. Exact frames/log identity and limits belong to TEST_BUILD_LOG. Station header text also exceeds its background; this is a separate fitting defect.
 
 Pinned1.407 source: CraftGUI.LateUpdate always calls scroll_view.RestrictWithinBounds(false). Unlike the movement-aware three-argument call in UIScrollView.LateUpdate, this one-argument overload forwards both axis flags as true. Its MoveRelative path changes localPosition and subtracts the same delta from panel.clipOffset; its alternative uses SpringPanel. Native SetDragAmount/ResetPosition respects movement axes and therefore does not repair an existing horizontal offset in this vertical scroll view. The returned frame trace corroborates this path's observable result; no runtime stack was recorded. No global NGUI defect/compatibility claim beyond this native seam is inferred.

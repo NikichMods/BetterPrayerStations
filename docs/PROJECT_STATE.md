@@ -21,7 +21,7 @@ Updated2026-10-27. This is the current entry point, not a chronological chat log
 | SHA256 | `f16edf44829a87b7ca284015c86961fd2c4e4b76563c2cea3d6f799a8a7cdf73` |
 | Installed identity | Same hash; canonical BetterPrayerStationsMenuProbe.dll |
 | Previous payload |0.5.1 backed up outside loader tree; older backups retained; see TEST_BUILD_LOG/local WORKSPACE |
-| Readiness |Clean-source build/checks pass; exact0.5.2 installed with host closed; loading/alignment acceptance pending |
+| Readiness |0.5.2 loading and bounded horizontal alignment accepted by user and runtime trace; header fitting remains open |
 
 0.5.0 adds native menu presentation to the accepted0.4.0 payment/persistence/effect;0.5.1 adds read-only traces retained in0.5.2, which changes only the owned late-confinement axes. Real faith spending remains enabled, though the current short diagnostic requires no purchase/save changes. F8 diagnostic panel starts hidden; its existing grants/cleanup still exist. No final heavenly world-light effect is implemented.
 
@@ -34,14 +34,15 @@ Updated2026-10-27. This is the current entry point, not a chronological chat log
 | Shared P/points/order persistence, support loss/recovery | Bounded installed Menu0.3.1/0.4.0 acceptance |
 | Real shared faith price/debit, shortage, A/B/A isolation, saved cleanup/full restart | Requested Menu0.4.0 checks accepted; exact limits in TEST_BUILD_LOG |
 | New text and icon selection | Accepted by user in design/mockup |
-| Actual0.5.0 native layout/readability/ordinary-desk regression | Failed user return: rows shifted left/down in station and several ordinary construction menus; actions remain usable; cause under investigation |
+| Station/ordinary-menu horizontal alignment |0.5.2 accepted: user confirms fix, all80 recorded snapshots retain scroll X6/clipOffsetX0 through reopen and subsequent desks |
+| Remaining native menu fit/readability | Header background still too short; unchanged/unaccepted; no full-menu acceptance inferred |
 | Final balance/world rays/production release | Not complete |
 
 Handoff live-log snapshot shows READY0.5.0, recovered C10/P0/points0/faith50/next1, repeated station opens/closes and no own FAILED/INIT_FAILED markers in that snapshot. It is a snapshot of a still-running session, not a final visual result. Exact snapshot identity is in TEST_BUILD_LOG; no purchase is observed in this snapshot. Game was running during handoff, and was not stopped or modified.
 
 ## Immediate next action
 
-Await the0.5.2 fresh-session ordinary desk->station->same desk return, plus station reopen, then preserve/read the local log. The scoped correction is implemented and installed under the BUILD_MENU_RESEARCH READY gate; verify scroll X/clipOffsetX remain at their pre-station baseline through deferred samples and the next ordinary desk.0.5.1 measured X6->-26 / clipOffsetX0->32 from native late both-axis confinement. Station header-background fitting is explicitly deferred by the user; do not change it in this candidate. Do not rebuild frozen candidates or repeat accepted entire payment/save/support scenarios.
+Horizontal displacement is closed within the0.5.2 returned scenario: user visually confirms the fix, and all80 trace samples retain scroll X6/clipOffsetX0 through repeated station entry, close and subsequent ordinary desks. Exact return identity is in TEST_BUILD_LOG. The remaining immediate menu issue is the station header-background fit, deliberately excluded from0.5.2; discuss/prepare it when the user continues that scope. No full-menu acceptance or stable promotion. Do not rebuild frozen candidates or repeat accepted entire payment/save/support scenarios.
 
 After menu acceptance, proceed by IMPLEMENTATION_PLAN: world-light visual trial, remaining targeted functional/compatibility checks, explicit balance decisions and production consolidation. The handoff itself authorizes none of those as already accepted.
 
