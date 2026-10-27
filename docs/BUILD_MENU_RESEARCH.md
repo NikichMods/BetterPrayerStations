@@ -1,5 +1,21 @@
 > Current consumer/status: [PROJECT_STATE](PROJECT_STATE.md). Earlier dated “current/pending/next” paragraphs below are historical evidence milestones; the newest accepted scope and TEST_BUILD_LOG take precedence. Menu0.5.0 changes presentation only; global mechanics/payment/save format are retained.
 
+# Shared scroll horizontal drift —2026-10-27
+
+Returned Menu0.5.1 trace localizes cross-menu drift to the shared main CraftGUI.scroll_view: X6->-26, clipOffsetX0->32 on the frame after synchronous station refresh. Table/template/first-row local positions stay unchanged; subsequent ordinary desk opening restores vertical position but retains the horizontal pair. Exact frames/log identity and limits belong to TEST_BUILD_LOG. Station header text also exceeds its background; this is a separate fitting defect.
+
+Pinned1.407 source: CraftGUI.LateUpdate always calls scroll_view.RestrictWithinBounds(false). Unlike the movement-aware three-argument call in UIScrollView.LateUpdate, this one-argument overload forwards both axis flags as true. Its MoveRelative path changes localPosition and subtracts the same delta from panel.clipOffset; its alternative uses SpringPanel. Native SetDragAmount/ResetPosition respects movement axes and therefore does not repair an existing horizontal offset in this vertical scroll view. The returned frame trace corroborates this path's observable result; no runtime stack was recorded. No global NGUI defect/compatibility claim beyond this native seam is inferred.
+
+## Corrective readiness: station horizontal confinement — READY
+
+- Observable result: station list retains its native horizontal alignment and leaves a later ordinary construction menu aligned. Existing vertical scrolling, native focus, rows/icons/copy/payment/save behavior remain preserved.
+- Owner/final writer: shared CraftGUI.scroll_view/UIPanel pair; the late CraftGUI.LateUpdate -> RestrictWithinBounds(bool) confinement call is the verified both-axis writer path. Correcting only RefreshMenu transforms would be overwritten later and would not fix the policy.
+- Narrow mechanism: replace only that native call site's dispatch with an owned wrapper. While the exact current CraftGUI/custom controller is owned by this plugin, use RestrictWithinBounds(instant,false,true); otherwise call the original overload. Retain native return handling/tween cancellation and vertical confinement. Do not globally patch UIScrollView or shift rows by a hardcoded32.
+- Blast radius: only the existing main CraftGUI LateUpdate call site, with an exact own-menu/controller/scroll reference guard. Other native scroll views/callers remain untouched, ordinary main CraftGUI retains original behavior. No scans or new recurring rendering loop.
+- Verification/acceptance: pinned native call/axis checks and compiled scoped dispatch preservation, then the same short ordinary desk->station->desk runtime return. Verify original scroll X/clipOffsetX survive both station frame-end samples and the following desk. Existing original0.5.0/0.5.1 binaries remain immutable. Header background fitting requires its own gate and is not bundled by this readiness record.
+
+The smallest sufficient option is to correct the late confinement axis for the owned session. Saving/restoring scroll X only on close would leave the station wrong; applying an opposite32 displacement would encode a sampled symptom and remain vulnerable to the same final writer. Production-source mutation has not occurred in this analysis.
+
 # Prayer-station management through native UI — 2026-10-24
 
 Status: **native three-card interaction and session point editing observed in game; menu/grid visual acceptance remains open**. This is research, not implemented production behavior. DESIGN.md owns gameplay; no production payment or persistence is introduced.

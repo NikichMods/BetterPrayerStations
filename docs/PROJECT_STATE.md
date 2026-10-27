@@ -21,7 +21,7 @@ Updated2026-10-27. This is the current entry point, not a chronological chat log
 | SHA256 | `9d62888681b57d7b2b03a15f19e5a41f578982131c45b8a2f08411e1993cfa9d` |
 | Installed identity | Same hash; canonical BetterPrayerStationsMenuProbe.dll |
 | Previous payload |0.5.0 backed up outside loader tree; earlier0.4.0 backup retained; see TEST_BUILD_LOG/local WORKSPACE |
-| Readiness | Builds/headless checks pass;0.5.1 installed with host closed; diagnostic runtime return pending; no visual fix claimed |
+| Readiness |0.5.1 diagnostic return captured: shared scroll X6->-26 / clipOffsetX0->32 after station refresh; scoped corrective gate READY, no visual fix implemented |
 
 0.5.0 adds native menu presentation to the accepted0.4.0 payment/persistence/effect;0.5.1 adds read-only layout tracing only. Real faith spending remains enabled, though the current short diagnostic requires no purchase/save changes. F8 diagnostic panel starts hidden; its existing grants/cleanup still exist. No final heavenly world-light effect is implemented.
 
@@ -41,7 +41,7 @@ Handoff live-log snapshot shows READY0.5.0, recovered C10/P0/points0/faith50/nex
 
 ## Immediate next action
 
-Investigate the returned0.5.0 layout regression before further features. New screenshots establish ordinary desk aligned -> station list shifted left -> same ordinary desk list shifted left, including entire rows rather than only their contents. Station multiline header also exceeds its background. Preserved screenshots/session are in TEST_BUILD_LOG. The exact runtime writer remains unresolved after bounded static inspection; fresh row creation/destruction does not explain cross-menu persistence.0.5.1 read-only layout tracing is frozen and installed (PLAN/README): await one fresh-session desk->station->desk return, then read the local log to localize the shared transform/clip change. This diagnostic retains the defective0.5.0 geometry and is not a correction. Only then establish a corrective READY gate; do not rebuild frozen candidates or repeat the accepted entire payment/save/support scenarios.
+The0.5.1 return localizes horizontal drift to shared scroll.localX6->-26 with clipOffsetX0->32 on the frame after synchronous station refresh. Hide retains it; the next ordinary desk opening restores Y only. Pinned native CraftGUI.LateUpdate calls a confinement overload that enables both axes even for vertical views. BUILD_MENU_RESEARCH owns a READY gate for restricting that call to the vertical axis only during the exact owned station session, preserving ordinary dispatch. Next implementation is this scoped correction, followed by the short desk->station->desk return; no0.5.2 source/artifact exists yet. Station header-background fitting remains separate. Do not rebuild frozen candidates or repeat the accepted entire payment/save/support scenarios.
 
 After menu acceptance, proceed by IMPLEMENTATION_PLAN: world-light visual trial, remaining targeted functional/compatibility checks, explicit balance decisions and production consolidation. The handoff itself authorizes none of those as already accepted.
 
