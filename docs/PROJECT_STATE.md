@@ -1,6 +1,6 @@
 # Project state — Better Prayer Stations
 
-Updated2026-10-26. This is the current entry point, not a chronological chat log. Product rules belong to DESIGN; exact historical runtime evidence belongs to TEST_BUILD_LOG.
+Updated2026-10-27. This is the current entry point, not a chronological chat log. Product rules belong to DESIGN; exact historical runtime evidence belongs to TEST_BUILD_LOG.
 
 ## Where work lives
 
@@ -41,7 +41,7 @@ Handoff live-log snapshot shows READY0.5.0, recovered C10/P0/points0/faith50/nex
 
 ## Immediate next action
 
-Investigate the returned0.5.0 layout regression before further features. User reports actions/recipe rows shifted left/down in station and three or four other construction menus, while actions work. Preserved session and numeric return are in TEST_BUILD_LOG. Obtain whole-window station/ordinary-menu screenshots to distinguish list displacement from row-content displacement; actual final writer/cause is not established. Static host inspection shows Hide destroys the old rows before its close callback and subsequent openings create fresh rows, so direct reuse of modified row instances is not an established explanation. Inspect shared window/header/list geometry and relevant mod interactions without assuming a culprit. If a correction is needed, establish readiness and issue a new immutable candidate; do not rebuild0.5.0 or repeat the accepted entire payment/save/support scenarios.
+Investigate the returned0.5.0 layout regression before further features. New screenshots establish ordinary desk aligned -> station list shifted left -> same ordinary desk list shifted left, including entire rows rather than only their contents. Station multiline header also exceeds its background. Preserved screenshots/session are in TEST_BUILD_LOG. The exact runtime writer remains unresolved after bounded static inspection; fresh row creation/destruction does not explain cross-menu persistence. Prepare0.5.1 read-only layout tracing (PLAN/README), then collect one desk->station->desk return to localize the shared transform/clip change. This diagnostic retains the defective0.5.0 geometry and is not a correction. Only then establish a corrective READY gate; do not rebuild0.5.0 or repeat the accepted entire payment/save/support scenarios.
 
 After menu acceptance, proceed by IMPLEMENTATION_PLAN: world-light visual trial, remaining targeted functional/compatibility checks, explicit balance decisions and production consolidation. The handoff itself authorizes none of those as already accepted.
 

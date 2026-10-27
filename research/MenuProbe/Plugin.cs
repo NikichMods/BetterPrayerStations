@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.IO;
@@ -15,7 +16,7 @@ namespace NikichMods.BPSMenuProbe
     [BepInPlugin(Id,"Better Prayer Stations - Menu Probe",Version)]
     public sealed class Plugin:BaseUnityPlugin,CraftInterface
     {
-        public const string Id="nikichmods.bps.menuprobe",Version="0.5.0";
+        public const string Id="nikichmods.bps.menuprobe",Version="0.5.1";
         const string Host="e72e4270e4b88dd0a87ca23c9cf1750aec4c4a0fedb40b6d2dae7902fc9c7fd8";
         const string BuyId="bps_menu_probe_buy",PlaceId="bps_menu_probe_place",RemoveId="bps_menu_probe_remove";
         static Plugin self;
@@ -48,6 +49,8 @@ namespace NikichMods.BPSMenuProbe
         MethodInfo fitCamera,openMenu,graveRedraw;
         bool ready,ownMenu,editor,removing,painting,showPanel,validCell,cursorSet,refreshRequested,recoveryPending;
         bool menuQueueWasActive;
+        bool layoutTraceFailed;
+        int layoutTraceSequence;
         UIWidget headerTableWidget;
         UILabel.Overflow headerOverflow;
         int headerHeight,headerDescriptionHeight,headerTop,headerBottom;
@@ -92,6 +95,7 @@ namespace NikichMods.BPSMenuProbe
                 Patch(typeof(CraftGUI),"AddRemoveBuildingItem",nameof(NativeRemoveCard),null,Type.EmptyTypes);
                 Patch(typeof(GJL),"L",nameof(Localize),null,new[]{typeof(string)});
                 Patch(typeof(CraftItemGUI),"Redraw",nameof(RowBefore),nameof(RowAfter),Type.EmptyTypes);
+                Patch(typeof(CraftGUI),"ProceedOpen",nameof(LayoutOpening),nameof(LayoutOpened),new[]{typeof(WorldGameObject),typeof(CraftsInventory),typeof(string)});
                 SkullProjection.Install(harmony);
                 Patch(typeof(GraveGUI),"Redraw",null,nameof(GraveRedrawn),Type.EmptyTypes);
                 ready=true;Log("READY version="+Version+" persistent=True faith_debit=True quality_effect=True test_resources=True native_presentation=True icons=100,37,37");
@@ -146,6 +150,35 @@ namespace NikichMods.BPSMenuProbe
         {
             var p=self;if(p==null || !p.Current() || __0==null || !Station(__0.obj_id))return true;
             try{p.Open(__0,false);}catch(Exception ex){p.Fail(ex);}return false;
+        }
+        bool ObservedLayout(CraftGUI view)
+        {return Current() && view!=null && ReferenceEquals(view,MainGame.me.gui_elements.craft);}
+        void TraceLayout(CraftGUI view,string phase)
+        {
+            if(layoutTraceFailed || !ObservedLayout(view))return;
+            try{Log(MenuLayoutTrace.Snapshot(view,phase,ownMenu));}
+            catch(Exception ex){layoutTraceFailed=true;Logger.LogWarning("BPS_MENU LAYOUT_TRACE_FAILED diagnostics_only=True "+ex);}
+        }
+        static void LayoutOpening(CraftGUI __instance)
+        {
+            var p=self;if(p==null || !p.ObservedLayout(__instance))return;
+            p.layoutTraceSequence++;p.TraceLayout(__instance,"native-open-before");
+        }
+        static void LayoutOpened(CraftGUI __instance)
+        {
+            var p=self;if(p==null || !p.ObservedLayout(__instance))return;
+            p.TraceLayout(__instance,"native-open-after");
+            p.StartCoroutine(p.SettledLayout(__instance,p.layoutTraceSequence));
+        }
+        IEnumerator SettledLayout(CraftGUI view,int sequence)
+        {
+            // Two bounded samples cover native deferred table/anchor work after opening.
+            yield return new WaitForEndOfFrame();
+            if(!ObservedLayout(view) || !view.is_shown || sequence!=layoutTraceSequence)yield break;
+            TraceLayout(view,"open-frame-end");
+            yield return null;
+            yield return new WaitForEndOfFrame();
+            if(ObservedLayout(view) && view.is_shown && sequence==layoutTraceSequence)TraceLayout(view,"next-frame-end");
         }
         static void Loading(){if(self!=null)self.ResetSession("load");}
         static void Started(){if(self!=null && self.ready){self.recoveryPending=true;self.recoveryUntil=Time.realtimeSinceStartup+30f;}}
@@ -216,6 +249,7 @@ namespace NikichMods.BPSMenuProbe
         }
         void MenuHidden()
         {
+            TraceLayout(menu,"hide-before-restore");
             presentation.Restore();
             ownMenu=false;
             if(menu!=null)
@@ -225,6 +259,7 @@ namespace NikichMods.BPSMenuProbe
                 if(menu.queue!=null)menu.queue.gameObject.SetActive(menuQueueWasActive);
             }
             if(ReferenceEquals(BuildModeLogics.last_build_desk,source))BuildModeLogics.last_build_desk=previousDesk;
+            TraceLayout(menu,"hide-after-restore");
             Log("MENU_CLOSED controller_restored=True");
         }
         string Counts()
@@ -256,7 +291,9 @@ namespace NikichMods.BPSMenuProbe
         {
             if(!ownMenu || menu==null || !menu.is_shown)return;
             UpdateQuote();
+            TraceLayout(menu,"refresh-before-anchors");
             menu.UpdateAllAnchors();
+            TraceLayout(menu,"refresh-after-first-anchors");
             if(menu.object_info!=null)
             {
                 menu.object_info.text_header.text="Благословения";
@@ -273,9 +310,13 @@ namespace NikichMods.BPSMenuProbe
                 menu.object_info.table.Reposition();
             }
             menu.UpdateAllAnchors();
+            TraceLayout(menu,"refresh-after-header");
             foreach(var row in menu.list_items)row.Redraw();
+            TraceLayout(menu,"refresh-after-rows");
             menu.craft_list_grid.Reposition();menu.craft_list_grid.repositionNow=true;
+            TraceLayout(menu,"refresh-after-list");
             menu.UpdateAllAnchors();
+            TraceLayout(menu,"refresh-after-final-anchors");
             Log("LAYOUT header_height="+menu.header_height_widget.height+" description_height="+menu.object_info.text_descr.height+" rows="+string.Join(",",menu.list_items.ConvertAll(row=>row.GetComponent<UIWidget>().height.ToString()).ToArray()));
             refreshRequested=false;
         }

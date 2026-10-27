@@ -1,4 +1,12 @@
-# Menu Probe 0.5.0 — native presentation preview
+# Menu Probe 0.5.1 — read-only layout regression trace
+
+Question2026-10-27: why does the common construction list shift left after the station menu? User screenshots establish ordinary desk aligned -> station list displaced -> ordinary desk displaced; header text also exceeds its background. Existing0.5.0 log reports heights, not positions. Static pinned host inspection establishes fresh row creation/destruction and shared table/scroll/header ownership, but not the runtime writer. Corrective geometry gate remains BLOCKED; no guessed coordinate correction is included.
+
+Research method: retain exact0.5.0 behavior and add read-only event snapshots around native ProceedOpen, station refresh stages, close restoration and two bounded frame-end samples per opening. Scope is only GUIElements.craft in the current save, not all windows. Record existing table/scroll/template/first-card/header transforms, root-relative positions, widget sizes and panel clip region/offset. No layout setters, no global scans, no recurring trace, no new gameplay or save mutation. Trace failure disables tracing only. Native gamepad/mouse focus remains untouched. Actual compiled trace IL must contain no property setters/field writes. This adds evidence absent from current logs with one short desk/station/desk sequence; a synthetic reimplementation would not test native layout ownership.
+
+Header background fitting is a separately observed defect; it is not corrected speculatively in this diagnostic.0.5.0 and its frozen tag/artifact remain unchanged.0.5.1 is an investigative candidate, not a visual fix or acceptance. Frozen build/install identity belongs to TEST_BUILD_LOG.
+
+## Historical0.5.0 native presentation preparation
 
 User accepts revised copy and the exact100/37/37 icon trio, and authorizes an installed native preview. `docs/STATION_MENU_PROPOSAL.md`, Menu0.5.0 READY gates, owns scoped header/copy/icon/row-geometry/native-price readiness before implementation. Native final writers verified in pinned GK1.407 CraftItemGUI.Redraw, BaseItemCellGUI.DrawIcon/DrawIngredient and custom click dispatch; ignored presentation/inventory IL reports are bounded local evidence, not shipped source.
 

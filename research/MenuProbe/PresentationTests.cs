@@ -40,6 +40,14 @@ static class PresentationTests
         }
         var plugin=probe.GetType("NikichMods.BPSMenuProbe.Plugin",true);
         var view=probe.GetType("NikichMods.BPSMenuProbe.StationMenuView",true);
+        var trace=probe.GetType("NikichMods.BPSMenuProbe.MenuLayoutTrace",true);
+        foreach(var method in trace.GetMethods(BindingFlags.Public|BindingFlags.NonPublic|BindingFlags.Static|BindingFlags.DeclaredOnly))
+        foreach(var instruction in PatchProcessor.GetOriginalInstructions(method))
+        {
+            var called=instruction.operand as MethodBase;
+            Assert(called==null || !called.Name.StartsWith("set_"),"Read-only layout trace must never move, resize or re-anchor native objects");
+            Assert(instruction.opcode!=System.Reflection.Emit.OpCodes.Stfld && instruction.opcode!=System.Reflection.Emit.OpCodes.Stsfld,"Layout trace must not write native or cached state");
+        }
         var owner=FormatterServices.GetUninitializedObject(plugin);
         var stateType=probe.GetType("NikichMods.BPSMenuProbe.BeamState",true);
         var state=Activator.CreateInstance(stateType,true);
