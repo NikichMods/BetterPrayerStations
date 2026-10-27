@@ -1,6 +1,6 @@
 # Station menu — accepted presentation and native preview
 
-Updated2026-10-27. Native-list structure, the following wording and exact icon trio are accepted. Menu0.5.0 visual return failed with rows shifted left in station and subsequent ordinary construction menus; station header text also exceeds its background. Installed0.5.1 adds read-only tracing with no visual fix. PROJECT_STATE/TEST_BUILD_LOG own the investigation; selected copy/artwork is unchanged. Historical drafts/reference searches are [archived](history/2026-10-26/STATION_MENU_PROPOSAL.md).
+Updated2026-10-27. Native-list structure, the following wording and exact icon trio are accepted. Menu0.5.0 visual return failed with rows shifted left in station and subsequent ordinary construction menus; station header text also exceeds its background. Installed0.5.2 retains the traces and corrects owned horizontal confinement; runtime acceptance is pending. Header background remains unchanged by explicit user request. PROJECT_STATE/TEST_BUILD_LOG own the investigation; selected copy/artwork is unchanged. Historical drafts/reference searches are [archived](history/2026-10-26/STATION_MENU_PROPOSAL.md).
 
 ## Accepted text
 

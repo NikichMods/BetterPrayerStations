@@ -1,5 +1,11 @@
 # Test-build log
 
+## Menu0.5.2 frozen build and installed correction —2026-10-27
+
+Frozen source `b382c617487918f25060fee91e7be20ccbd3671c`, tag `probe/menu-0.5.2`, branch codex/persistence-research. Artifact `artifacts/MenuProbe-0.5.2/BetterPrayerStationsMenuProbe-0.5.2.dll`, assembly/file0.5.2.0, SHA256 `f16edf44829a87b7ca284015c86961fd2c4e4b76563c2cea3d6f799a8a7cdf73`. Clean-source SDK6.0.406 warning-as-error build passes existing gates and new actual-native-instruction confinement checks (40 effect/219 persistence/77 payment/933 presentation/8585 structural assertions). Exact references/assets are in ignored build-identity.json. This is a corrective research candidate, not installed visual acceptance or stable promotion.
+
+Host rechecked closed before replacement; one owned DLL. Installed canonical BetterPrayerStationsMenuProbe.dll verified equal to candidate hash/version. Previous0.5.1 backed up/verified outside loader tree at ignored `.local/evidence/menu-probe-0.5.2/previous-installed-menu-0.5.1.dll`, SHA256 `9d62888681b57d7b2b03a15f19e5a41f578982131c45b8a2f08411e1993cfa9d`. Pre-install log `pre-install-session.log` SHA256 `23ff157e4c5d10960754e0573f90bbbb009a9f998a51b7f17ed14b5ce648c651` is the historical0.5.1 return, not0.5.2 evidence. No game launch/termination/save mutation or unrelated plugin changes by agent. Frozen earlier artifacts unchanged. Await fresh-session desk->station->same desk plus station reopen. Read existing bounded coordinate traces to compare X/clipOffsetX to baseline. Header background deliberately unchanged; no purchase/placement/save setup required.
+
 ## Menu0.5.2 correction preparation —2026-10-27
 
 User explicitly requests the horizontal fix and0.5.2, deferring header background. BUILD_MENU_RESEARCH READY gate precedes mutation. Plugin.Version0.5.2 adds one guarded transpiler at CraftGUI.LateUpdate: replace its single original confinement call with an identical-stack static dispatch to vertical-only confinement when the exact current visible station menu/controller/scroll belongs to this plugin; preserve original overload for every other case. Native branch/tween handling remains intact. No other layout/mechanics change; existing0.5.1 read-only traces retained. No fixed32 compensation or global scroll patch. Frozen0.5.0/0.5.1 artifacts/tags unchanged.

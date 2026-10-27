@@ -14,16 +14,16 @@ Updated2026-10-27. This is the current entry point, not a chronological chat log
 
 | Item | Exact state |
 | --- | --- |
-| Installed probe | Menu0.5.1 — read-only layout diagnostic;0.5.0 geometry retained |
-| Frozen source | `42513e21faa69687fc9f931e6001e001e7045f24` |
-| Frozen tag | `probe/menu-0.5.1` |
-| Artifact | `artifacts/MenuProbe-0.5.1/BetterPrayerStationsMenuProbe-0.5.1.dll` |
-| SHA256 | `9d62888681b57d7b2b03a15f19e5a41f578982131c45b8a2f08411e1993cfa9d` |
+| Installed probe | Menu0.5.2 — owned vertical confinement correction; header unchanged |
+| Frozen source | `b382c617487918f25060fee91e7be20ccbd3671c` |
+| Frozen tag | `probe/menu-0.5.2` |
+| Artifact | `artifacts/MenuProbe-0.5.2/BetterPrayerStationsMenuProbe-0.5.2.dll` |
+| SHA256 | `f16edf44829a87b7ca284015c86961fd2c4e4b76563c2cea3d6f799a8a7cdf73` |
 | Installed identity | Same hash; canonical BetterPrayerStationsMenuProbe.dll |
-| Previous payload |0.5.0 backed up outside loader tree; earlier0.4.0 backup retained; see TEST_BUILD_LOG/local WORKSPACE |
-| Readiness |0.5.1 diagnostic return captured: shared scroll X6->-26 / clipOffsetX0->32 after station refresh; scoped corrective gate READY, no visual fix implemented |
+| Previous payload |0.5.1 backed up outside loader tree; older backups retained; see TEST_BUILD_LOG/local WORKSPACE |
+| Readiness |Clean-source build/checks pass; exact0.5.2 installed with host closed; loading/alignment acceptance pending |
 
-0.5.0 adds native menu presentation to the accepted0.4.0 payment/persistence/effect;0.5.1 adds read-only layout tracing only. Real faith spending remains enabled, though the current short diagnostic requires no purchase/save changes. F8 diagnostic panel starts hidden; its existing grants/cleanup still exist. No final heavenly world-light effect is implemented.
+0.5.0 adds native menu presentation to the accepted0.4.0 payment/persistence/effect;0.5.1 adds read-only traces retained in0.5.2, which changes only the owned late-confinement axes. Real faith spending remains enabled, though the current short diagnostic requires no purchase/save changes. F8 diagnostic panel starts hidden; its existing grants/cleanup still exist. No final heavenly world-light effect is implemented.
 
 ## Acceptance map
 
@@ -41,7 +41,7 @@ Handoff live-log snapshot shows READY0.5.0, recovered C10/P0/points0/faith50/nex
 
 ## Immediate next action
 
-The0.5.1 return localizes horizontal drift to shared scroll.localX6->-26 with clipOffsetX0->32 on the frame after synchronous station refresh. Hide retains it; the next ordinary desk opening restores Y only. Pinned native CraftGUI.LateUpdate calls a confinement overload that enables both axes even for vertical views. BUILD_MENU_RESEARCH owns a READY gate for restricting that call to the vertical axis only during the exact owned station session, preserving ordinary dispatch. Next implementation is this scoped correction, followed by the short desk->station->desk return; no0.5.2 source/artifact exists yet. Station header-background fitting remains separate. Do not rebuild frozen candidates or repeat the accepted entire payment/save/support scenarios.
+Await the0.5.2 fresh-session ordinary desk->station->same desk return, plus station reopen, then preserve/read the local log. The scoped correction is implemented and installed under the BUILD_MENU_RESEARCH READY gate; verify scroll X/clipOffsetX remain at their pre-station baseline through deferred samples and the next ordinary desk.0.5.1 measured X6->-26 / clipOffsetX0->32 from native late both-axis confinement. Station header-background fitting is explicitly deferred by the user; do not change it in this candidate. Do not rebuild frozen candidates or repeat accepted entire payment/save/support scenarios.
 
 After menu acceptance, proceed by IMPLEMENTATION_PLAN: world-light visual trial, remaining targeted functional/compatibility checks, explicit balance decisions and production consolidation. The handoff itself authorizes none of those as already accepted.
 
