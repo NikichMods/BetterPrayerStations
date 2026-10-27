@@ -14,16 +14,16 @@ Updated2026-10-27. This is the current entry point, not a chronological chat log
 
 | Item | Exact state |
 | --- | --- |
-| Installed probe | Menu0.5.0 |
-| Frozen source | `0b5b838e1889819645e9b2e897bef43f292fbb61` |
-| Frozen tag | `probe/menu-0.5.0` |
-| Artifact | `artifacts/MenuProbe-0.5.0/BetterPrayerStationsMenuProbe-0.5.0.dll` |
-| SHA256 | `f624ed052f681ad57b26558c2a9a38d5988cee7422f3611dcacdc83bba9b5b55` |
+| Installed probe | Menu0.5.1 — read-only layout diagnostic;0.5.0 geometry retained |
+| Frozen source | `42513e21faa69687fc9f931e6001e001e7045f24` |
+| Frozen tag | `probe/menu-0.5.1` |
+| Artifact | `artifacts/MenuProbe-0.5.1/BetterPrayerStationsMenuProbe-0.5.1.dll` |
+| SHA256 | `9d62888681b57d7b2b03a15f19e5a41f578982131c45b8a2f08411e1993cfa9d` |
 | Installed identity | Same hash; canonical BetterPrayerStationsMenuProbe.dll |
-| Previous payload |0.4.0 backed up outside loader tree; see TEST_BUILD_LOG/local WORKSPACE |
-| Readiness | Builds/headless checks pass; installed visual check failed: user reports rows shifted left/down in station and several ordinary construction menus |
+| Previous payload |0.5.0 backed up outside loader tree; earlier0.4.0 backup retained; see TEST_BUILD_LOG/local WORKSPACE |
+| Readiness | Builds/headless checks pass;0.5.1 installed with host closed; diagnostic runtime return pending; no visual fix claimed |
 
-0.5.0 adds only native menu presentation to the accepted0.4.0 payment/persistence/effect. Real faith spending remains enabled. F8 diagnostic panel starts hidden; its existing grants/cleanup still exist. No final heavenly world-light effect is implemented.
+0.5.0 adds native menu presentation to the accepted0.4.0 payment/persistence/effect;0.5.1 adds read-only layout tracing only. Real faith spending remains enabled, though the current short diagnostic requires no purchase/save changes. F8 diagnostic panel starts hidden; its existing grants/cleanup still exist. No final heavenly world-light effect is implemented.
 
 ## Acceptance map
 
@@ -41,7 +41,7 @@ Handoff live-log snapshot shows READY0.5.0, recovered C10/P0/points0/faith50/nex
 
 ## Immediate next action
 
-Investigate the returned0.5.0 layout regression before further features. New screenshots establish ordinary desk aligned -> station list shifted left -> same ordinary desk list shifted left, including entire rows rather than only their contents. Station multiline header also exceeds its background. Preserved screenshots/session are in TEST_BUILD_LOG. The exact runtime writer remains unresolved after bounded static inspection; fresh row creation/destruction does not explain cross-menu persistence. Prepare0.5.1 read-only layout tracing (PLAN/README), then collect one desk->station->desk return to localize the shared transform/clip change. This diagnostic retains the defective0.5.0 geometry and is not a correction. Only then establish a corrective READY gate; do not rebuild0.5.0 or repeat the accepted entire payment/save/support scenarios.
+Investigate the returned0.5.0 layout regression before further features. New screenshots establish ordinary desk aligned -> station list shifted left -> same ordinary desk list shifted left, including entire rows rather than only their contents. Station multiline header also exceeds its background. Preserved screenshots/session are in TEST_BUILD_LOG. The exact runtime writer remains unresolved after bounded static inspection; fresh row creation/destruction does not explain cross-menu persistence.0.5.1 read-only layout tracing is frozen and installed (PLAN/README): await one fresh-session desk->station->desk return, then read the local log to localize the shared transform/clip change. This diagnostic retains the defective0.5.0 geometry and is not a correction. Only then establish a corrective READY gate; do not rebuild frozen candidates or repeat the accepted entire payment/save/support scenarios.
 
 After menu acceptance, proceed by IMPLEMENTATION_PLAN: world-light visual trial, remaining targeted functional/compatibility checks, explicit balance decisions and production consolidation. The handoff itself authorizes none of those as already accepted.
 

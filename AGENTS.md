@@ -13,7 +13,7 @@ Project: NikichMods/BetterPrayerStations, initial target Graveyard Keeper1.407 W
 
 ## Current work
 
-- Active source is `research/MenuProbe`, not a released production plugin. Current installed0.5.0 adds accepted menu copy/icons to accepted0.4.0 mechanics. Visual return failed: rows shift left/down in station and several ordinary construction menus; PROJECT_STATE and TEST_BUILD_LOG own exact status.
+- Active source is `research/MenuProbe`, not a released production plugin. Current installed0.5.1 adds read-only layout tracing to0.5.0. Visual return of0.5.0 failed: rows shift left in station and subsequent ordinary construction menus; no visual fix is claimed. PROJECT_STATE and TEST_BUILD_LOG own exact status.
 - Screenshots establish ordinary desk aligned -> station list shifted left -> same desk shifted left. Next action is one desk/station/desk return with read-only0.5.1 layout tracing; exact runtime writer/correction remains unresolved. PROJECT_STATE owns preparation/install status. Do not start a new feature, rebuild a frozen version or assume functional actions mean visual acceptance.
 - `research/AppearanceProbe` and `research/FaithProbe` are historical experiments for the former combined concept. Preserve them as evidence; do not install them or resume their old “next” scenarios by default.
 - Use the current checkout/branch documented in PROJECT_STATE; do not switch to main just because a new chat starts. One active writer per checkout; use a separate worktree only when actual concurrent writing requires it.

@@ -1,5 +1,11 @@
 # Test-build log
 
+## Menu0.5.1 frozen diagnostic / installed —2026-10-27
+
+Frozen source `42513e21faa69687fc9f931e6001e001e7045f24`, tag `probe/menu-0.5.1`, branch codex/persistence-research. Artifact `artifacts/MenuProbe-0.5.1/BetterPrayerStationsMenuProbe-0.5.1.dll`, assembly/file0.5.1.0, SHA256 `9d62888681b57d7b2b03a15f19e5a41f578982131c45b8a2f08411e1993cfa9d`. Clean-source SDK6.0.406 Roslyn build and existing effect/persistence/payment/presentation/mutation gates pass; trace-specific compiled checks reject property setters and native field writes in MenuLayoutTrace. Exact input hashes in ignored build-identity.json. This candidate adds observation only; no fix or runtime acceptance is asserted.
+
+Host rechecked closed before replacement; exactly one owned plugin DLL. Installed canonical BetterPrayerStationsMenuProbe.dll hash verified equal to the candidate. Exact previous0.5.0 backed up and hash-verified outside loader tree at ignored `.local/evidence/menu-probe-0.5.1/previous-installed-menu-0.5.0.dll`, SHA256 `f624ed052f681ad57b26558c2a9a38d5988cee7422f3611dcacdc83bba9b5b55`. Pre-install log preserved as `pre-install-session.log` SHA256 `79b764e2327dc60855310bd55e6e5abb5169a4e35728dcba2f4ef256faca0cd2`; it belongs to0.5.0, not0.5.1. No launch/restart/save mutation by agent; no unrelated plugin changes.0.5.1 loading/traces remain unverified until user starts the game and repeats the short desk->station->desk sequence in README. No purchase/placement/save setup is required; existing real-spending behavior remains enabled.
+
 ## Menu0.5.0 screenshot sequence /0.5.1 diagnostic preparation —2026-10-27
 
 User supplied a direct sequence: ordinary cemetery desk aligned before first station interaction, station list displaced left, then the same ordinary desk displaced left. Entire rows (selection frame, icons, text, ingredients) shift together relative to the outer frame; the ordinary-menu screenshots do not show a corresponding clear vertical displacement. This refines the initial left/down report; it does not establish runtime coordinates. Station multiline header text extends below its fixed brown background, a separately observed fitting defect. No requested mechanics/artwork/copy change follows from either finding.
